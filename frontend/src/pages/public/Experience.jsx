@@ -9,19 +9,12 @@ function Experience() {
   useEffect(() => {
     const loadExperience = async () => {
       const data = await fetchExperience()
-      // Handle the API response structure
-      const parsedData = data.body ? JSON.parse(data.body) : data
-      setExperiences(parsedData)
+      setExperiences(data)
       setLoading(false)
     }
     loadExperience()
   }, [])
 
-  if (loading) {
-    return <div>Loading experience...</div>
-  }
-
-  // Parse description string into array if needed
   const parseDescription = (description) => {
     if (Array.isArray(description)) return description
     if (typeof description === 'string') {
@@ -34,39 +27,46 @@ function Experience() {
     return []
   }
 
-  return (
-    <div>
-      <h1>Experience</h1>
-      <p>My professional journey in DevOps, Cloud, and leadership.</p>
+  if (loading) {
+    return <div className="container text-center mt-4">Loading experience...</div>
+  }
 
-      {experiences.map((exp) => (
-        <div key={exp.id}>
-          <h2>{exp.title}</h2>
-          <h3>{exp.organization}</h3>
-          <p>{exp.period} | {exp.location}</p>
-          <ul>
-            {parseDescription(exp.description).map((item, idx) => (
-              <li key={idx}>{item}</li>
-            ))}
-          </ul>
-          <div>
-            <strong>Skills used:</strong>
+  return (
+    <div className="container">
+      <h1 className="text-center">Experience</h1>
+      <p className="text-center">My professional journey in DevOps, Cloud, and leadership.</p>
+      
+      <div className="timeline mt-4">
+        {experiences.map((exp) => (
+          <div key={exp.id} className="experience-item">
+            <h3>{exp.title}</h3>
+            <h4>{exp.organization}</h4>
+            <p style={{ color: 'var(--primary)' }}>{exp.period} | {exp.location}</p>
             <ul>
-              {exp.skills?.map((skill, idx) => (
-                <li key={idx}>{skill}</li>
+              {parseDescription(exp.description).map((item, idx) => (
+                <li key={idx}>{item}</li>
               ))}
             </ul>
+            <div>
+              <strong>Skills used:</strong>
+              <div className="skill-list mt-1">
+                {exp.skills?.map((skill, idx) => (
+                  <span key={idx} className="skill-tag">{skill}</span>
+                ))}
+              </div>
+            </div>
           </div>
-          <hr />
-        </div>
-      ))}
-
-      <div>
-        <p>
-          <Link to="/skills">View my skills</Link> |{' '}
-          <Link to="/projects">See my projects</Link> |{' '}
-          <Link to="/certifications">Check certifications</Link>
-        </p>
+        ))}
+      </div>
+      
+      <hr className="mt-4" />
+      
+      <div className="text-center mt-3">
+        <Link to="/skills" className="btn btn-secondary">View my skills</Link>
+        {' '}
+        <Link to="/projects" className="btn btn-secondary">See my projects</Link>
+        {' '}
+        <Link to="/certifications" className="btn btn-secondary">Check certifications</Link>
       </div>
     </div>
   )

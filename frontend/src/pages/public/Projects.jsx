@@ -16,37 +16,41 @@ function Projects() {
   }, [])
 
   if (loading) {
-    return <div>Loading projects...</div>
+    return <div className="container text-center mt-4">Loading projects...</div>
   }
 
   return (
-    <div>
-      <h1>Projects</h1>
-      <p>Here are some things I've built.</p>
-
-      {projects.map((project) => (
-        <div key={project.id}>
-          <h2>{project.title}</h2>
-          <p>{project.description}</p>
-          <p>
-            <strong>Tech Stack:</strong> {project.tech_stack?.join(', ')}
-          </p>
-          {project.github_link && (
-            <p>
-              <a href={project.github_link} target="_blank" rel="noopener noreferrer">
-                GitHub →
-              </a>
-            </p>
-          )}
-          <hr />
-        </div>
-      ))}
-
-      <div>
-        <p>
-          <Link to="/skills">View my skills</Link> |{' '}
-          <Link to="/experience">See my experience</Link>
-        </p>
+    <div className="container">
+      <h1 className="text-center">Projects</h1>
+      <p className="text-center">Here are some things I've built.</p>
+      
+      <div className="projects-grid mt-4">
+        {projects.map((project) => (
+          <div key={project.id} className="project-card">
+            <div className="project-content">
+              <h3>{project.title}</h3>
+              <p>{project.description}</p>
+              <div className="project-tech">
+                {project.tech_stack?.map((tech, idx) => (
+                  <span key={idx} className="tech-badge">{tech}</span>
+                ))}
+              </div>
+              {project.github_link && (
+                <a href={project.github_link} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
+                  GitHub →
+                </a>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+      
+      <hr className="mt-4" />
+      
+      <div className="text-center mt-3">
+        <Link to="/skills" className="btn btn-secondary">View my skills</Link>
+        {' '}
+        <Link to="/experience" className="btn btn-secondary">See my experience</Link>
       </div>
     </div>
   )

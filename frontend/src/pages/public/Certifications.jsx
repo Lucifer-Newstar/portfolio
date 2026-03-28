@@ -16,44 +16,45 @@ function Certifications() {
   }, [])
 
   if (loading) {
-    return <div>Loading certifications...</div>
+    return <div className="container text-center mt-4">Loading certifications...</div>
   }
 
   return (
-    <div>
-      <h1>Certifications</h1>
-      <p>Professional certifications and credentials.</p>
-
-      {certifications.map((cert) => (
-        <div key={cert.id}>
-          <h2>{cert.name}</h2>
-          <p><strong>Issuer:</strong> {cert.issuer}</p>
-          <p><strong>Date:</strong> {cert.date}</p>
-          {cert.link && (
-            <p>
-              <a href={cert.link} target="_blank" rel="noopener noreferrer">
+    <div className="container">
+      <h1 className="text-center">Certifications</h1>
+      <p className="text-center">Professional certifications and credentials.</p>
+      
+      <div className="certs-grid mt-4">
+        {certifications.map((cert) => (
+          <div key={cert.id} className="cert-card">
+            <h3>{cert.name}</h3>
+            <p><strong>Issuer:</strong> {cert.issuer}</p>
+            <p><strong>Date:</strong> {cert.date}</p>
+            {cert.link && (
+              <a href={cert.link} target="_blank" rel="noopener noreferrer" className="btn btn-primary cert-link">
                 View Credential →
               </a>
-            </p>
-          )}
-          <div>
-            <strong>Skills:</strong>
-            <ul>
-              {cert.skills.map((skill, idx) => (
-                <li key={idx}>{skill}</li>
-              ))}
-            </ul>
+            )}
+            <div className="mt-2">
+              <strong>Skills:</strong>
+              <div className="skill-list mt-1">
+                {cert.skills?.map((skill, idx) => (
+                  <span key={idx} className="skill-tag">{skill}</span>
+                ))}
+              </div>
+            </div>
           </div>
-          <hr />
-        </div>
-      ))}
-
-      <div>
-        <p>
-          <Link to="/skills">View related skills</Link> |{' '}
-          <Link to="/projects">See projects using these skills</Link> |{' '}
-          <Link to="/posts">Read my posts</Link>
-        </p>
+        ))}
+      </div>
+      
+      <hr className="mt-4" />
+      
+      <div className="text-center mt-3">
+        <Link to="/skills" className="btn btn-secondary">View related skills</Link>
+        {' '}
+        <Link to="/projects" className="btn btn-secondary">See projects</Link>
+        {' '}
+        <Link to="/posts" className="btn btn-secondary">Read my posts</Link>
       </div>
     </div>
   )

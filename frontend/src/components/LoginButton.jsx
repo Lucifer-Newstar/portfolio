@@ -6,8 +6,10 @@ function LoginButton() {
   const loginUrl = `${cognitoDomain}/login?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}`
 
   return (
-    <div>
-      <a href={loginUrl}>Login to Admin Dashboard</a>
+    <div className="container text-center mt-4">
+      <h1>Admin Access Only</h1>
+      <p>This area is restricted. Please login to continue.</p>
+      <a href={loginUrl} className="btn btn-primary">Login to Admin Dashboard</a>
     </div>
   )
 }
