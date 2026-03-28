@@ -1,4 +1,12 @@
+import { useState } from 'react'
+import SkillsManager from '../../components/admin/SkillsManager'
+import ProjectsManager from '../../components/admin/ProjectsManager'
+import ExperienceManager from '../../components/admin/ExperienceManager'
+import CertificationsManager from '../../components/admin/CertificationsManager'
+
 function AdminDashboard() {
+  const [activeTab, setActiveTab] = useState('skills')
+
   const handleLogout = () => {
     localStorage.removeItem('isAuthenticated')
     window.location.href = '/'
@@ -7,20 +15,23 @@ function AdminDashboard() {
   return (
     <div>
       <h1>Admin Dashboard</h1>
-      <p>You are logged in!</p>
       <button onClick={handleLogout}>Logout</button>
       
       <hr />
       
-      <h2>Content Management</h2>
-      <p>Coming soon: Manage skills, projects, experience, and certifications.</p>
+      {/* Tab Navigation */}
+      <div style={{ display: 'flex', gap: '10px', marginBottom: '20px', flexWrap: 'wrap' }}>
+        <button onClick={() => setActiveTab('skills')}>Skills</button>
+        <button onClick={() => setActiveTab('projects')}>Projects</button>
+        <button onClick={() => setActiveTab('experience')}>Experience</button>
+        <button onClick={() => setActiveTab('certifications')}>Certifications</button>
+      </div>
       
-      <ul>
-        <li>Skills Manager - Add, edit, delete skills</li>
-        <li>Projects Manager - Add, edit, delete projects</li>
-        <li>Experience Manager - Add, edit, delete experience</li>
-        <li>Certifications Manager - Add, edit, delete certifications</li>
-      </ul>
+      {/* Tab Content */}
+      {activeTab === 'skills' && <SkillsManager />}
+      {activeTab === 'projects' && <ProjectsManager />}
+      {activeTab === 'experience' && <ExperienceManager />}
+      {activeTab === 'certifications' && <CertificationsManager />}
     </div>
   )
 }
