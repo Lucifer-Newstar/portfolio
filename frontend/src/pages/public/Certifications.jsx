@@ -1,57 +1,46 @@
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { fetchCertifications } from '../../utils/api'
 
 function Certifications() {
-  const certifications = [
-    {
-      name: "Oracle Database @ AWS Certified Architect Professional",
-      issuer: "Oracle",
-      date: "Oct 2025",
-      link: "https://catalog-education.oracle.com/ords/certview/sharebadge?id=CA28460C14F975E596709C7D3B622CE567A942B04EF082EF61C6C213894FA234",
-      skills: ["Oracle", "AWS", "Database"]
-    },
-    {
-      name: "Oracle Cloud Infrastructure 2025 Certified Foundations Associate",
-      issuer: "Oracle",
-      date: "Oct 2025",
-      link: "https://catalog-education.oracle.com/ords/certview/sharebadge?id=3E5A5A8C90DB6F61272E7662EF777663C3316544D516C47E054F2357741AC09A",
-      skills: ["OCI", "Cloud Fundamentals"]
-    },
-    {
-      name: "AWS - Solutions Architecture Job Simulation",
-      issuer: "Forage",
-      date: "Oct 2025",
-      link: "https://www.linkedin.com/posts/navin-jairam_forage-certificate-activity-7383053776896770048-CnHV",
-      skills: ["AWS", "Solutions Architecture"]
-    },
-    {
-      name: "30 Days Masterclass in Full Stack Development",
-      issuer: "NoviTech",
-      date: "Sep 2025",
-      link: "https://www.linkedin.com/posts/navin-jairam_learningjourney-fullstackdevelopment-webdev-activity-7383070289804439552-7xV3",
-      skills: ["Full Stack", "Web Development", "JavaScript"]
+  const [certifications, setCertifications] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const loadCertifications = async () => {
+      const data = await fetchCertifications()
+      setCertifications(data)
+      setLoading(false)
     }
-  ]
+    loadCertifications()
+  }, [])
+
+  if (loading) {
+    return <div>Loading certifications...</div>
+  }
 
   return (
     <div>
       <h1>Certifications</h1>
       <p>Professional certifications and credentials.</p>
 
-      {certifications.map((cert, idx) => (
-        <div key={idx}>
+      {certifications.map((cert) => (
+        <div key={cert.id}>
           <h2>{cert.name}</h2>
           <p><strong>Issuer:</strong> {cert.issuer}</p>
           <p><strong>Date:</strong> {cert.date}</p>
-          <p>
-            <a href={cert.link} target="_blank" rel="noopener noreferrer">
-              View Credential →
-            </a>
-          </p>
+          {cert.link && (
+            <p>
+              <a href={cert.link} target="_blank" rel="noopener noreferrer">
+                View Credential →
+              </a>
+            </p>
+          )}
           <div>
             <strong>Skills:</strong>
             <ul>
-              {cert.skills.map((skill, i) => (
-                <li key={i}>{skill}</li>
+              {cert.skills.map((skill, idx) => (
+                <li key={idx}>{skill}</li>
               ))}
             </ul>
           </div>

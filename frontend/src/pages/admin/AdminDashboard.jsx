@@ -9,15 +9,17 @@ function AdminDashboard() {
       <h1>Admin Dashboard</h1>
       <p>You are logged in!</p>
       <button onClick={handleLogout}>Logout</button>
-      <p>Features planned:</p>
+      
+      <hr />
+      
+      <h2>Content Management</h2>
+      <p>Coming soon: Manage skills, projects, experience, and certifications.</p>
+      
       <ul>
-        <li>Deploy history</li>
-        <li>Manual deploy</li>
-        <li>CloudWatch metrics</li>
-        <li>Site analytics</li>
-        <li>Skill tracker</li>
-        <li>Projects manager</li>
-        <li>Certifications manager</li>
+        <li>Skills Manager - Add, edit, delete skills</li>
+        <li>Projects Manager - Add, edit, delete projects</li>
+        <li>Experience Manager - Add, edit, delete experience</li>
+        <li>Certifications Manager - Add, edit, delete certifications</li>
       </ul>
     </div>
   )

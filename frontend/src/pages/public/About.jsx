@@ -12,6 +12,7 @@ function About() {
       </div>
       
       <hr />
+      
       <div>
         <p>
           <Link to="/experience">My experience</Link> |{' '}

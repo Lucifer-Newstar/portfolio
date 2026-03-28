@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 function Posts() {
   return (
     <div>
@@ -22,6 +24,15 @@ function Posts() {
       <p>
         📌 Visit my <a href="https://www.linkedin.com/in/navin-jairam" target="_blank" rel="noopener noreferrer">LinkedIn profile</a> for now.
       </p>
+      
+      <hr />
+      
+      <div>
+        <p>
+          <Link to="/skills">View my skills</Link> |{' '}
+          <Link to="/projects">See my projects</Link>
+        </p>
+      </div>
     </div>
   )
 }
