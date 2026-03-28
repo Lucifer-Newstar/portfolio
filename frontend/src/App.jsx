@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
+import ProtectedRoute from './components/ProtectedRoute'
 
 // Public pages
 import Home from './pages/public/Home'
@@ -11,8 +12,9 @@ import Projects from './pages/public/Projects'
 import Certifications from './pages/public/Certifications'
 import Posts from './pages/public/Posts'
 import Contact from './pages/public/Contact'
+import Callback from './pages/public/Callback'
 
-// Admin page (placeholder for now)
+// Admin page
 import AdminDashboard from './pages/admin/AdminDashboard'
 
 function App() {
@@ -31,9 +33,17 @@ function App() {
             <Route path="/certifications" element={<Certifications />} />
             <Route path="/posts" element={<Posts />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/callback" element={<Callback />} />
             
-            {/* Hidden Admin Route - Placeholder */}
-            <Route path="/lucifer-newstar_dashboard" element={<AdminDashboard />} />
+            {/* Protected Admin Route - Hidden */}
+            <Route 
+              path="/lucifer-newstar_dashboard" 
+              element={
+                <ProtectedRoute>
+                  <AdminDashboard />
+                </ProtectedRoute>
+              } 
+            />
           </Routes>
         </main>
         <Footer />
