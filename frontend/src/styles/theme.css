@@ -1,0 +1,86 @@
+/* ===== LIGHT MODE (Default) ===== */
+:root {
+  /* Backgrounds */
+  --bg-primary: #F8F9FA;
+  --bg-secondary: #FFFFFF;
+  --bg-card: #FFFFFF;
+  --bg-surface: #F1F3F5;
+  
+  /* Text */
+  --text-primary: #1A1A1A;
+  --text-secondary: #4B5563;
+  --text-muted: #6B7280;
+  
+  /* Borders */
+  --border: #E5E5E5;
+  --border-light: #F0F0F0;
+  
+  /* Accents - Royal/Gold Theme */
+  --primary: #D4AF37;
+  --primary-dark: #B8960C;
+  --primary-light: #F5E6B8;
+  --secondary: #6B21A8;
+  --accent: #8B5CF6;
+  
+  /* Status */
+  --success: #10B981;
+  --danger: #EF4444;
+  --warning: #F59E0B;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.05);
+  --shadow-gold: 0 4px 15px rgba(212, 175, 55, 0.2);
+  
+  /* Typography */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-mono: 'Fira Code', 'Courier New', monospace;
+  
+  /* Transitions */
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+}
+
+/* ===== DARK MODE ===== */
+[data-theme="dark"] {
+  /* Backgrounds */
+  --bg-primary: #0A0A0F;
+  --bg-secondary: #14141F;
+  --bg-card: #1A1A2E;
+  --bg-surface: #1F1F2E;
+  
+  /* Text */
+  --text-primary: #E5E5E5;
+  --text-secondary: #9CA3AF;
+  --text-muted: #6B7280;
+  
+  /* Borders */
+  --border: #2D2D3A;
+  --border-light: #252530;
+  
+  /* Accents - Futuristic/Cyberpunk Theme */
+  --primary: #00D4FF;
+  --primary-dark: #00B8E6;
+  --primary-light: #66E5FF;
+  --secondary: #A855F7;
+  --accent: #FF6B6B;
+  
+  /* Status */
+  --success: #10B981;
+  --danger: #FF6B6B;
+  --warning: #F59E0B;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5);
+  --shadow-neon: 0 0 15px rgba(0, 212, 255, 0.3);
+  
+  /* Typography */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-mono: 'Fira Code', 'Courier New', monospace;
+}
