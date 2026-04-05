@@ -5,7 +5,7 @@ function SkillsManager() {
   const [skills, setSkills] = useState([])
   const [loading, setLoading] = useState(true)
   const [editingId, setEditingId] = useState(null)
-  const [editForm, setEditForm] = useState({ name: '', category: '', level: '', order: 0 })
+  const [editForm, setEditForm] = useState({ name: '', category: '', level: 'Learning', order: 0 })
   const [newSkill, setNewSkill] = useState({
     id: '',
     name: '',
@@ -19,48 +19,75 @@ function SkillsManager() {
   }, [])
 
   const loadSkills = async () => {
-    const data = await fetchSkills()
-    setSkills(data)
-    setLoading(false)
+    console.log("=== LOADING SKILLS ===")
+    try {
+      const data = await fetchSkills()
+      console.log("Skills data received:", data)
+      setSkills(Array.isArray(data) ? data : [])
+      setLoading(false)
+    } catch (error) {
+      console.error('Error loading skills:', error)
+      setLoading(false)
+    }
   }
 
   const handleAddSkill = async (e) => {
     e.preventDefault()
+    console.log("=== ADDING SKILL ===")
+    console.log("New skill data:", newSkill)
     try {
-      await createSkill(newSkill)
+      const result = await createSkill(newSkill)
+      console.log("Create result:", result)
       setNewSkill({ id: '', name: '', category: '', level: 'Learning', order: 0 })
-      loadSkills()
+      await loadSkills()
       alert('Skill added!')
     } catch (error) {
+      console.error('Create error:', error)
       alert('Error: ' + error.message)
     }
   }
 
   const handleEditClick = (skill) => {
+    console.log("=== EDITING SKILL ===")
+    console.log("Skill to edit:", skill)
     setEditingId(skill.id)
     setEditForm({
-      name: skill.name,
-      category: skill.category,
-      level: skill.level,
-      order: skill.order
+      name: skill.name || '',
+      category: skill.category || '',
+      level: skill.level || 'Learning',
+      order: skill.order || 0
     })
   }
 
   const handleUpdate = async (id) => {
+    console.log("=== UPDATING SKILL ===")
+    console.log("Skill ID:", id)
+    console.log("Update data:", editForm)
     try {
-      await updateSkill(id, editForm)
+      const result = await updateSkill(id, editForm)
+      console.log("Update result:", result)
       setEditingId(null)
-      loadSkills()
+      await loadSkills()
       alert('Skill updated!')
     } catch (error) {
+      console.error('Update error:', error)
       alert('Error: ' + error.message)
     }
   }
 
   const handleDeleteSkill = async (id) => {
+    console.log("=== DELETING SKILL ===")
+    console.log("Skill ID:", id)
     if (confirm('Delete this skill?')) {
-      await deleteSkill(id)
-      loadSkills()
+      try {
+        const result = await deleteSkill(id)
+        console.log("Delete result:", result)
+        await loadSkills()
+        alert('Skill deleted!')
+      } catch (error) {
+        console.error('Delete error:', error)
+        alert('Error: ' + error.message)
+      }
     }
   }
 
@@ -72,52 +99,15 @@ function SkillsManager() {
       
       <h3>Add New Skill</h3>
       <form onSubmit={handleAddSkill}>
-        <div>
-          <label>ID (e.g., skill-aws):</label>
-          <input
-            type="text"
-            value={newSkill.id}
-            onChange={(e) => setNewSkill({...newSkill, id: e.target.value})}
-            required
-          />
-        </div>
-        <div>
-          <label>Name:</label>
-          <input
-            type="text"
-            value={newSkill.name}
-            onChange={(e) => setNewSkill({...newSkill, name: e.target.value})}
-            required
-          />
-        </div>
-        <div>
-          <label>Category:</label>
-          <input
-            type="text"
-            value={newSkill.category}
-            onChange={(e) => setNewSkill({...newSkill, category: e.target.value})}
-            required
-          />
-        </div>
-        <div>
-          <label>Level:</label>
-          <select
-            value={newSkill.level}
-            onChange={(e) => setNewSkill({...newSkill, level: e.target.value})}
-          >
-            <option>Learning</option>
-            <option>Intermediate</option>
-            <option>Advanced</option>
+        <div><label>ID:</label><input type="text" value={newSkill.id} onChange={(e) => setNewSkill({...newSkill, id: e.target.value})} required /></div>
+        <div><label>Name:</label><input type="text" value={newSkill.name} onChange={(e) => setNewSkill({...newSkill, name: e.target.value})} required /></div>
+        <div><label>Category:</label><input type="text" value={newSkill.category} onChange={(e) => setNewSkill({...newSkill, category: e.target.value})} required /></div>
+        <div><label>Level:</label>
+          <select value={newSkill.level} onChange={(e) => setNewSkill({...newSkill, level: e.target.value})}>
+            <option>Learning</option><option>Intermediate</option><option>Advanced</option>
           </select>
         </div>
-        <div>
-          <label>Order:</label>
-          <input
-            type="number"
-            value={newSkill.order}
-            onChange={(e) => setNewSkill({...newSkill, order: parseInt(e.target.value)})}
-          />
-        </div>
+        <div><label>Order:</label><input type="number" value={newSkill.order} onChange={(e) => setNewSkill({...newSkill, order: parseInt(e.target.value) || 0})} /></div>
         <button type="submit">Add Skill</button>
       </form>
       
@@ -125,55 +115,18 @@ function SkillsManager() {
       
       <h3>Existing Skills</h3>
       <table border="1" cellPadding="8">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Category</th>
-            <th>Level</th>
-            <th>Order</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
+        <thead><tr><th>ID</th><th>Name</th><th>Category</th><th>Level</th><th>Order</th><th>Actions</th></tr></thead>
         <tbody>
           {skills.map(skill => (
             <tr key={skill.id}>
               {editingId === skill.id ? (
                 <>
                   <td>{skill.id}</td>
-                  <td>
-                    <input
-                      value={editForm.name}
-                      onChange={(e) => setEditForm({...editForm, name: e.target.value})}
-                    />
-                  </td>
-                  <td>
-                    <input
-                      value={editForm.category}
-                      onChange={(e) => setEditForm({...editForm, category: e.target.value})}
-                    />
-                  </td>
-                  <td>
-                    <select
-                      value={editForm.level}
-                      onChange={(e) => setEditForm({...editForm, level: e.target.value})}
-                    >
-                      <option>Learning</option>
-                      <option>Intermediate</option>
-                      <option>Advanced</option>
-                    </select>
-                  </td>
-                  <td>
-                    <input
-                      type="number"
-                      value={editForm.order}
-                      onChange={(e) => setEditForm({...editForm, order: parseInt(e.target.value)})}
-                    />
-                  </td>
-                  <td>
-                    <button onClick={() => handleUpdate(skill.id)}>Save</button>
-                    <button onClick={() => setEditingId(null)}>Cancel</button>
-                  </td>
+                  <td><input value={editForm.name} onChange={(e) => setEditForm({...editForm, name: e.target.value})} /></td>
+                  <td><input value={editForm.category} onChange={(e) => setEditForm({...editForm, category: e.target.value})} /></td>
+                  <td><select value={editForm.level} onChange={(e) => setEditForm({...editForm, level: e.target.value})}><option>Learning</option><option>Intermediate</option><option>Advanced</option></select></td>
+                  <td><input type="number" value={editForm.order} onChange={(e) => setEditForm({...editForm, order: parseInt(e.target.value) || 0})} /></td>
+                  <td><button onClick={() => handleUpdate(skill.id)}>Save</button><button onClick={() => setEditingId(null)}>Cancel</button></td>
                 </>
               ) : (
                 <>
@@ -182,10 +135,7 @@ function SkillsManager() {
                   <td>{skill.category}</td>
                   <td>{skill.level}</td>
                   <td>{skill.order}</td>
-                  <td>
-                    <button onClick={() => handleEditClick(skill)}>Edit</button>
-                    <button onClick={() => handleDeleteSkill(skill.id)}>Delete</button>
-                  </td>
+                  <td><button onClick={() => handleEditClick(skill)}>Edit</button><button onClick={() => handleDeleteSkill(skill.id)}>Delete</button></td>
                 </>
               )}
             </tr>

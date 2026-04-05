@@ -1,37 +1,73 @@
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { fetchPosts } from '../../utils/api'
 
 function Posts() {
+  const [posts, setPosts] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const loadPosts = async () => {
+      const data = await fetchPosts()
+      setPosts(data)
+      setLoading(false)
+    }
+    loadPosts()
+  }, [])
+
+  if (loading) return <div className="container text-center mt-4">Loading posts...</div>
+
+  const manualPosts = posts.filter(p => p.type === 'manual')
+  const githubPosts = posts.filter(p => p.type === 'github')
+
   return (
-    <div>
-      <h1>Posts</h1>
-      <p>My latest thoughts, learnings, and updates from LinkedIn.</p>
+    <div className="container">
+      <h1 className="text-center">Posts & Updates</h1>
+      <p className="text-center">My latest thoughts, learnings, and GitHub activity.</p>
       
-      <div>
-        <p><em>LinkedIn feed integration coming soon.</em></p>
-        <p>This page will automatically display my recent LinkedIn posts.</p>
-      </div>
+      {githubPosts.length > 0 && (
+        <>
+          <h2>📊 GitHub Activity</h2>
+          <div className="posts-grid">
+            {githubPosts.map(post => (
+              <div key={post.id} className="post-card">
+                <h3>{post.title}</h3>
+                <p>{post.content}</p>
+                <small>{new Date(post.date).toLocaleDateString()}</small>
+                {post.link && <a href={post.link} target="_blank" rel="noopener noreferrer">View on GitHub →</a>}
+              </div>
+            ))}
+          </div>
+        </>
+      )}
       
-      <div>
-        <h3>Preview of what's coming:</h3>
-        <ul>
-          <li>📝 Latest LinkedIn articles and updates</li>
-          <li>🏆 Certifications and achievements</li>
-          <li>🚀 Project launches and milestones</li>
-          <li>💡 Cloud & DevOps learnings</li>
-        </ul>
-      </div>
+      {manualPosts.length > 0 && (
+        <>
+          <h2>📝 Recent Updates</h2>
+          <div className="posts-grid">
+            {manualPosts.map(post => (
+              <div key={post.id} className="post-card">
+                <h3>{post.title}</h3>
+                <p>{post.content}</p>
+                <small>{new Date(post.date).toLocaleDateString()}</small>
+                {post.link && <a href={post.link} target="_blank" rel="noopener noreferrer">Read more →</a>}
+              </div>
+            ))}
+          </div>
+        </>
+      )}
       
-      <p>
-        📌 Visit my <a href="https://www.linkedin.com/in/navin-jairam" target="_blank" rel="noopener noreferrer">LinkedIn profile</a> for now.
-      </p>
+      {posts.length === 0 && (
+        <div className="card text-center mt-4">
+          <p>No posts yet. Add posts from the admin dashboard or sync GitHub activity.</p>
+        </div>
+      )}
       
       <hr />
-      
-      <div>
-        <p>
-          <Link to="/skills">View my skills</Link> |{' '}
-          <Link to="/projects">See my projects</Link>
-        </p>
+      <div className="text-center">
+        <Link to="/skills" className="btn btn-secondary">View my skills</Link>
+        {' '}
+        <Link to="/projects" className="btn btn-secondary">See my projects</Link>
       </div>
     </div>
   )

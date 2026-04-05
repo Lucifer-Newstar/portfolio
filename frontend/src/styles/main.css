@@ -449,3 +449,43 @@ th {
 .mb-2 { margin-bottom: var(--spacing-sm); }
 .mb-3 { margin-bottom: var(--spacing-md); }
 .mb-4 { margin-bottom: var(--spacing-lg); }
+
+/* Posts Page */
+.posts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-md);
+}
+
+.post-card {
+  background: var(--dark-surface);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-md);
+  transition: transform 0.3s ease;
+}
+
+.post-card:hover {
+  transform: translateY(-4px);
+}
+
+.post-card h3 {
+  margin-top: 0;
+  color: var(--primary);
+}
+
+.post-card p {
+  margin: var(--spacing-sm) 0;
+}
+
+.post-card small {
+  color: var(--text-muted);
+  display: block;
+  margin: var(--spacing-xs) 0;
+}
+
+.post-card a {
+  display: inline-block;
+  margin-top: var(--spacing-sm);
+  color: var(--accent);
+}
