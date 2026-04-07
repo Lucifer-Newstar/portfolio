@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { fetchSkills } from '../../utils/api'
+import LinkedDataModal from '../../components/LinkedDataModal'
 
 function Skills() {
   const [skills, setSkills] = useState([])
   const [loading, setLoading] = useState(true)
+  const [modalOpen, setModalOpen] = useState(false)
+  const [selectedItem, setSelectedItem] = useState({ type: '', id: '', name: '' })
 
   useEffect(() => {
     const loadSkills = async () => {
@@ -14,6 +17,15 @@ function Skills() {
     }
     loadSkills()
   }, [])
+
+  const handleSkillClick = (skill) => {
+    setSelectedItem({
+      type: 'skill',
+      id: skill.id,
+      name: skill.name
+    })
+    setModalOpen(true)
+  }
 
   if (loading) {
     return <div className="container text-center mt-4">Loading skills...</div>
@@ -30,7 +42,7 @@ function Skills() {
   return (
     <div className="container">
       <h1 className="text-center">Skills & Technologies</h1>
-      <p className="text-center">Here's what I'm learning and building with.</p>
+      <p className="text-center">Click on any skill to see related projects and certifications.</p>
       
       <div className="skills-grid">
         {Object.entries(groupedSkills).map(([category, categorySkills]) => (
@@ -38,7 +50,11 @@ function Skills() {
             <h2>{category}</h2>
             <div className="skill-list">
               {categorySkills.map((skill) => (
-                <span key={skill.id} className="skill-tag">
+                <span 
+                  key={skill.id} 
+                  className="skill-tag clickable"
+                  onClick={() => handleSkillClick(skill)}
+                >
                   {skill.name} {skill.level !== 'Advanced' && `(${skill.level})`}
                 </span>
               ))}
@@ -56,6 +72,14 @@ function Skills() {
         {' '}
         <Link to="/certifications" className="btn btn-secondary">View certifications</Link>
       </div>
+      
+      <LinkedDataModal
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+        itemType={selectedItem.type}
+        itemId={selectedItem.id}
+        itemName={selectedItem.name}
+      />
     </div>
   )
 }

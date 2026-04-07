@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { fetchExperience } from '../../utils/api'
+import LinkedDataModal from '../../components/LinkedDataModal'
 
 function Experience() {
   const [experiences, setExperiences] = useState([])
   const [loading, setLoading] = useState(true)
+  const [modalOpen, setModalOpen] = useState(false)
+  const [selectedItem, setSelectedItem] = useState({ type: '', id: '', name: '' })
 
   useEffect(() => {
     const loadExperience = async () => {
@@ -14,6 +17,15 @@ function Experience() {
     }
     loadExperience()
   }, [])
+
+  const handleSkillClick = (skillName) => {
+    setSelectedItem({
+      type: 'skill',
+      id: skillName.toLowerCase().replace(/\s/g, '-'),
+      name: skillName
+    })
+    setModalOpen(true)
+  }
 
   const parseDescription = (description) => {
     if (Array.isArray(description)) return description
@@ -34,7 +46,7 @@ function Experience() {
   return (
     <div className="container">
       <h1 className="text-center">Experience</h1>
-      <p className="text-center">My professional journey in DevOps, Cloud, and leadership.</p>
+      <p className="text-center">Click on any skill to see related projects and certifications.</p>
       
       <div className="timeline">
         {experiences.map((exp) => (
@@ -51,7 +63,13 @@ function Experience() {
               <strong>Skills used:</strong>
               <div className="skill-list mt-1">
                 {exp.skills?.map((skill, idx) => (
-                  <span key={idx} className="skill-tag">{skill}</span>
+                  <span 
+                    key={idx} 
+                    className="skill-tag clickable"
+                    onClick={() => handleSkillClick(skill)}
+                  >
+                    {skill}
+                  </span>
                 ))}
               </div>
             </div>
@@ -68,6 +86,14 @@ function Experience() {
         {' '}
         <Link to="/certifications" className="btn btn-secondary">Check certifications</Link>
       </div>
+      
+      <LinkedDataModal
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+        itemType={selectedItem.type}
+        itemId={selectedItem.id}
+        itemName={selectedItem.name}
+      />
     </div>
   )
 }

@@ -7,12 +7,23 @@ function ThemeToggle() {
   const isDark = theme === 'dark'
 
   return (
-    <Within
-      duration={750}
-      toggled={isDark}
-      onToggle={toggleTheme}
-      className="theme-toggle-button"
-    />
+    <div className="theme-toggle-wrapper">
+      <Within
+        duration={750}
+        toggled={isDark}
+        onToggle={toggleTheme}
+        className="theme-toggle-button"
+        style={{
+          fontSize: '2.5rem',
+          width: '3rem',
+          height: '3rem',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          color: '#9b8140'
+        }}
+      />
+    </div>
   )
 }
 

@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { fetchCertifications } from '../../utils/api'
+import LinkedDataModal from '../../components/LinkedDataModal'
 
 function Certifications() {
   const [certifications, setCertifications] = useState([])
   const [loading, setLoading] = useState(true)
+  const [modalOpen, setModalOpen] = useState(false)
+  const [selectedItem, setSelectedItem] = useState({ type: '', id: '', name: '' })
 
   useEffect(() => {
     const loadCertifications = async () => {
@@ -15,6 +18,15 @@ function Certifications() {
     loadCertifications()
   }, [])
 
+  const handleSkillClick = (skillName) => {
+    setSelectedItem({
+      type: 'skill',
+      id: skillName.toLowerCase().replace(/\s/g, '-'),
+      name: skillName
+    })
+    setModalOpen(true)
+  }
+
   if (loading) {
     return <div className="container text-center mt-4">Loading certifications...</div>
   }
@@ -22,7 +34,7 @@ function Certifications() {
   return (
     <div className="container">
       <h1 className="text-center">Certifications</h1>
-      <p className="text-center">Professional certifications and credentials.</p>
+      <p className="text-center">Click on any skill to see related projects and certifications.</p>
       
       <div className="certs-grid">
         {certifications.map((cert) => (
@@ -34,7 +46,13 @@ function Certifications() {
               <strong>Skills:</strong>
               <div className="skill-list mt-1">
                 {cert.skills?.map((skill, idx) => (
-                  <span key={idx} className="skill-tag">{skill}</span>
+                  <span 
+                    key={idx} 
+                    className="skill-tag clickable"
+                    onClick={() => handleSkillClick(skill)}
+                  >
+                    {skill}
+                  </span>
                 ))}
               </div>
             </div>
@@ -56,6 +74,14 @@ function Certifications() {
         {' '}
         <Link to="/posts" className="btn btn-secondary">Read my posts</Link>
       </div>
+      
+      <LinkedDataModal
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+        itemType={selectedItem.type}
+        itemId={selectedItem.id}
+        itemName={selectedItem.name}
+      />
     </div>
   )
 }
