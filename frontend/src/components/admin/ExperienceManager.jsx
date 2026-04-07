@@ -8,14 +8,22 @@ function ExperienceManager() {
   const [editForm, setEditForm] = useState({ title: '', organization: '', period: '', location: '', description: '', skills: '', order: 0 })
   const [newExp, setNewExp] = useState({ id: '', title: '', organization: '', period: '', location: '', description: '', skills: '', order: 0 })
 
-  useEffect(() => { loadExperiences() }, [])
+  useEffect(() => {
+    const loadExperiences = async () => {
+      try {
+        const data = await fetchExperience()
+        setExperiences(Array.isArray(data) ? data : [])
+      } finally {
+        setLoading(false)
+      }
+    }
 
-  const loadExperiences = async () => {
-    try {
-      const data = await fetchExperience()
-      setExperiences(Array.isArray(data) ? data : [])
-      setLoading(false)
-    } catch (error) { setLoading(false) }
+    loadExperiences()
+  }, [])
+
+  const refreshExperiences = async () => {
+    const data = await fetchExperience()
+    setExperiences(Array.isArray(data) ? data : [])
   }
 
   const handleAdd = async (e) => {
@@ -24,7 +32,7 @@ function ExperienceManager() {
       const toAdd = { ...newExp, description: newExp.description.split('\n').filter(l => l.trim()), skills: newExp.skills.split(',').map(s => s.trim()) }
       await createExperience(toAdd)
       setNewExp({ id: '', title: '', organization: '', period: '', location: '', description: '', skills: '', order: 0 })
-      await loadExperiences()
+      await refreshExperiences()
       alert('Experience added!')
     } catch (error) { alert('Error: ' + error.message) }
   }
@@ -47,7 +55,7 @@ function ExperienceManager() {
       const updates = { ...editForm, description: editForm.description.split('\n').filter(l => l.trim()), skills: editForm.skills.split(',').map(s => s.trim()) }
       await updateExperience(id, updates)
       setEditingId(null)
-      await loadExperiences()
+      await refreshExperiences()
       alert('Experience updated!')
     } catch (error) { alert('Error: ' + error.message) }
   }
@@ -55,7 +63,7 @@ function ExperienceManager() {
   const handleDelete = async (id) => {
     if (confirm('Delete this experience?')) {
       await deleteExperience(id)
-      await loadExperiences()
+      await refreshExperiences()
     }
   }
 

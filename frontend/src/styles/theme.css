@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;700&display=swap');
+
 /* ===== LIGHT MODE (Default) ===== */
 :root {
   /* Backgrounds */
@@ -83,4 +85,234 @@
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-serif: 'Playfair Display', Georgia, serif;
   --font-mono: 'Fira Code', 'Courier New', monospace;
+}
+
+/* ===== DARK MODE - PAGE VARIATIONS ===== */
+[data-theme="dark"][data-page="hero"] {
+  --primary: #00D4FF;
+  --bg-effect: radial-gradient(circle at center, #00D4FF20, transparent);
+}
+
+[data-theme="dark"][data-page="skills"] {
+  --primary: #A855F7;
+  --card-bg: rgba(26, 26, 46, 0.8);
+  --effect: repeating-linear-gradient(0deg, #00D4FF10 0px, #00D4FF10 1px, transparent 1px, transparent 20px);
+}
+
+[data-theme="dark"][data-page="projects"] {
+  --primary: #FF6B6B;
+  --card-bg: rgba(20, 20, 31, 0.9);
+  --effect: linear-gradient(45deg, #00D4FF05, #A855F705);
+}
+
+[data-theme="dark"][data-page="experience"] {
+  --primary: #00D4FF;
+  --card-bg: rgba(26, 26, 46, 0.7);
+  --effect: repeating-linear-gradient(90deg, #00D4FF10 0px, #00D4FF10 2px, transparent 2px, transparent 30px);
+}
+
+[data-theme="dark"][data-page="certifications"] {
+  --primary: #A855F7;
+  --card-bg: rgba(20, 20, 31, 0.8);
+  --effect: radial-gradient(circle at 20% 30%, #A855F710, transparent);
+}
+
+[data-theme="dark"][data-page="posts"] {
+  --primary: #FF6B6B;
+  --card-bg: rgba(26, 26, 46, 0.6);
+  --effect: linear-gradient(135deg, #00D4FF05, #FF6B6B05);
+}
+
+[data-theme="dark"][data-page="contact"] {
+  --primary: #00D4FF;
+  --card-bg: rgba(20, 20, 31, 0.7);
+  --effect: repeating-linear-gradient(45deg, #00D4FF08 0px, #00D4FF08 1px, transparent 1px, transparent 10px);
+}
+
+/* ===== LIGHT MODE - PAGE VARIATIONS ===== */
+[data-theme="light"][data-page="hero"] {
+  --primary: #D4AF37;
+  --bg-effect: radial-gradient(circle at center, #D4AF3710, transparent);
+}
+
+[data-theme="light"][data-page="skills"] {
+  --primary: #8B5CF6;
+  --card-bg: rgba(255, 255, 255, 0.9);
+  --effect: repeating-linear-gradient(0deg, #D4AF3710 0px, #D4AF3710 1px, transparent 1px, transparent 20px);
+}
+
+[data-theme="light"][data-page="projects"] {
+  --primary: #EC4899;
+  --card-bg: rgba(255, 255, 255, 0.95);
+  --effect: linear-gradient(45deg, #D4AF3705, #8B5CF605);
+}
+
+[data-theme="light"][data-page="experience"] {
+  --primary: #D4AF37;
+  --card-bg: rgba(255, 255, 255, 0.9);
+  --effect: repeating-linear-gradient(90deg, #D4AF3708 0px, #D4AF3708 2px, transparent 2px, transparent 30px);
+}
+
+[data-theme="light"][data-page="certifications"] {
+  --primary: #8B5CF6;
+  --card-bg: rgba(255, 255, 255, 0.95);
+  --effect: radial-gradient(circle at 20% 30%, #D4AF3708, transparent);
+}
+
+[data-theme="light"][data-page="posts"] {
+  --primary: #EC4899;
+  --card-bg: rgba(255, 255, 255, 0.9);
+  --effect: linear-gradient(135deg, #D4AF3705, #EC489905);
+}
+
+[data-theme="light"][data-page="contact"] {
+  --primary: #D4AF37;
+  --card-bg: rgba(255, 255, 255, 0.95);
+  --effect: repeating-linear-gradient(45deg, #D4AF3705 0px, #D4AF3705 1px, transparent 1px, transparent 10px);
+}
+
+/* ===== PAGE-SPECIFIC THEME VARIABLES ===== */
+
+/* Dark Mode - Page Variations */
+[data-theme="dark"][data-page="hero"] {
+  --primary: #00D4FF;
+  --secondary: #A855F7;
+}
+
+[data-theme="dark"][data-page="skills"] {
+  --primary: #A855F7;
+  --secondary: #00D4FF;
+  --card-effect: repeating-linear-gradient(0deg, #00D4FF10 0px, #00D4FF10 1px, transparent 1px, transparent 20px);
+}
+
+[data-theme="dark"][data-page="projects"] {
+  --primary: #FF6B6B;
+  --secondary: #00D4FF;
+  --card-effect: linear-gradient(45deg, #00D4FF05, #A855F705);
+}
+
+[data-theme="dark"][data-page="experience"] {
+  --primary: #00D4FF;
+  --secondary: #A855F7;
+  --card-effect: repeating-linear-gradient(90deg, #00D4FF10 0px, #00D4FF10 2px, transparent 2px, transparent 30px);
+}
+
+[data-theme="dark"][data-page="certifications"] {
+  --primary: #A855F7;
+  --secondary: #FF6B6B;
+  --card-effect: radial-gradient(circle at 20% 30%, #A855F710, transparent);
+}
+
+[data-theme="dark"][data-page="posts"] {
+  --primary: #FF6B6B;
+  --secondary: #A855F7;
+  --card-effect: linear-gradient(135deg, #00D4FF05, #FF6B6B05);
+}
+
+[data-theme="dark"][data-page="contact"] {
+  --primary: #00D4FF;
+  --secondary: #FF6B6B;
+  --card-effect: repeating-linear-gradient(45deg, #00D4FF08 0px, #00D4FF08 1px, transparent 1px, transparent 10px);
+}
+
+/* Light Mode - Page Variations */
+[data-theme="light"][data-page="hero"] {
+  --primary: #D4AF37;
+  --secondary: #8B5CF6;
+}
+
+[data-theme="light"][data-page="skills"] {
+  --primary: #8B5CF6;
+  --secondary: #D4AF37;
+  --card-effect: repeating-linear-gradient(0deg, #D4AF3710 0px, #D4AF3710 1px, transparent 1px, transparent 20px);
+}
+
+[data-theme="light"][data-page="projects"] {
+  --primary: #EC4899;
+  --secondary: #D4AF37;
+  --card-effect: linear-gradient(45deg, #D4AF3705, #8B5CF605);
+}
+
+[data-theme="light"][data-page="experience"] {
+  --primary: #D4AF37;
+  --secondary: #8B5CF6;
+  --card-effect: repeating-linear-gradient(90deg, #D4AF3708 0px, #D4AF3708 2px, transparent 2px, transparent 30px);
+}
+
+[data-theme="light"][data-page="certifications"] {
+  --primary: #8B5CF6;
+  --secondary: #D4AF37;
+  --card-effect: radial-gradient(circle at 20% 30%, #D4AF3708, transparent);
+}
+
+[data-theme="light"][data-page="posts"] {
+  --primary: #EC4899;
+  --secondary: #D4AF37;
+  --card-effect: linear-gradient(135deg, #D4AF3705, #EC489905);
+}
+
+[data-theme="light"][data-page="contact"] {
+  --primary: #D4AF37;
+  --secondary: #EC4899;
+  --card-effect: repeating-linear-gradient(45deg, #D4AF3705 0px, #D4AF3705 1px, transparent 1px, transparent 10px);
+}
+
+[data-theme="dark"][data-page="devops"] {
+  --primary: #69e2ff;
+  --secondary: #2ce5a4;
+}
+
+[data-theme="light"][data-page="devops"] {
+  --primary: #bd6b36;
+  --secondary: #3456d1;
+}
+
+:root {
+  --bg-primary: #f6efe5;
+  --bg-secondary: rgba(255, 251, 247, 0.74);
+  --bg-card: rgba(255, 252, 248, 0.82);
+  --bg-card-strong: rgba(255, 250, 244, 0.96);
+  --bg-surface: rgba(255, 245, 234, 0.88);
+  --text-primary: #20170f;
+  --text-secondary: #5e4f42;
+  --text-muted: #7a6858;
+  --border: rgba(122, 79, 47, 0.14);
+  --border-strong: rgba(122, 79, 47, 0.22);
+  --primary: #bd6b36;
+  --primary-dark: #944c22;
+  --secondary: #3456d1;
+  --accent: #d94d78;
+  --success: #17825f;
+  --shadow-sm: 0 8px 24px rgba(106, 70, 34, 0.08);
+  --shadow-md: 0 18px 50px rgba(106, 70, 34, 0.12);
+  --shadow-lg: 0 26px 90px rgba(106, 70, 34, 0.18);
+  --font-sans: 'Space Grotesk', sans-serif;
+  --font-display: 'Fraunces', serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+  --font-reading: 'Fraunces', serif;
+  --transition-fast: 180ms ease;
+  --transition-normal: 320ms ease;
+  --transition-slow: 520ms ease;
+}
+
+[data-theme="dark"] {
+  --bg-primary: #060b16;
+  --bg-secondary: rgba(8, 17, 32, 0.74);
+  --bg-card: rgba(10, 18, 36, 0.72);
+  --bg-card-strong: rgba(8, 19, 38, 0.92);
+  --bg-surface: rgba(14, 25, 47, 0.82);
+  --text-primary: #ebf6ff;
+  --text-secondary: #9eb4cf;
+  --text-muted: #6b7f99;
+  --border: rgba(91, 144, 214, 0.18);
+  --border-strong: rgba(91, 144, 214, 0.3);
+  --primary: #69e2ff;
+  --primary-dark: #20bfdc;
+  --secondary: #9c7cff;
+  --accent: #ff647c;
+  --success: #2ce5a4;
+  --shadow-sm: 0 8px 24px rgba(0, 0, 0, 0.24);
+  --shadow-md: 0 18px 50px rgba(0, 0, 0, 0.38);
+  --shadow-lg: 0 26px 90px rgba(0, 0, 0, 0.55);
+  --font-reading: 'Space Grotesk', sans-serif;
 }

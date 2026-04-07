@@ -11,45 +11,40 @@ function LinkedDataModal({ isOpen, onClose, itemType, itemId, itemName }) {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    if (isOpen) {
-      loadRelatedData()
-    }
-  }, [isOpen, itemType, itemId])
+    if (!isOpen) return
 
-  const loadRelatedData = async () => {
-    setLoading(true)
-    
-    // Fetch all data
-    const allProjects = await fetchProjects()
-    const allCerts = await fetchCertifications()
-    const allExp = await fetchExperience()
-    
-    let relatedProjectIds = []
-    let relatedCertIds = []
-    let relatedExpIds = []
-    
-    // Get relationships based on item type
-    if (itemType === 'skill') {
-      const relations = skillRelations[itemName] || { projects: [], certifications: [], experience: [] }
-      relatedProjectIds = relations.projects
-      relatedCertIds = relations.certifications
-      relatedExpIds = relations.experience
-    } else if (itemType === 'project') {
-      const relations = projectRelations[itemId] || { skills: [], certifications: [] }
-      relatedCertIds = relations.certifications
-      // For projects, also find skills and then their related items
-    } else if (itemType === 'certification') {
-      const relations = certificationRelations[itemId] || { skills: [], projects: [] }
-      relatedProjectIds = relations.projects
+    const loadRelatedData = async () => {
+      setLoading(true)
+      
+      const allProjects = await fetchProjects()
+      const allCerts = await fetchCertifications()
+      const allExp = await fetchExperience()
+      
+      let relatedProjectIds = []
+      let relatedCertIds = []
+      let relatedExpIds = []
+      
+      if (itemType === 'skill') {
+        const relations = skillRelations[itemName] || { projects: [], certifications: [], experience: [] }
+        relatedProjectIds = relations.projects
+        relatedCertIds = relations.certifications
+        relatedExpIds = relations.experience
+      } else if (itemType === 'project') {
+        const relations = projectRelations[itemId] || { skills: [], certifications: [] }
+        relatedCertIds = relations.certifications
+      } else if (itemType === 'certification') {
+        const relations = certificationRelations[itemId] || { skills: [], projects: [] }
+        relatedProjectIds = relations.projects
+      }
+      
+      setProjects(allProjects.filter((project) => relatedProjectIds.includes(project.id)))
+      setCertifications(allCerts.filter((cert) => relatedCertIds.includes(cert.id)))
+      setExperience(allExp.filter((exp) => relatedExpIds.includes(exp.id)))
+      setLoading(false)
     }
-    
-    // Filter items
-    setProjects(allProjects.filter(p => relatedProjectIds.includes(p.id)))
-    setCertifications(allCerts.filter(c => relatedCertIds.includes(c.id)))
-    setExperience(allExp.filter(e => relatedExpIds.includes(e.id)))
-    
-    setLoading(false)
-  }
+
+    loadRelatedData()
+  }, [isOpen, itemType, itemId, itemName])
 
   if (!isOpen) return null
 

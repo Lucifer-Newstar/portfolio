@@ -1,248 +1,92 @@
-const API_BASE_URL = "https://6e2n1oy6k9.execute-api.us-east-1.amazonaws.com/prod"
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://6e2n1oy6k9.execute-api.us-east-1.amazonaws.com/prod'
+const REQUEST_TIMEOUT_MS = 12000
 
-// ========== HELPER FUNCTION ==========
-const handleResponse = async (response) => {
-  const result = await response.json()
-  console.log("API Response:", result)
-  
-  // Handle Lambda proxy integration response
-  if (result.statusCode === 200 || result.statusCode === 201) {
-    if (result.body) {
+function parseApiPayload(result) {
+  if (result?.body) {
+    try {
       return JSON.parse(result.body)
+    } catch {
+      return result.body
     }
-    return result
   }
-  
-  // Handle error responses
-  if (result.statusCode >= 400) {
-    const error = result.body ? JSON.parse(result.body) : result
-    throw new Error(error.error || error.message || "Request failed")
-  }
-  
   return result
 }
 
-// ========== SKILLS ==========
-export const fetchSkills = async () => {
-  console.log("Fetching skills...")
-  try {
-    const response = await fetch(`${API_BASE_URL}/skills`)
-    const result = await response.json()
-    console.log("Skills fetch result:", result)
-    
-    // Handle Lambda response format
-    if (result.body) {
-      return JSON.parse(result.body)
+async function handleResponse(response) {
+  const rawText = await response.text()
+  let result = {}
+
+  if (rawText) {
+    try {
+      result = JSON.parse(rawText)
+    } catch {
+      result = { message: rawText }
     }
+  }
+  const parsed = parseApiPayload(result)
+
+  if (!response.ok || result?.statusCode >= 400) {
+    const message = parsed?.error || parsed?.message || 'Request failed'
+    throw new Error(message)
+  }
+
+  return parsed
+}
+
+async function request(path, options = {}) {
+  const controller = new AbortController()
+  const timeoutId = window.setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS)
+
+  try {
+    const response = await fetch(`${API_BASE_URL}${path}`, {
+      ...options,
+      headers: {
+        'Content-Type': 'application/json',
+        ...(options.headers || {}),
+      },
+      signal: controller.signal,
+    })
+
+    return await handleResponse(response)
+  } finally {
+    window.clearTimeout(timeoutId)
+  }
+}
+
+async function fetchCollection(path) {
+  try {
+    const result = await request(path, { method: 'GET' })
     return Array.isArray(result) ? result : []
-  } catch (error) {
-    console.error("Fetch skills error:", error)
+  } catch {
     return []
   }
 }
 
-export const createSkill = async (skill) => {
-  console.log("Creating skill:", skill)
-  try {
-    const response = await fetch(`${API_BASE_URL}/skills`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(skill)
-    })
-    return await handleResponse(response)
-  } catch (error) {
-    console.error("Create skill error:", error)
-    throw error
-  }
-}
+export const fetchSkills = async () => fetchCollection('/skills')
+export const createSkill = async (skill) => request('/skills', { method: 'POST', body: JSON.stringify(skill) })
+export const updateSkill = async (id, updates) => request(`/skills/${id}`, { method: 'PUT', body: JSON.stringify(updates) })
+export const deleteSkill = async (id) => request(`/skills/${id}`, { method: 'DELETE' })
 
-export const updateSkill = async (id, updates) => {
-  console.log("Updating skill - ID:", id, "Updates:", updates)
-  try {
-    const response = await fetch(`${API_BASE_URL}/skills/${id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(updates)
-    })
-    return await handleResponse(response)
-  } catch (error) {
-    console.error("Update skill error:", error)
-    throw error
-  }
-}
-
-export const deleteSkill = async (id) => {
-  console.log("Deleting skill - ID:", id)
-  try {
-    const response = await fetch(`${API_BASE_URL}/skills/${id}`, {
-      method: 'DELETE'
-    })
-    return await handleResponse(response)
-  } catch (error) {
-    console.error("Delete skill error:", error)
-    throw error
-  }
-}
-
-// ========== PROJECTS ==========
 export const fetchProjects = async () => {
-  try {
-    // For admin dashboard, add ?admin=true to see all projects
-    const isAdmin = window.location.pathname.includes('lucifer-newstar_dashboard')
-    const url = isAdmin ? `${API_BASE_URL}/projects?admin=true` : `${API_BASE_URL}/projects`
-    const response = await fetch(url)
-    const result = await response.json()
-    if (result.body) return JSON.parse(result.body)
-    return Array.isArray(result) ? result : []
-  } catch (error) {
-    console.error("Fetch projects error:", error)
-    return []
-  }
+  const isAdmin = window.location.pathname.includes('lucifer-newstar_dashboard')
+  return fetchCollection(isAdmin ? '/projects?admin=true' : '/projects')
 }
+export const createProject = async (project) => request('/projects', { method: 'POST', body: JSON.stringify(project) })
+export const updateProject = async (id, updates) => request(`/projects/${id}`, { method: 'PUT', body: JSON.stringify(updates) })
+export const deleteProject = async (id) => request(`/projects/${id}`, { method: 'DELETE' })
 
-export const createProject = async (project) => {
-  const response = await fetch(`${API_BASE_URL}/projects`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(project)
-  })
-  return handleResponse(response)
-}
+export const fetchExperience = async () => fetchCollection('/experience')
+export const createExperience = async (exp) => request('/experience', { method: 'POST', body: JSON.stringify(exp) })
+export const updateExperience = async (id, updates) => request(`/experience/${id}`, { method: 'PUT', body: JSON.stringify(updates) })
+export const deleteExperience = async (id) => request(`/experience/${id}`, { method: 'DELETE' })
 
-export const updateProject = async (id, updates) => {
-  const response = await fetch(`${API_BASE_URL}/projects/${id}`, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(updates)
-  })
-  return handleResponse(response)
-}
+export const fetchCertifications = async () => fetchCollection('/certifications')
+export const createCertification = async (cert) => request('/certifications', { method: 'POST', body: JSON.stringify(cert) })
+export const updateCertification = async (id, updates) => request(`/certifications/${id}`, { method: 'PUT', body: JSON.stringify(updates) })
+export const deleteCertification = async (id) => request(`/certifications/${id}`, { method: 'DELETE' })
 
-export const deleteProject = async (id) => {
-  const response = await fetch(`${API_BASE_URL}/projects/${id}`, {
-    method: 'DELETE'
-  })
-  return handleResponse(response)
-}
-
-// ========== EXPERIENCE ==========
-export const fetchExperience = async () => {
-  try {
-    const response = await fetch(`${API_BASE_URL}/experience`)
-    const result = await response.json()
-    if (result.body) return JSON.parse(result.body)
-    return Array.isArray(result) ? result : []
-  } catch (error) {
-    console.error("Fetch experience error:", error)
-    return []
-  }
-}
-
-export const createExperience = async (exp) => {
-  const response = await fetch(`${API_BASE_URL}/experience`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(exp)
-  })
-  return handleResponse(response)
-}
-
-export const updateExperience = async (id, updates) => {
-  const response = await fetch(`${API_BASE_URL}/experience/${id}`, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(updates)
-  })
-  return handleResponse(response)
-}
-
-export const deleteExperience = async (id) => {
-  const response = await fetch(`${API_BASE_URL}/experience/${id}`, {
-    method: 'DELETE'
-  })
-  return handleResponse(response)
-}
-
-// ========== CERTIFICATIONS ==========
-export const fetchCertifications = async () => {
-  try {
-    const response = await fetch(`${API_BASE_URL}/certifications`)
-    const result = await response.json()
-    if (result.body) return JSON.parse(result.body)
-    return Array.isArray(result) ? result : []
-  } catch (error) {
-    console.error("Fetch certifications error:", error)
-    return []
-  }
-}
-
-export const createCertification = async (cert) => {
-  const response = await fetch(`${API_BASE_URL}/certifications`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(cert)
-  })
-  return handleResponse(response)
-}
-
-export const updateCertification = async (id, updates) => {
-  const response = await fetch(`${API_BASE_URL}/certifications/${id}`, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(updates)
-  })
-  return handleResponse(response)
-}
-
-export const deleteCertification = async (id) => {
-  const response = await fetch(`${API_BASE_URL}/certifications/${id}`, {
-    method: 'DELETE'
-  })
-  return handleResponse(response)
-}
-
-// ========== POSTS ==========
-export const fetchPosts = async () => {
-  try {
-    const response = await fetch(`${API_BASE_URL}/posts`)
-    const result = await response.json()
-    if (result.body) return JSON.parse(result.body)
-    return Array.isArray(result) ? result : []
-  } catch (error) {
-    console.error("Fetch posts error:", error)
-    return []
-  }
-}
-
-export const syncGitHubActivity = async () => {
-  const response = await fetch(`${API_BASE_URL}/posts/sync-github`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' }
-  })
-  return handleResponse(response)
-}
-
-export const createPost = async (post) => {
-  const response = await fetch(`${API_BASE_URL}/posts`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(post)
-  })
-  return handleResponse(response)
-}
-
-export const updatePost = async (id, updates) => {
-  const response = await fetch(`${API_BASE_URL}/posts/${id}`, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(updates)
-  })
-  return handleResponse(response)
-}
-
-export const deletePost = async (id) => {
-  const response = await fetch(`${API_BASE_URL}/posts/${id}`, {
-    method: 'DELETE'
-  })
-  return handleResponse(response)
-}
+export const fetchPosts = async () => fetchCollection('/posts')
+export const syncGitHubActivity = async () => request('/posts/sync-github', { method: 'POST' })
+export const createPost = async (post) => request('/posts', { method: 'POST', body: JSON.stringify(post) })
+export const updatePost = async (id, updates) => request(`/posts/${id}`, { method: 'PUT', body: JSON.stringify(updates) })
+export const deletePost = async (id) => request(`/posts/${id}`, { method: 'DELETE' })

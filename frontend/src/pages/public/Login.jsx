@@ -9,22 +9,21 @@ function Login() {
   const [mfaCode, setMfaCode] = useState('')
   const [step, setStep] = useState('login')
   const [error, setError] = useState('')
-  const [session, setSession] = useState(null)
 
   useEffect(() => {
-    checkAuth()
-  }, [])
-
-  const checkAuth = async () => {
-    try {
-      const user = await getCurrentUser()
-      if (user) {
-        navigate('/lucifer-newstar_dashboard')
+    const checkAuth = async () => {
+      try {
+        const user = await getCurrentUser()
+        if (user) {
+          navigate('/lucifer-newstar_dashboard')
+        }
+      } catch {
+        // Not logged in
       }
-    } catch (err) {
-      // Not logged in
     }
-  }
+
+    checkAuth()
+  }, [navigate])
 
   const handleLogin = async (e) => {
     e.preventDefault()
@@ -37,7 +36,6 @@ function Login() {
       })
 
       if (result.nextStep?.signInStep === 'CONFIRM_SIGN_IN_WITH_TOTP_MFA') {
-        setSession(result.nextStep)
         setStep('mfa')
       } else if (result.isSignedIn) {
         navigate('/lucifer-newstar_dashboard')

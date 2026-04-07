@@ -9,21 +9,29 @@ function PostsManager() {
   const [editForm, setEditForm] = useState({ title: '', content: '', link: '', date: '', visible: true })
   const [newPost, setNewPost] = useState({ id: '', type: 'manual', title: '', content: '', link: '', date: new Date().toISOString().split('T')[0], visible: true, order: 0 })
 
-  useEffect(() => { loadPosts() }, [])
+  useEffect(() => {
+    const loadPosts = async () => {
+      try {
+        const data = await fetchPosts()
+        setPosts(Array.isArray(data) ? data : [])
+      } finally {
+        setLoading(false)
+      }
+    }
 
-  const loadPosts = async () => {
-    try {
-      const data = await fetchPosts()
-      setPosts(Array.isArray(data) ? data : [])
-      setLoading(false)
-    } catch (error) { setLoading(false) }
+    loadPosts()
+  }, [])
+
+  const refreshPosts = async () => {
+    const data = await fetchPosts()
+    setPosts(Array.isArray(data) ? data : [])
   }
 
   const handleSyncGitHub = async () => {
     setSyncing(true)
     try {
       await syncGitHubActivity()
-      await loadPosts()
+      await refreshPosts()
       alert('GitHub activity synced!')
     } catch (error) { alert('Error: ' + error.message) }
     setSyncing(false)
@@ -34,7 +42,7 @@ function PostsManager() {
     try {
       await createPost(newPost)
       setNewPost({ id: '', type: 'manual', title: '', content: '', link: '', date: new Date().toISOString().split('T')[0], visible: true, order: 0 })
-      await loadPosts()
+      await refreshPosts()
       alert('Post added!')
     } catch (error) { alert('Error: ' + error.message) }
   }
@@ -54,7 +62,7 @@ function PostsManager() {
     try {
       await updatePost(id, editForm)
       setEditingId(null)
-      await loadPosts()
+      await refreshPosts()
       alert('Post updated!')
     } catch (error) { alert('Error: ' + error.message) }
   }
@@ -62,7 +70,7 @@ function PostsManager() {
   const handleDelete = async (id) => {
     if (confirm('Delete this post?')) {
       await deletePost(id)
-      await loadPosts()
+      await refreshPosts()
     }
   }
 

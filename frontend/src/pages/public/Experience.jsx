@@ -2,8 +2,11 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { fetchExperience } from '../../utils/api'
 import LinkedDataModal from '../../components/LinkedDataModal'
+import { useSiteContent } from '../../context/useSiteContent'
 
 function Experience() {
+  const { siteContent } = useSiteContent()
+  const content = siteContent.experiencePage
   const [experiences, setExperiences] = useState([])
   const [loading, setLoading] = useState(true)
   const [modalOpen, setModalOpen] = useState(false)
@@ -44,49 +47,82 @@ function Experience() {
   }
 
   return (
-    <div className="container">
-      <h1 className="text-center">Experience</h1>
-      <p className="text-center">Click on any skill to see related projects and certifications.</p>
-      
-      <div className="timeline">
-        {experiences.map((exp) => (
-          <div key={exp.id} className="experience-item">
-            <h3>{exp.title}</h3>
-            <h4>{exp.organization}</h4>
-            <span className="exp-period">{exp.period} | {exp.location}</span>
-            <ul>
-              {parseDescription(exp.description).map((item, idx) => (
-                <li key={idx}>{item}</li>
-              ))}
-            </ul>
-            <div>
-              <strong>Skills used:</strong>
-              <div className="skill-list mt-1">
+    <div className="page-shell experience-shell">
+      <section className="container page-hero" data-reveal="up">
+        <span className="eyebrow">{content.eyebrow}</span>
+        <h1>{content.title}</h1>
+        <p className="page-lead">{content.lead}</p>
+      </section>
+
+      <section className="container page-section" data-reveal="scale">
+        <div className="dashboard-strip">
+          <article className="widget-card"><strong>{experiences.length}</strong><span>{content.stats[0].value}</span></article>
+          <article className="widget-card"><strong>{content.stats[1].value}</strong><span>{content.stats[1].label}</span></article>
+          <article className="widget-card"><strong>{content.stats[2].value}</strong><span>{content.stats[2].label}</span></article>
+        </div>
+      </section>
+
+      <section className="container page-section" data-reveal="up">
+        <div className="experience-signal-grid">
+          {experiences.slice(0, 3).map((exp, index) => (
+            <article key={exp.id} className="experience-signal-card">
+              <span className="eyebrow">Track 0{index + 1}</span>
+              <h3>{exp.title}</h3>
+              <p>{exp.organization}</p>
+              <span className="metric-pill">{exp.period}</span>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="container page-section">
+        <div className="timeline">
+          {experiences.map((exp, index) => (
+            <article key={exp.id} className="timeline-card" data-reveal={index % 2 === 0 ? 'left' : 'right'}>
+              <div className="timeline-marker" />
+              <div className="timeline-card-header">
+                <div>
+                  <span className="eyebrow">{exp.period}</span>
+                  <h3>{exp.title}</h3>
+                  <p className="muted-line">{exp.organization} · {exp.location}</p>
+                </div>
+                <span className="metric-pill">{exp.skills?.length || 0} skills</span>
+              </div>
+
+              <details className="accordion-card experience-accordion" open={index === 0}>
+                <summary>Expand responsibilities</summary>
+                <ul className="detail-list">
+                  {parseDescription(exp.description).map((item, idx) => (
+                    <li key={idx}>{item}</li>
+                  ))}
+                </ul>
+              </details>
+
+              <div className="tag-cloud">
                 {exp.skills?.map((skill, idx) => (
-                  <span 
-                    key={idx} 
+                  <button
+                    key={idx}
+                    type="button"
                     className="skill-tag clickable"
                     onClick={() => handleSkillClick(skill)}
                   >
                     {skill}
-                  </span>
+                  </button>
                 ))}
               </div>
-            </div>
-          </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="container page-section inline-actions" data-reveal="up">
+        {content.actions.map((action) => (
+          <Link key={action.href} to={action.href} className={action.primary ? 'btn btn-primary' : 'btn btn-secondary'}>
+            {action.label}
+          </Link>
         ))}
-      </div>
-      
-      <hr className="mt-4" />
-      
-      <div className="text-center mt-3">
-        <Link to="/skills" className="btn btn-secondary">View my skills</Link>
-        {' '}
-        <Link to="/projects" className="btn btn-secondary">See my projects</Link>
-        {' '}
-        <Link to="/certifications" className="btn btn-secondary">Check certifications</Link>
-      </div>
-      
+      </section>
+
       <LinkedDataModal
         isOpen={modalOpen}
         onClose={() => setModalOpen(false)}

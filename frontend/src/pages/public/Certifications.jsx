@@ -2,8 +2,11 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { fetchCertifications } from '../../utils/api'
 import LinkedDataModal from '../../components/LinkedDataModal'
+import { useSiteContent } from '../../context/useSiteContent'
 
 function Certifications() {
+  const { siteContent } = useSiteContent()
+  const content = siteContent.certificationsPage
   const [certifications, setCertifications] = useState([])
   const [loading, setLoading] = useState(true)
   const [modalOpen, setModalOpen] = useState(false)
@@ -32,49 +35,82 @@ function Certifications() {
   }
 
   return (
-    <div className="container">
-      <h1 className="text-center">Certifications</h1>
-      <p className="text-center">Click on any skill to see related projects and certifications.</p>
-      
-      <div className="certs-grid">
-        {certifications.map((cert) => (
-          <div key={cert.id} className="cert-card">
-            <h3>{cert.name}</h3>
-            <p><strong>Issuer:</strong> {cert.issuer}</p>
-            <p><strong>Date:</strong> {cert.date}</p>
-            <div>
-              <strong>Skills:</strong>
-              <div className="skill-list mt-1">
+    <div className="page-shell certifications-shell">
+      <section className="container page-hero" data-reveal="up">
+        <span className="eyebrow">{content.eyebrow}</span>
+        <h1>{content.title}</h1>
+        <p className="page-lead">{content.lead}</p>
+      </section>
+
+      <section className="container page-section" data-reveal="up">
+        <div className="horizontal-rail">
+          {certifications.slice(0, 6).map((cert) => (
+            <article key={cert.id} className="rail-card">
+              <span className="eyebrow">{cert.issuer}</span>
+              <h3>{cert.name}</h3>
+              <p>{cert.date}</p>
+              {cert.link && (
+                <a href={cert.link} target="_blank" rel="noopener noreferrer" className="btn btn-secondary btn-sm">
+                  Verify credential
+                </a>
+              )}
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="container page-section" data-reveal="scale">
+        <div className="cert-orbit-grid">
+          {certifications.slice(0, 3).map((cert, index) => (
+            <article key={`${cert.id}-orbit`} className={`cert-orbit-card cert-orbit-card-${index + 1}`}>
+              <span className="eyebrow">Issuer</span>
+              <h3>{cert.issuer}</h3>
+              <p>{cert.name}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="container page-section">
+        <div className="certs-grid">
+          {certifications.map((cert, index) => (
+            <article key={cert.id} className="cert-card" data-reveal={index % 2 === 0 ? 'scale' : 'up'}>
+              <div className="project-card-top">
+                <span className="eyebrow">Credential</span>
+                <span className="metric-pill">{cert.issuer}</span>
+              </div>
+              <h3>{cert.name}</h3>
+              <p className="muted-line">{cert.date}</p>
+              <div className="tag-cloud">
                 {cert.skills?.map((skill, idx) => (
-                  <span 
-                    key={idx} 
+                  <button
+                    key={idx}
+                    type="button"
                     className="skill-tag clickable"
                     onClick={() => handleSkillClick(skill)}
                   >
                     {skill}
-                  </span>
+                  </button>
                 ))}
               </div>
-            </div>
-            {cert.link && (
-              <a href={cert.link} target="_blank" rel="noopener noreferrer" className="cert-link">
-                View Credential →
-              </a>
-            )}
-          </div>
+              {cert.link && (
+                <a href={cert.link} target="_blank" rel="noopener noreferrer" className="btn btn-primary btn-sm cert-link">
+                  View credential
+                </a>
+              )}
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="container page-section inline-actions" data-reveal="up">
+        {content.actions.map((action) => (
+          <Link key={action.href} to={action.href} className={action.primary ? 'btn btn-primary' : 'btn btn-secondary'}>
+            {action.label}
+          </Link>
         ))}
-      </div>
-      
-      <hr className="mt-4" />
-      
-      <div className="text-center mt-3">
-        <Link to="/skills" className="btn btn-secondary">View related skills</Link>
-        {' '}
-        <Link to="/projects" className="btn btn-secondary">See projects</Link>
-        {' '}
-        <Link to="/posts" className="btn btn-secondary">Read my posts</Link>
-      </div>
-      
+      </section>
+
       <LinkedDataModal
         isOpen={modalOpen}
         onClose={() => setModalOpen(false)}

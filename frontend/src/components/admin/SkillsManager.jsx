@@ -15,41 +15,38 @@ function SkillsManager() {
   })
 
   useEffect(() => {
+    const loadSkills = async () => {
+      try {
+        const data = await fetchSkills()
+        setSkills(Array.isArray(data) ? data : [])
+      } catch {
+        setSkills([])
+      } finally {
+        setLoading(false)
+      }
+    }
+
     loadSkills()
   }, [])
 
-  const loadSkills = async () => {
-    console.log("=== LOADING SKILLS ===")
-    try {
-      const data = await fetchSkills()
-      console.log("Skills data received:", data)
-      setSkills(Array.isArray(data) ? data : [])
-      setLoading(false)
-    } catch (error) {
-      console.error('Error loading skills:', error)
-      setLoading(false)
-    }
+  const refreshSkills = async () => {
+    const data = await fetchSkills()
+    setSkills(Array.isArray(data) ? data : [])
   }
 
   const handleAddSkill = async (e) => {
     e.preventDefault()
-    console.log("=== ADDING SKILL ===")
-    console.log("New skill data:", newSkill)
     try {
-      const result = await createSkill(newSkill)
-      console.log("Create result:", result)
+      await createSkill(newSkill)
       setNewSkill({ id: '', name: '', category: '', level: 'Learning', order: 0 })
-      await loadSkills()
+      await refreshSkills()
       alert('Skill added!')
     } catch (error) {
-      console.error('Create error:', error)
       alert('Error: ' + error.message)
     }
   }
 
   const handleEditClick = (skill) => {
-    console.log("=== EDITING SKILL ===")
-    console.log("Skill to edit:", skill)
     setEditingId(skill.id)
     setEditForm({
       name: skill.name || '',
@@ -60,32 +57,23 @@ function SkillsManager() {
   }
 
   const handleUpdate = async (id) => {
-    console.log("=== UPDATING SKILL ===")
-    console.log("Skill ID:", id)
-    console.log("Update data:", editForm)
     try {
-      const result = await updateSkill(id, editForm)
-      console.log("Update result:", result)
+      await updateSkill(id, editForm)
       setEditingId(null)
-      await loadSkills()
+      await refreshSkills()
       alert('Skill updated!')
     } catch (error) {
-      console.error('Update error:', error)
       alert('Error: ' + error.message)
     }
   }
 
   const handleDeleteSkill = async (id) => {
-    console.log("=== DELETING SKILL ===")
-    console.log("Skill ID:", id)
     if (confirm('Delete this skill?')) {
       try {
-        const result = await deleteSkill(id)
-        console.log("Delete result:", result)
-        await loadSkills()
+        await deleteSkill(id)
+        await refreshSkills()
         alert('Skill deleted!')
       } catch (error) {
-        console.error('Delete error:', error)
         alert('Error: ' + error.message)
       }
     }

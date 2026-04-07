@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
+import { completeFallbackAdminSession } from '../../utils/adminAuth'
 
 function Callback() {
   const navigate = useNavigate()
@@ -8,12 +9,11 @@ function Callback() {
   useEffect(() => {
     const params = new URLSearchParams(location.search)
     const code = params.get('code')
+    const state = params.get('state')
 
     if (code) {
-      // Store that user is authenticated
-      localStorage.setItem('isAuthenticated', 'true')
-      // In production, you'd exchange the code for tokens here
-      navigate('/lucifer-newstar_dashboard')
+      const completed = completeFallbackAdminSession(state)
+      navigate(completed ? '/lucifer-newstar_dashboard' : '/')
     } else {
       navigate('/')
     }

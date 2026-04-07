@@ -8,14 +8,22 @@ function CertificationsManager() {
   const [editForm, setEditForm] = useState({ name: '', issuer: '', date: '', link: '', skills: '', order: 0 })
   const [newCert, setNewCert] = useState({ id: '', name: '', issuer: '', date: '', link: '', skills: '', order: 0 })
 
-  useEffect(() => { loadCertifications() }, [])
+  useEffect(() => {
+    const loadCertifications = async () => {
+      try {
+        const data = await fetchCertifications()
+        setCertifications(Array.isArray(data) ? data : [])
+      } finally {
+        setLoading(false)
+      }
+    }
 
-  const loadCertifications = async () => {
-    try {
-      const data = await fetchCertifications()
-      setCertifications(Array.isArray(data) ? data : [])
-      setLoading(false)
-    } catch (error) { setLoading(false) }
+    loadCertifications()
+  }, [])
+
+  const refreshCertifications = async () => {
+    const data = await fetchCertifications()
+    setCertifications(Array.isArray(data) ? data : [])
   }
 
   const handleAdd = async (e) => {
@@ -24,7 +32,7 @@ function CertificationsManager() {
       const toAdd = { ...newCert, skills: newCert.skills.split(',').map(s => s.trim()) }
       await createCertification(toAdd)
       setNewCert({ id: '', name: '', issuer: '', date: '', link: '', skills: '', order: 0 })
-      await loadCertifications()
+      await refreshCertifications()
       alert('Certification added!')
     } catch (error) { alert('Error: ' + error.message) }
   }
@@ -46,7 +54,7 @@ function CertificationsManager() {
       const updates = { ...editForm, skills: editForm.skills.split(',').map(s => s.trim()) }
       await updateCertification(id, updates)
       setEditingId(null)
-      await loadCertifications()
+      await refreshCertifications()
       alert('Certification updated!')
     } catch (error) { alert('Error: ' + error.message) }
   }
@@ -54,7 +62,7 @@ function CertificationsManager() {
   const handleDelete = async (id) => {
     if (confirm('Delete this certification?')) {
       await deleteCertification(id)
-      await loadCertifications()
+      await refreshCertifications()
     }
   }
 

@@ -8,14 +8,22 @@ function ProjectsManager() {
   const [editForm, setEditForm] = useState({ title: '', description: '', tech_stack: '', github_link: '', visible: true, order: 0 })
   const [newProject, setNewProject] = useState({ id: '', title: '', description: '', tech_stack: '', github_link: '', visible: true, order: 0 })
 
-  useEffect(() => { loadProjects() }, [])
+  useEffect(() => {
+    const loadProjects = async () => {
+      try {
+        const data = await fetchProjects()
+        setProjects(Array.isArray(data) ? data : [])
+      } finally {
+        setLoading(false)
+      }
+    }
 
-  const loadProjects = async () => {
-    try {
-      const data = await fetchProjects()
-      setProjects(Array.isArray(data) ? data : [])
-      setLoading(false)
-    } catch (error) { setLoading(false) }
+    loadProjects()
+  }, [])
+
+  const refreshProjects = async () => {
+    const data = await fetchProjects()
+    setProjects(Array.isArray(data) ? data : [])
   }
 
   const handleAdd = async (e) => {
@@ -24,7 +32,7 @@ function ProjectsManager() {
       const toAdd = { ...newProject, tech_stack: newProject.tech_stack.split(',').map(s => s.trim()) }
       await createProject(toAdd)
       setNewProject({ id: '', title: '', description: '', tech_stack: '', github_link: '', visible: true, order: 0 })
-      await loadProjects()
+      await refreshProjects()
       alert('Project added!')
     } catch (error) { alert('Error: ' + error.message) }
   }
@@ -46,7 +54,7 @@ function ProjectsManager() {
       const updates = { ...editForm, tech_stack: editForm.tech_stack.split(',').map(s => s.trim()) }
       await updateProject(id, updates)
       setEditingId(null)
-      await loadProjects()
+      await refreshProjects()
       alert('Project updated!')
     } catch (error) { alert('Error: ' + error.message) }
   }
@@ -54,7 +62,7 @@ function ProjectsManager() {
   const handleDelete = async (id) => {
     if (confirm('Delete this project?')) {
       await deleteProject(id)
-      await loadProjects()
+      await refreshProjects()
     }
   }
 
