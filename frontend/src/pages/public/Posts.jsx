@@ -33,8 +33,8 @@ function Posts() {
               <div key={post.id} className="post-card">
                 <h3>{post.title}</h3>
                 <p>{post.content}</p>
-                <small>{new Date(post.date).toLocaleDateString()}</small>
-                {post.link && <a href={post.link} target="_blank" rel="noopener noreferrer">View on GitHub →</a>}
+                <span className="post-date">{new Date(post.date).toLocaleDateString()}</span>
+                {post.link && <a href={post.link} target="_blank" rel="noopener noreferrer" className="post-link">View on GitHub →</a>}
               </div>
             ))}
           </div>
@@ -49,8 +49,8 @@ function Posts() {
               <div key={post.id} className="post-card">
                 <h3>{post.title}</h3>
                 <p>{post.content}</p>
-                <small>{new Date(post.date).toLocaleDateString()}</small>
-                {post.link && <a href={post.link} target="_blank" rel="noopener noreferrer">Read more →</a>}
+                <span className="post-date">{new Date(post.date).toLocaleDateString()}</span>
+                {post.link && <a href={post.link} target="_blank" rel="noopener noreferrer" className="post-link">Read more →</a>}
               </div>
             ))}
           </div>

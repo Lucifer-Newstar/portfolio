@@ -24,9 +24,9 @@ function Projects() {
       <h1 className="text-center">Projects</h1>
       <p className="text-center">Here are some things I've built.</p>
       
-      <div className="projects-grid mt-4">
+      <div className="projects-grid">
         {projects.map((project) => (
-          <div key={project.id} className="project-card">
+          <div key={project.id} className="project-card card">
             <div className="project-content">
               <h3>{project.title}</h3>
               <p>{project.description}</p>
@@ -35,11 +35,13 @@ function Projects() {
                   <span key={idx} className="tech-badge">{tech}</span>
                 ))}
               </div>
-              {project.github_link && (
-                <a href={project.github_link} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
-                  GitHub →
-                </a>
-              )}
+              <div className="project-links">
+                {project.github_link && (
+                  <a href={project.github_link} target="_blank" rel="noopener noreferrer">
+                    GitHub →
+                  </a>
+                )}
+              </div>
             </div>
           </div>
         ))}

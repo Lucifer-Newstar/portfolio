@@ -32,17 +32,17 @@ function Skills() {
       <h1 className="text-center">Skills & Technologies</h1>
       <p className="text-center">Here's what I'm learning and building with.</p>
       
-      <div className="skills-grid mt-4">
+      <div className="skills-grid">
         {Object.entries(groupedSkills).map(([category, categorySkills]) => (
           <div key={category} className="skill-category">
             <h2>{category}</h2>
-            <ul className="skill-list">
+            <div className="skill-list">
               {categorySkills.map((skill) => (
-                <li key={skill.id} className="skill-tag">
+                <span key={skill.id} className="skill-tag">
                   {skill.name} {skill.level !== 'Advanced' && `(${skill.level})`}
-                </li>
+                </span>
               ))}
-            </ul>
+            </div>
           </div>
         ))}
       </div>

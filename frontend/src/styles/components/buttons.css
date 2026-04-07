@@ -1,0 +1,63 @@
+/* ===== BUTTONS ===== */
+.btn {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+  font-size: 1rem;
+}
+
+/* Light Mode Buttons */
+:root .btn-primary {
+  background: var(--primary);
+  color: #1A1A1A;
+  box-shadow: 0 2px 8px rgba(212, 175, 55, 0.3);
+}
+
+:root .btn-primary:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+}
+
+:root .btn-secondary {
+  background: transparent;
+  color: var(--primary);
+  border: 2px solid var(--primary);
+}
+
+:root .btn-secondary:hover {
+  background: var(--primary);
+  color: #1A1A1A;
+  transform: translateY(-2px);
+}
+
+/* Dark Mode Buttons */
+[data-theme="dark"] .btn-primary {
+  background: var(--primary);
+  color: #0A0A0F;
+  box-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+}
+
+[data-theme="dark"] .btn-primary:hover {
+  background: var(--primary-dark);
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+  transform: translateY(-2px);
+}
+
+[data-theme="dark"] .btn-secondary {
+  background: transparent;
+  color: var(--primary);
+  border: 2px solid var(--primary);
+}
+
+[data-theme="dark"] .btn-secondary:hover {
+  background: var(--primary);
+  color: #0A0A0F;
+  box-shadow: 0 0 15px rgba(0, 212, 255, 0.4);
+  transform: translateY(-2px);
+}

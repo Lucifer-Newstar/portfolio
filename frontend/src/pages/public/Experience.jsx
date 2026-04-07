@@ -36,12 +36,12 @@ function Experience() {
       <h1 className="text-center">Experience</h1>
       <p className="text-center">My professional journey in DevOps, Cloud, and leadership.</p>
       
-      <div className="timeline mt-4">
+      <div className="timeline">
         {experiences.map((exp) => (
           <div key={exp.id} className="experience-item">
             <h3>{exp.title}</h3>
             <h4>{exp.organization}</h4>
-            <p style={{ color: 'var(--primary)' }}>{exp.period} | {exp.location}</p>
+            <span className="exp-period">{exp.period} | {exp.location}</span>
             <ul>
               {parseDescription(exp.description).map((item, idx) => (
                 <li key={idx}>{item}</li>

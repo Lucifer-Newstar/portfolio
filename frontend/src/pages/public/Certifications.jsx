@@ -24,18 +24,13 @@ function Certifications() {
       <h1 className="text-center">Certifications</h1>
       <p className="text-center">Professional certifications and credentials.</p>
       
-      <div className="certs-grid mt-4">
+      <div className="certs-grid">
         {certifications.map((cert) => (
           <div key={cert.id} className="cert-card">
             <h3>{cert.name}</h3>
             <p><strong>Issuer:</strong> {cert.issuer}</p>
             <p><strong>Date:</strong> {cert.date}</p>
-            {cert.link && (
-              <a href={cert.link} target="_blank" rel="noopener noreferrer" className="btn btn-primary cert-link">
-                View Credential →
-              </a>
-            )}
-            <div className="mt-2">
+            <div>
               <strong>Skills:</strong>
               <div className="skill-list mt-1">
                 {cert.skills?.map((skill, idx) => (
@@ -43,6 +38,11 @@ function Certifications() {
                 ))}
               </div>
             </div>
+            {cert.link && (
+              <a href={cert.link} target="_blank" rel="noopener noreferrer" className="cert-link">
+                View Credential →
+              </a>
+            )}
           </div>
         ))}
       </div>

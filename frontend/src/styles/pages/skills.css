@@ -1,0 +1,39 @@
+/* ===== SKILLS PAGE ===== */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.skill-category {
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+/* Light Mode Skill Category */
+:root .skill-category {
+  background: #FFFFFF;
+  border-left: 4px solid var(--primary);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Dark Mode Skill Category */
+[data-theme="dark"] .skill-category {
+  background: rgba(26, 26, 46, 0.7);
+  backdrop-filter: blur(10px);
+  border-left: 4px solid var(--primary);
+}
+
+.skill-category h2 {
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+}
+
+.skill-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  list-style: none;
+  padding: 0;
+}

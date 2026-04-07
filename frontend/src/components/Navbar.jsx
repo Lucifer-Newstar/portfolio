@@ -9,8 +9,6 @@ function Navbar() {
           <Link to="/">Navin Jairam</Link>
         </div>
         
-        <ThemeToggle />
-        
         <ul className="navbar-links">
           <li><Link to="/about">About</Link></li>
           <li><Link to="/experience">Experience</Link></li>
@@ -20,6 +18,8 @@ function Navbar() {
           <li><Link to="/posts">Posts</Link></li>
           <li><Link to="/contact">Contact</Link></li>
         </ul>
+        
+        <ThemeToggle />
       </div>
     </nav>
   )

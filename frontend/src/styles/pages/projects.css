@@ -1,0 +1,76 @@
+/* ===== PROJECTS PAGE ===== */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.project-card {
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-5px);
+}
+
+.project-content {
+  padding: 1.5rem;
+}
+
+.project-tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+.tech-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+}
+
+/* Light Mode Tech Badge */
+:root .tech-badge {
+  background: #F1F3F5;
+  color: #1A1A1A;
+}
+
+/* Dark Mode Tech Badge */
+[data-theme="dark"] .tech-badge {
+  background: rgba(168, 85, 247, 0.2);
+  color: var(--secondary);
+}
+
+.project-links {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.project-links a {
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+/* Light Mode Project Links */
+:root .project-links a {
+  color: var(--primary);
+}
+
+:root .project-links a:hover {
+  text-decoration: underline;
+}
+
+/* Dark Mode Project Links */
+[data-theme="dark"] .project-links a {
+  color: var(--primary);
+}
+
+[data-theme="dark"] .project-links a:hover {
+  text-shadow: 0 0 5px var(--primary);
+}
