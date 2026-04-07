@@ -45,6 +45,7 @@ function InteractionEffects() {
   const cursorRef = useRef(null)
   const ringRef = useRef(null)
   const spotlightRef = useRef(null)
+  const trailRefs = useRef([])
 
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -68,6 +69,11 @@ function InteractionEffects() {
     let mouseY = window.innerHeight * 0.5
     let ringX = mouseX
     let ringY = mouseY
+    const trailPoints = Array.from({ length: 7 }, (_, index) => ({
+      x: mouseX,
+      y: mouseY,
+      lag: 0.1 - index * 0.01
+    }))
     let frameId
 
     const animate = () => {
@@ -77,6 +83,15 @@ function InteractionEffects() {
       ring.style.transform = `translate3d(${ringX}px, ${ringY}px, 0)`
       spotlight.style.setProperty('--spotlight-x', `${mouseX}px`)
       spotlight.style.setProperty('--spotlight-y', `${mouseY}px`)
+      trailPoints.forEach((point, index) => {
+        point.x += (mouseX - point.x) * point.lag
+        point.y += (mouseY - point.y) * point.lag
+        const node = trailRefs.current[index]
+        if (node) {
+          node.style.transform = `translate3d(${point.x}px, ${point.y}px, 0) scale(${1 - index * 0.08})`
+          node.style.opacity = `${0.8 - index * 0.09}`
+        }
+      })
       frameId = window.requestAnimationFrame(animate)
     }
 
@@ -157,6 +172,16 @@ function InteractionEffects() {
   return (
     <>
       <div ref={spotlightRef} className="mouse-spotlight" aria-hidden="true" />
+      {Array.from({ length: 7 }, (_, index) => (
+        <div
+          key={index}
+          ref={(node) => {
+            trailRefs.current[index] = node
+          }}
+          className={`cursor-trail-particle cursor-trail-${index + 1} ${theme === 'dark' ? 'is-dark' : 'is-light'}`}
+          aria-hidden="true"
+        />
+      ))}
       <div ref={ringRef} className="interactive-cursor cursor-ring" aria-hidden="true" />
       <div ref={cursorRef} className="interactive-cursor cursor-dot" aria-hidden="true" />
     </>

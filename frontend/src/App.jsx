@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import ScrollAnimations from './components/ScrollAnimations'
@@ -25,19 +25,22 @@ import Callback from './pages/public/Callback'
 // Admin page
 import AdminDashboard from './pages/admin/AdminDashboard'
 
-function App() {
+function AppFrame() {
+  const location = useLocation()
+  const isAdminRoute = location.pathname === '/lucifer-newstar_dashboard'
+
   return (
-    <Router>
+    <>
       <PageThemeHandler />
       <ParticleBackground />
       <ThemeAtmosphere />
       <InteractionEffects />
       <ScrollAnimations />
-      <ScrollProgress />
-      <div className="app-shell">
-        <Navbar />
-        <main className="app-main">
-          <Breadcrumbs />
+      {!isAdminRoute && <ScrollProgress />}
+      <div className={`app-shell ${isAdminRoute ? 'app-shell-admin' : ''}`}>
+        {!isAdminRoute && <Navbar />}
+        <main className={`app-main ${isAdminRoute ? 'app-main-admin' : ''}`}>
+          {!isAdminRoute && <Breadcrumbs />}
           <Routes>
             {/* Public Routes */}
             <Route path="/" element={<Home />} />
@@ -50,20 +53,28 @@ function App() {
             <Route path="/posts" element={<Posts />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/callback" element={<Callback />} />
-            
+
             {/* Protected Admin Route - Hidden */}
-            <Route 
-              path="/lucifer-newstar_dashboard" 
+            <Route
+              path="/lucifer-newstar_dashboard"
               element={
                 <ProtectedRoute>
                   <AdminDashboard />
                 </ProtectedRoute>
-              } 
+              }
             />
           </Routes>
         </main>
-        <Footer />
+        {!isAdminRoute && <Footer />}
       </div>
+    </>
+  )
+}
+
+function App() {
+  return (
+    <Router>
+      <AppFrame />
     </Router>
   )
 }

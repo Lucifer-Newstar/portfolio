@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import ThemeToggle from './ThemeToggle'
 import { useSiteContent } from '../context/useSiteContent'
@@ -9,6 +9,13 @@ function Navbar() {
   const { siteContent } = useSiteContent()
   const navContent = siteContent.global.nav
   const links = navContent.links || []
+
+  useEffect(() => {
+    document.body.classList.toggle('nav-explore-active', exploreOpen)
+    return () => {
+      document.body.classList.remove('nav-explore-active')
+    }
+  }, [exploreOpen])
 
   return (
     <nav className="navbar">
