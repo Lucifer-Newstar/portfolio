@@ -22,7 +22,7 @@ function Navbar() {
       <div className="container navbar-container">
         <div className="navbar-brand-cluster">
           <Link to="/" className="navbar-brand">
-            <span className="brand-mark">NJ</span>
+            <span className="brand-mark">{navContent.brandMark || 'NJ'}</span>
             <span>
               <strong>{navContent.brandName}</strong>
               <small>{navContent.brandSubtitle}</small>
@@ -68,6 +68,16 @@ function Navbar() {
           onClick={() => setExploreOpen(false)}
         />
         <div className="nav-radial-menu">
+          <Link
+            to="/"
+            className="nav-home-corner"
+            onClick={() => {
+              setExploreOpen(false)
+              setMenuOpen(false)
+            }}
+          >
+            Home
+          </Link>
           <div className="nav-radial-core">
             <span className="nav-radial-pulse nav-radial-pulse-1" />
             <span className="nav-radial-pulse nav-radial-pulse-2" />

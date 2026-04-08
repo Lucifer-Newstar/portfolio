@@ -13,6 +13,12 @@ function Home() {
   const { siteContent } = useSiteContent()
   const { theme } = useTheme()
   const home = siteContent.home
+  const resolvedPortraitImage = theme === 'dark'
+    ? (home.portraitImageDark || home.portraitImage || home.heroImageDark || home.heroImage)
+    : (home.portraitImageLight || home.portraitImage || home.heroImageLight || home.heroImage)
+  const resolvedHeroImage = theme === 'dark'
+    ? (home.heroImageDark || home.heroImage)
+    : (home.heroImageLight || home.heroImage)
   const roles = useMemo(() => (home.roles?.length ? home.roles : ['Cloud Engineer']), [home.roles])
   const signalModes = useMemo(
     () => (home.signalModes?.length ? home.signalModes : [{ name: 'Platform', headline: 'Reliable systems.', detail: 'Modern cloud delivery with calmer operations.' }]),
@@ -76,21 +82,68 @@ function Home() {
     <div className="page-shell home-shell">
       <section className="container hero-panel">
         <div className="hero-copy" data-reveal="up">
-          <span className="eyebrow">{home.eyebrow}</span>
-          <h1 className="hero-title" data-echo={home.titleEcho || home.title}>{home.title}</h1>
-          <p className="hero-subtitle">
-            {home.introPrefix}{' '}
-            <span className="typed-text">{displayText}</span>
-            <span className="cursor">|</span>
-          </p>
-          <p className="hero-description">{home.description}</p>
+          <div className="hero-heading-grid">
+            <div className="hero-heading-copy">
+              <span className="eyebrow">{home.eyebrow}</span>
+              <h1 className="hero-title" data-echo={home.titleEcho || home.title}>{home.title}</h1>
+              <p className="hero-subtitle">
+                {home.introPrefix}{' '}
+                <span className="typed-text">{displayText}</span>
+                <span className="cursor">|</span>
+              </p>
+              <p className="hero-description">{home.description}</p>
+            </div>
+
+            <div className="hero-portrait-shell" data-reveal="right">
+              <div className={`hero-portrait-decor hero-portrait-decor-${theme}`}>
+                {theme === 'light' ? (
+                  <>
+                    <span className="hero-royal-crown" aria-hidden="true">♕</span>
+                    <span className="hero-royal-arc hero-royal-arc-1" aria-hidden="true" />
+                    <span className="hero-royal-star hero-royal-star-1" aria-hidden="true">✦</span>
+                    <span className="hero-royal-star hero-royal-star-2" aria-hidden="true">✦</span>
+                    <span className="hero-royal-star hero-royal-star-3" aria-hidden="true">✦</span>
+                    <span className="hero-royal-gem hero-royal-gem-1" aria-hidden="true" />
+                    <span className="hero-royal-gem hero-royal-gem-2" aria-hidden="true" />
+                    <span className="hero-royal-orbit hero-royal-orbit-1" aria-hidden="true" />
+                    <span className="hero-royal-orbit hero-royal-orbit-2" aria-hidden="true" />
+                  </>
+                ) : (
+                  <>
+                    <span className="hero-signal-chip hero-signal-chip-1" aria-hidden="true">SYS</span>
+                    <span className="hero-signal-chip hero-signal-chip-2" aria-hidden="true">LIVE</span>
+                    <span className="hero-signal-node hero-signal-node-1" aria-hidden="true" />
+                    <span className="hero-signal-node hero-signal-node-2" aria-hidden="true" />
+                    <span className="hero-signal-node hero-signal-node-3" aria-hidden="true" />
+                    <span className="hero-signal-ring hero-signal-ring-1" aria-hidden="true" />
+                    <span className="hero-signal-ring hero-signal-ring-2" aria-hidden="true" />
+                    <span className="hero-signal-ring hero-signal-ring-3" aria-hidden="true" />
+                    <span className="hero-signal-beam hero-signal-beam-1" aria-hidden="true" />
+                    <span className="hero-signal-beam hero-signal-beam-2" aria-hidden="true" />
+                  </>
+                )}
+              </div>
+              <div className="hero-portrait-card">
+                <img
+                  src={resolvedPortraitImage}
+                  alt={home.portraitAlt || `${home.title} portrait`}
+                  className="hero-portrait-image"
+                />
+                <div className="hero-portrait-badge">
+                  <strong>{home.title}</strong>
+                  <span>{displayText || roles[0]}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div className="hero-buttons">
             <Link to={home.primaryCta.href} className="btn btn-primary">{home.primaryCta.label}</Link>
             <Link to={home.secondaryCta.href} className="btn btn-secondary">{home.secondaryCta.label}</Link>
           </div>
-          {home.heroImage && (
+          {resolvedHeroImage && (
             <div className="hero-visual-card" data-reveal="right">
-              <img src={home.heroImage} alt={home.title} className="hero-visual-image" />
+              <img src={resolvedHeroImage} alt={home.title} className="hero-visual-image" />
             </div>
           )}
           <div className="hero-depth-strip zoom-blur-panel" data-reveal="up" data-parallax="-18">

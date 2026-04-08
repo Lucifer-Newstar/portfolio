@@ -1,0 +1,81 @@
+.is-tilting {
+  transform: none !important;
+}
+
+.bento-card,
+.feature-card,
+.widget-card,
+.rail-card,
+.step-card,
+.project-card,
+.skill-category,
+.post-card,
+.cert-card,
+.timeline-card,
+.contact-detail,
+.contact-form,
+.footer-panel,
+.admin-panel,
+.admin-stat-card,
+.admin-manager,
+.skill-tile,
+.text-visual-card,
+.royal-note-card,
+.signal-panel,
+.orbit-core,
+.orbit-node,
+.response-chip-card,
+.skill-signal-card,
+.sketch-note-card,
+.principle-card,
+.experience-signal-card,
+.cert-orbit-card,
+.feed-spectrum-card {
+  transform: none !important;
+}
+
+.bento-card::after,
+.feature-card::after,
+.widget-card::after,
+.rail-card::after,
+.step-card::after,
+.project-card::after,
+.skill-category::after,
+.post-card::after,
+.cert-card::after,
+.timeline-card::after,
+.contact-form::after,
+.contact-detail::after,
+.admin-panel::after,
+.admin-stat-card::after {
+  opacity: 0 !important;
+}
+
+.btn.is-tilting,
+.picker-chip.is-tilting,
+.nav-pill.is-tilting,
+.theme-toggle-shell.is-tilting,
+.magnetic-surface.is-tilting,
+.skill-tag.is-tilting,
+.tech-badge.is-tilting,
+.project-rail-card.is-tilting {
+  transform: translateY(-1px) !important;
+}
+
+.btn.is-tilting::after,
+.picker-chip.is-tilting::after,
+.nav-pill.is-tilting::after,
+.theme-toggle-shell.is-tilting::after,
+.magnetic-surface.is-tilting::after,
+.skill-tag.is-tilting::after,
+.tech-badge.is-tilting::after,
+.project-rail-card.is-tilting::after {
+  opacity: 0.6 !important;
+}
+
+.cursor-trail-particle.is-light {
+  background: radial-gradient(circle, rgba(255, 191, 87, 0.98), rgba(255, 122, 89, 0.6) 56%, transparent 72%);
+  box-shadow:
+    0 0 16px rgba(255, 177, 82, 0.3),
+    0 0 28px rgba(255, 122, 89, 0.16);
+}

@@ -6,14 +6,15 @@ import ExperienceManager from '../../components/admin/ExperienceManager'
 import CertificationsManager from '../../components/admin/CertificationsManager'
 import PostsManager from '../../components/admin/PostsManager'
 import ContentManager from '../../components/admin/ContentManager'
+import PreviewManager from '../../components/admin/PreviewManager'
 import { useSiteContent } from '../../context/useSiteContent'
 import { useTheme } from '../../context/useTheme'
 import { clearAdminSession } from '../../utils/adminAuth'
 
 function AdminDashboard() {
-  const { siteContent } = useSiteContent()
+  const { draftContent, saveSiteContent, discardDraftChanges, hasUnsavedChanges, lastSavedAt } = useSiteContent()
   const { theme } = useTheme()
-  const adminContent = siteContent.admin
+  const adminContent = draftContent.admin
   const [activeTab, setActiveTab] = useState('overview')
 
   const handleLogout = () => {
@@ -25,6 +26,7 @@ function AdminDashboard() {
     ...tab,
     component:
       tab.id === 'content' ? ContentManager
+      : tab.id === 'preview' ? PreviewManager
       : tab.id === 'skills' ? SkillsManager
       : tab.id === 'projects' ? ProjectsManager
       : tab.id === 'experience' ? ExperienceManager
@@ -62,6 +64,12 @@ function AdminDashboard() {
         </nav>
 
         <div className="admin-topbar-actions">
+          <div className="content-meta-strip">
+            <span className="metric-pill">{hasUnsavedChanges ? 'Unsaved changes' : 'Saved state'}</span>
+            <span className="metric-pill">
+              {lastSavedAt ? `Last save ${new Date(lastSavedAt).toLocaleString()}` : 'No manual save yet'}
+            </span>
+          </div>
           <div className="admin-topbar-stats">
             {adminContent.stats.map((stat) => (
               <article key={stat.label} className="admin-stat-card">
@@ -72,6 +80,22 @@ function AdminDashboard() {
           </div>
           <div className="admin-hero-actions">
             <Link to="/" className="btn btn-secondary">{adminContent.openSiteLabel}</Link>
+            <button
+              type="button"
+              onClick={discardDraftChanges}
+              className="btn btn-secondary"
+              disabled={!hasUnsavedChanges}
+            >
+              {adminContent.discardLabel ?? 'Discard draft'}
+            </button>
+            <button
+              type="button"
+              onClick={saveSiteContent}
+              className="btn btn-primary"
+              disabled={!hasUnsavedChanges}
+            >
+              {adminContent.saveLabel ?? 'Save changes'}
+            </button>
             <button onClick={handleLogout} className="btn btn-primary">{adminContent.logoutLabel}</button>
           </div>
         </div>
@@ -88,11 +112,13 @@ function AdminDashboard() {
             <article className="admin-window-card">
               <span className="eyebrow">Editing mode</span>
               <h3>{theme === 'dark' ? 'Focused control room' : 'Editorial workspace'}</h3>
-              <p>
-                {activeTab === 'content'
-                  ? 'Use the wider content area to edit text, links, image URLs, and imports without the public-site chrome getting in your way.'
+                <p>
+                  {activeTab === 'content'
+                  ? 'Use the wider content area to edit text, links, image URLs, imports, and draft changes before saving them live.'
+                  : activeTab === 'preview'
+                  ? 'Use the dedicated preview section to compare saved content against your current draft without leaving the admin workspace.'
                   : 'This admin layout keeps navigation in the top bar so the full body stays dedicated to managing, creating, updating, and deleting content.'}
-              </p>
+                </p>
             </article>
           </div>
         </div>

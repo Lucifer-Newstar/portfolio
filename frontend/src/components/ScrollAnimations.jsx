@@ -36,6 +36,19 @@ function ScrollAnimations() {
       })
     })
 
+    const storySections = gsap.utils.toArray('.page-shell .page-hero, .page-shell .page-section')
+    storySections.forEach((section) => {
+      ScrollTrigger.create({
+        trigger: section,
+        start: 'top 72%',
+        end: 'bottom 38%',
+        toggleClass: {
+          targets: section,
+          className: 'is-story-active'
+        }
+      })
+    })
+
     const parallaxNodes = gsap.utils.toArray('[data-parallax]')
     parallaxNodes.forEach((node) => {
       const speed = Number(node.dataset.parallax || 80)

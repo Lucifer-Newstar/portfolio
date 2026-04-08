@@ -14,39 +14,26 @@ function ScrollProgress() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const circumference = 2 * Math.PI * 45
-  const strokeDashoffset = circumference - (scrollProgress / 100) * circumference
-
   const handleClick = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   return (
-    <div className="scroll-progress" onClick={handleClick}>
-      <svg width="60" height="60" viewBox="0 0 100 100">
-        <circle
-          cx="50"
-          cy="50"
-          r="45"
-          fill="none"
-          stroke="var(--border)"
-          strokeWidth="4"
+    <button
+      type="button"
+      className="scroll-progress"
+      onClick={handleClick}
+      aria-label={`Scroll to top, ${Math.round(scrollProgress)} percent read`}
+      title="Scroll to top"
+    >
+      <span className="scroll-progress-label">{Math.round(scrollProgress)}%</span>
+      <span className="scroll-progress-track">
+        <span
+          className="scroll-progress-fill"
+          style={{ width: `${Math.max(0, Math.min(100, scrollProgress))}%` }}
         />
-        <circle
-          cx="50"
-          cy="50"
-          r="45"
-          fill="none"
-          stroke="var(--primary)"
-          strokeWidth="4"
-          strokeLinecap="round"
-          strokeDasharray={circumference}
-          strokeDashoffset={strokeDashoffset}
-          style={{ transition: 'stroke-dashoffset 0.1s ease' }}
-        />
-      </svg>
-      <span>{Math.round(scrollProgress)}%</span>
-    </div>
+      </span>
+    </button>
   )
 }
 

@@ -1,8 +1,10 @@
 /* ===== EXPERIENCE PAGE ===== */
 .timeline {
   position: relative;
+  display: grid;
+  gap: 1.25rem;
   padding-left: 2rem;
-  margin-top: 2rem;
+  margin-top: 1.5rem;
 }
 
 /* Light Mode Timeline Line */
@@ -30,7 +32,10 @@
 
 .experience-item {
   position: relative;
-  margin-bottom: 2rem;
+  display: grid;
+  align-content: start;
+  gap: 0.45rem;
+  margin-bottom: 0;
   padding-left: 1.5rem;
 }
 
@@ -68,11 +73,13 @@
 }
 
 .exp-period {
-  display: inline-block;
-  padding: 0.25rem 0.75rem;
-  border-radius: 20px;
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  padding: 0.35rem 0.8rem;
+  border-radius: 999px;
   font-size: 0.8rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.2rem;
 }
 
 /* Light Mode Period Badge */

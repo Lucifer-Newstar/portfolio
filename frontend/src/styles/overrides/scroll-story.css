@@ -1,0 +1,128 @@
+.page-shell .page-hero,
+.page-shell .page-section {
+  position: relative;
+  isolation: isolate;
+  transition:
+    transform var(--transition-normal),
+    filter var(--transition-normal),
+    opacity var(--transition-normal);
+}
+
+.page-shell .page-hero::before,
+.page-shell .page-section::before {
+  content: '';
+  position: absolute;
+  top: 0.6rem;
+  bottom: 0.6rem;
+  left: clamp(0.35rem, 1vw, 0.75rem);
+  width: 1px;
+  opacity: 0.42;
+  pointer-events: none;
+  transition:
+    opacity var(--transition-normal),
+    transform var(--transition-normal),
+    box-shadow var(--transition-normal);
+}
+
+.page-shell .page-hero::after,
+.page-shell .page-section::after {
+  content: '';
+  position: absolute;
+  top: 1rem;
+  left: calc(clamp(0.35rem, 1vw, 0.75rem) - 0.3rem);
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 999px;
+  opacity: 0.75;
+  pointer-events: none;
+  transition:
+    transform var(--transition-normal),
+    opacity var(--transition-normal),
+    box-shadow var(--transition-normal),
+    background var(--transition-normal);
+}
+
+.page-shell .page-hero > *,
+.page-shell .page-section > * {
+  position: relative;
+  z-index: 1;
+}
+
+.page-shell .page-hero.is-story-active,
+.page-shell .page-section.is-story-active {
+  transform: translateY(-3px);
+}
+
+.page-shell .page-hero.is-story-active::before,
+.page-shell .page-section.is-story-active::before {
+  opacity: 0.95;
+  transform: scaleY(1.02);
+}
+
+.page-shell .page-hero.is-story-active::after,
+.page-shell .page-section.is-story-active::after {
+  opacity: 1;
+  transform: scale(1.12);
+}
+
+:root .page-shell .page-hero::before,
+:root .page-shell .page-section::before {
+  background: linear-gradient(180deg, rgba(191, 129, 64, 0.12), rgba(226, 116, 63, 0.78), rgba(52, 86, 209, 0.18));
+}
+
+:root .page-shell .page-hero::after,
+:root .page-shell .page-section::after {
+  background: radial-gradient(circle at 35% 35%, rgba(255, 248, 233, 0.95), rgba(226, 116, 63, 0.92));
+  box-shadow:
+    0 0 0 0.28rem rgba(243, 195, 87, 0.12),
+    0 0 16px rgba(226, 116, 63, 0.16);
+}
+
+:root .page-shell .page-hero.is-story-active::before,
+:root .page-shell .page-section.is-story-active::before {
+  box-shadow: 0 0 18px rgba(226, 116, 63, 0.12);
+}
+
+:root .page-shell .page-hero.is-story-active::after,
+:root .page-shell .page-section.is-story-active::after {
+  box-shadow:
+    0 0 0 0.38rem rgba(243, 195, 87, 0.14),
+    0 0 22px rgba(226, 116, 63, 0.2);
+}
+
+[data-theme="dark"] .page-shell .page-hero::before,
+[data-theme="dark"] .page-shell .page-section::before {
+  background: linear-gradient(180deg, rgba(103, 225, 255, 0.1), rgba(103, 225, 255, 0.82), rgba(129, 103, 255, 0.2));
+}
+
+[data-theme="dark"] .page-shell .page-hero::after,
+[data-theme="dark"] .page-shell .page-section::after {
+  background: radial-gradient(circle at 35% 35%, rgba(235, 250, 255, 0.96), rgba(103, 225, 255, 0.92));
+  box-shadow:
+    0 0 0 0.28rem rgba(103, 225, 255, 0.1),
+    0 0 16px rgba(103, 225, 255, 0.22);
+}
+
+[data-theme="dark"] .page-shell .page-hero.is-story-active::before,
+[data-theme="dark"] .page-shell .page-section.is-story-active::before {
+  box-shadow: 0 0 20px rgba(103, 225, 255, 0.14);
+}
+
+[data-theme="dark"] .page-shell .page-hero.is-story-active::after,
+[data-theme="dark"] .page-shell .page-section.is-story-active::after {
+  box-shadow:
+    0 0 0 0.38rem rgba(103, 225, 255, 0.12),
+    0 0 22px rgba(103, 225, 255, 0.24);
+}
+
+@media (max-width: 640px) {
+  .page-shell .page-hero::before,
+  .page-shell .page-section::before {
+    left: 0.1rem;
+  }
+
+  .page-shell .page-hero::after,
+  .page-shell .page-section::after {
+    left: -0.22rem;
+  }
+}

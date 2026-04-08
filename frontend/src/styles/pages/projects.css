@@ -1,36 +1,45 @@
 /* ===== PROJECTS PAGE ===== */
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-  gap: 1.5rem;
-  margin-top: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+  align-items: stretch;
+  gap: clamp(1rem, 2vw, 1.5rem);
+  margin-top: 1.5rem;
 }
 
 .project-card {
-  border-radius: 12px;
+  display: grid;
+  align-content: start;
+  height: 100%;
+  border-radius: 1.25rem;
   overflow: hidden;
-  transition: all 0.3s ease;
+  transition: transform var(--transition-fast), box-shadow var(--transition-normal), border-color var(--transition-normal);
 }
 
 .project-card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-4px);
 }
 
 .project-content {
-  padding: 1.5rem;
+  display: grid;
+  align-content: start;
+  gap: 1rem;
+  padding: 1.35rem;
 }
 
 .project-tech {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
-  margin: 1rem 0;
+  gap: 0.55rem;
+  margin: 0;
 }
 
 .tech-badge {
-  display: inline-block;
-  padding: 0.25rem 0.75rem;
-  border-radius: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.45rem 0.8rem;
+  border-radius: 999px;
   font-size: 0.75rem;
 }
 
@@ -48,8 +57,9 @@
 
 .project-links {
   display: flex;
-  gap: 1rem;
-  margin-top: 1rem;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 0.25rem;
 }
 
 .project-links a {

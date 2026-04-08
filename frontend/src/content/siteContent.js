@@ -1,6 +1,7 @@
 export const defaultSiteContent = {
   global: {
     nav: {
+      brandMark: 'NJ',
       brandName: 'Navin Jairam',
       brandSubtitle: 'Cloud systems portfolio',
       statusText: 'Building resilient platforms',
@@ -48,6 +49,17 @@ export const defaultSiteContent = {
     secondaryCta: { label: 'Start a conversation', href: '/contact' },
     heroImage:
       'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80',
+    heroImageLight:
+      'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80',
+    heroImageDark:
+      'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80',
+    portraitImage:
+      'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=900&q=80',
+    portraitImageLight:
+      'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=900&q=80',
+    portraitImageDark:
+      'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=900&q=80',
+    portraitAlt: 'Navin Jairam portrait placeholder',
     signalModes: [
       {
         name: 'Platform',
@@ -363,6 +375,8 @@ export const defaultSiteContent = {
     title: 'Portfolio control center',
     lead: 'A more comfortable dashboard for content updates, quick previews, and faster navigation between sections.',
     openSiteLabel: 'Open public site',
+    saveLabel: 'Save changes',
+    discardLabel: 'Discard draft',
     logoutLabel: 'Logout',
     workspaceLabel: 'Workspace',
     searchPlaceholder: 'Search fields, labels, image URLs, or section names',
@@ -378,6 +392,7 @@ export const defaultSiteContent = {
     tabs: [
       { id: 'overview', name: 'Overview', description: 'Quick actions, preview links, and workspace guidance.' },
       { id: 'content', name: 'Content', description: 'Edit all hardcoded page text, labels, links, and image URLs.' },
+      { id: 'preview', name: 'Preview', description: 'Check saved pages and draft pages inside the admin workspace.' },
       { id: 'skills', name: 'Skills', description: 'Curate taxonomy, levels, and order.' },
       { id: 'projects', name: 'Projects', description: 'Shape featured work and portfolio visibility.' },
       { id: 'experience', name: 'Experience', description: 'Keep the timeline and achievements current.' },
@@ -388,11 +403,13 @@ export const defaultSiteContent = {
       eyebrow: 'Editable copy + images',
       title: 'Content manager',
       description: 'Edit page text, labels, links, arrays, and image URLs in one place.',
+      saveLabel: 'Save content',
+      discardLabel: 'Discard draft',
       resetLabel: 'Reset content defaults',
       sectionLabel: 'Content sections'
     },
     stats: [
-      { value: '6', label: 'Content sections' },
+      { value: '7', label: 'Workspace tabs' },
       { value: 'Live', label: 'Portfolio mode' },
       { value: 'Theme aware', label: 'Public experience' }
     ],
@@ -406,6 +423,7 @@ export const defaultSiteContent = {
       ],
       actions: [
         { label: 'Go to content', tab: 'content' },
+        { label: 'Open preview', tab: 'preview' },
         { label: 'Go to projects', tab: 'projects' },
         { label: 'Go to posts', tab: 'posts' }
       ]

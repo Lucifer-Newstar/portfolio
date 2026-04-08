@@ -2,42 +2,14 @@ import { useEffect, useRef } from 'react'
 import { useTheme } from '../context/useTheme'
 
 const interactiveSelector = [
-  '.bento-card',
-  '.feature-card',
-  '.widget-card',
-  '.rail-card',
-  '.step-card',
-  '.project-card',
-  '.skill-category',
-  '.post-card',
-  '.cert-card',
-  '.timeline-card',
-  '.contact-detail',
-  '.contact-form',
-  '.footer-panel',
-  '.admin-panel',
-  '.admin-stat-card',
-  '.admin-manager',
   '.btn',
   '.picker-chip',
   '.nav-pill',
-  '.skill-tile',
-  '.text-visual-card',
-  '.royal-note-card',
-  '.signal-panel',
-  '.orbit-core',
-  '.orbit-node',
-  '.nav-radial-link',
   '.theme-toggle-shell',
-  '.project-rail-card',
-  '.response-chip-card',
-  '.skill-signal-card',
-  '.sketch-note-card',
   '.magnetic-surface',
-  '.principle-card',
-  '.experience-signal-card',
-  '.cert-orbit-card',
-  '.feed-spectrum-card'
+  '.skill-tag',
+  '.tech-badge',
+  '.project-rail-card'
 ].join(', ')
 
 function InteractionEffects() {
@@ -115,17 +87,9 @@ function InteractionEffects() {
         const rect = node.getBoundingClientRect()
         const offsetX = event.clientX - rect.left
         const offsetY = event.clientY - rect.top
-        const rotateY = ((offsetX / rect.width) - 0.5) * 10
-        const rotateX = ((offsetY / rect.height) - 0.5) * -10
-        const shiftX = ((offsetX / rect.width) - 0.5) * 10
-        const shiftY = ((offsetY / rect.height) - 0.5) * 10
 
         node.style.setProperty('--pointer-x', `${offsetX}px`)
         node.style.setProperty('--pointer-y', `${offsetY}px`)
-        node.style.setProperty('--rotate-x', `${rotateX}deg`)
-        node.style.setProperty('--rotate-y', `${rotateY}deg`)
-        node.style.setProperty('--shift-x', `${shiftX}px`)
-        node.style.setProperty('--shift-y', `${shiftY}px`)
       }
 
       const handleEnter = () => {
@@ -136,10 +100,8 @@ function InteractionEffects() {
       const handleLeave = () => {
         document.documentElement.classList.remove('cursor-hovering')
         node.classList.remove('is-tilting')
-        node.style.removeProperty('--rotate-x')
-        node.style.removeProperty('--rotate-y')
-        node.style.removeProperty('--shift-x')
-        node.style.removeProperty('--shift-y')
+        node.style.removeProperty('--pointer-x')
+        node.style.removeProperty('--pointer-y')
       }
 
       node.addEventListener('pointermove', handleMove)

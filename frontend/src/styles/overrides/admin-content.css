@@ -1,0 +1,534 @@
+.content-upload-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 0.35rem;
+}
+
+.content-upload-hint {
+  width: 100%;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+.admin-preview-shell {
+  display: grid;
+  grid-template-columns: minmax(280px, 360px) minmax(0, 1fr);
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.admin-preview-sidebar,
+.admin-preview-stage {
+  padding: 1.1rem;
+  border-radius: 24px;
+}
+
+.admin-preview-mode-switch {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin: 1rem 0;
+}
+
+.admin-preview-stage-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 0.9rem;
+}
+
+.admin-preview-frame-shell {
+  min-height: 72vh;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid rgba(120, 145, 170, 0.3);
+  background: rgba(9, 18, 31, 0.2);
+}
+
+.admin-preview-frame {
+  width: 100%;
+  min-height: 72vh;
+  border: 0;
+  background: #ffffff;
+}
+
+@media (max-width: 1080px) {
+  .admin-preview-shell {
+    grid-template-columns: 1fr;
+  }
+}
+
+[data-theme="dark"] .bento-card,
+[data-theme="dark"] .feature-card,
+[data-theme="dark"] .widget-card,
+[data-theme="dark"] .rail-card,
+[data-theme="dark"] .step-card,
+[data-theme="dark"] .project-card,
+[data-theme="dark"] .skill-category,
+[data-theme="dark"] .post-card,
+[data-theme="dark"] .cert-card,
+[data-theme="dark"] .timeline-card,
+[data-theme="dark"] .contact-detail,
+[data-theme="dark"] .contact-form,
+[data-theme="dark"] .footer-panel,
+[data-theme="dark"] .featured-post,
+[data-theme="dark"] .accordion-card,
+[data-theme="dark"] .principle-card,
+[data-theme="dark"] .feed-spectrum-card,
+[data-theme="dark"] .cert-orbit-card,
+[data-theme="dark"] .admin-window-card,
+[data-theme="dark"] .content-workspace-panel,
+[data-theme="dark"] .content-field,
+[data-theme="dark"] .admin-manager form > div,
+[data-theme="dark"] .admin-main-content,
+[data-theme="dark"] .admin-topbar {
+  color: #ecf6ff;
+}
+
+[data-theme="dark"] .bento-card h2,
+[data-theme="dark"] .bento-card h3,
+[data-theme="dark"] .feature-card h2,
+[data-theme="dark"] .feature-card h3,
+[data-theme="dark"] .widget-card h2,
+[data-theme="dark"] .widget-card h3,
+[data-theme="dark"] .rail-card h2,
+[data-theme="dark"] .rail-card h3,
+[data-theme="dark"] .step-card h2,
+[data-theme="dark"] .step-card h3,
+[data-theme="dark"] .project-card h2,
+[data-theme="dark"] .project-card h3,
+[data-theme="dark"] .skill-category h2,
+[data-theme="dark"] .post-card h2,
+[data-theme="dark"] .post-card h3,
+[data-theme="dark"] .cert-card h2,
+[data-theme="dark"] .cert-card h3,
+[data-theme="dark"] .timeline-card h2,
+[data-theme="dark"] .timeline-card h3,
+[data-theme="dark"] .featured-post h2,
+[data-theme="dark"] .featured-post h3,
+[data-theme="dark"] .principle-card h3,
+[data-theme="dark"] .feed-spectrum-card h3,
+[data-theme="dark"] .cert-orbit-card h3,
+[data-theme="dark"] .admin-window-card h2,
+[data-theme="dark"] .admin-window-card h3,
+[data-theme="dark"] .content-workspace-panel h2,
+[data-theme="dark"] .content-workspace-panel h3 {
+  color: #f5fbff;
+}
+
+[data-theme="dark"] .bento-card p,
+[data-theme="dark"] .feature-card p,
+[data-theme="dark"] .widget-card p,
+[data-theme="dark"] .rail-card p,
+[data-theme="dark"] .step-card p,
+[data-theme="dark"] .project-card p,
+[data-theme="dark"] .skill-category p,
+[data-theme="dark"] .post-card p,
+[data-theme="dark"] .cert-card p,
+[data-theme="dark"] .timeline-card p,
+[data-theme="dark"] .contact-detail p,
+[data-theme="dark"] .contact-detail small,
+[data-theme="dark"] .contact-form p,
+[data-theme="dark"] .footer-panel p,
+[data-theme="dark"] .featured-post p,
+[data-theme="dark"] .accordion-card p,
+[data-theme="dark"] .principle-card p,
+[data-theme="dark"] .feed-spectrum-card p,
+[data-theme="dark"] .cert-orbit-card p,
+[data-theme="dark"] .admin-window-card p,
+[data-theme="dark"] .content-workspace-panel p,
+[data-theme="dark"] .content-field label,
+[data-theme="dark"] .admin-manager td,
+[data-theme="dark"] .admin-manager span:not(.metric-pill):not(.eyebrow),
+[data-theme="dark"] .admin-manager small {
+  color: #c9d9ea;
+}
+
+[data-theme="dark"] .metric-pill,
+[data-theme="dark"] .skill-tag,
+[data-theme="dark"] .tech-badge,
+[data-theme="dark"] .ticker-pill,
+[data-theme="dark"] .picker-chip,
+[data-theme="dark"] .nav-pill {
+  color: #eaf7ff;
+}
+
+[data-theme="dark"] .content-upload-hint {
+  color: #b8d0e2;
+}
+
+[data-theme="dark"] .bento-card strong,
+[data-theme="dark"] .feature-card strong,
+[data-theme="dark"] .widget-card strong,
+[data-theme="dark"] .rail-card strong,
+[data-theme="dark"] .step-card strong,
+[data-theme="dark"] .project-card strong,
+[data-theme="dark"] .skill-category strong,
+[data-theme="dark"] .post-card strong,
+[data-theme="dark"] .cert-card strong,
+[data-theme="dark"] .timeline-card strong,
+[data-theme="dark"] .contact-detail strong,
+[data-theme="dark"] .contact-form strong,
+[data-theme="dark"] .footer-panel strong,
+[data-theme="dark"] .featured-post strong,
+[data-theme="dark"] .accordion-card strong,
+[data-theme="dark"] .principle-card strong,
+[data-theme="dark"] .feed-spectrum-card strong,
+[data-theme="dark"] .cert-orbit-card strong,
+[data-theme="dark"] .admin-window-card strong,
+[data-theme="dark"] .content-workspace-panel strong,
+[data-theme="dark"] .bento-card li,
+[data-theme="dark"] .feature-card li,
+[data-theme="dark"] .widget-card li,
+[data-theme="dark"] .rail-card li,
+[data-theme="dark"] .step-card li,
+[data-theme="dark"] .project-card li,
+[data-theme="dark"] .skill-category li,
+[data-theme="dark"] .post-card li,
+[data-theme="dark"] .cert-card li,
+[data-theme="dark"] .timeline-card li,
+[data-theme="dark"] .contact-detail li,
+[data-theme="dark"] .contact-form li,
+[data-theme="dark"] .footer-panel li,
+[data-theme="dark"] .featured-post li,
+[data-theme="dark"] .accordion-card li,
+[data-theme="dark"] .principle-card li,
+[data-theme="dark"] .feed-spectrum-card li,
+[data-theme="dark"] .cert-orbit-card li,
+[data-theme="dark"] .admin-window-card li,
+[data-theme="dark"] .content-workspace-panel li,
+[data-theme="dark"] .bento-card span:not(.eyebrow):not(.metric-pill):not(.picker-chip):not(.ticker-pill),
+[data-theme="dark"] .feature-card span:not(.eyebrow):not(.metric-pill),
+[data-theme="dark"] .widget-card span:not(.eyebrow):not(.metric-pill),
+[data-theme="dark"] .rail-card span:not(.eyebrow):not(.metric-pill),
+[data-theme="dark"] .step-card span:not(.eyebrow):not(.metric-pill),
+[data-theme="dark"] .project-card span:not(.eyebrow):not(.tech-badge),
+[data-theme="dark"] .skill-category span:not(.eyebrow):not(.skill-tag),
+[data-theme="dark"] .post-card span:not(.eyebrow):not(.metric-pill),
+[data-theme="dark"] .cert-card span:not(.eyebrow):not(.metric-pill),
+[data-theme="dark"] .timeline-card span:not(.eyebrow):not(.metric-pill),
+[data-theme="dark"] .contact-detail span:not(.eyebrow):not(.metric-pill),
+[data-theme="dark"] .contact-form span:not(.eyebrow):not(.metric-pill),
+[data-theme="dark"] .footer-panel span:not(.eyebrow):not(.metric-pill),
+[data-theme="dark"] .featured-post span:not(.eyebrow):not(.metric-pill),
+[data-theme="dark"] .accordion-card span:not(.eyebrow):not(.metric-pill),
+[data-theme="dark"] .principle-card span:not(.eyebrow):not(.metric-pill),
+[data-theme="dark"] .feed-spectrum-card span:not(.eyebrow):not(.metric-pill),
+[data-theme="dark"] .cert-orbit-card span:not(.eyebrow):not(.metric-pill) {
+  color: #deedf9;
+}
+
+[data-theme="dark"] .bento-card a:not(.btn),
+[data-theme="dark"] .feature-card a:not(.btn),
+[data-theme="dark"] .widget-card a:not(.btn),
+[data-theme="dark"] .rail-card a:not(.btn),
+[data-theme="dark"] .step-card a:not(.btn),
+[data-theme="dark"] .project-card a:not(.btn),
+[data-theme="dark"] .skill-category a:not(.btn),
+[data-theme="dark"] .post-card a:not(.btn),
+[data-theme="dark"] .cert-card a:not(.btn),
+[data-theme="dark"] .timeline-card a:not(.btn),
+[data-theme="dark"] .contact-detail a:not(.btn),
+[data-theme="dark"] .contact-form a:not(.btn),
+[data-theme="dark"] .footer-panel a:not(.btn),
+[data-theme="dark"] .featured-post a:not(.btn),
+[data-theme="dark"] .accordion-card a:not(.btn),
+[data-theme="dark"] .principle-card a:not(.btn),
+[data-theme="dark"] .feed-spectrum-card a:not(.btn),
+[data-theme="dark"] .cert-orbit-card a:not(.btn) {
+  color: #8fe7ff;
+}
+
+.hero-title,
+.page-hero h1,
+.section-header h2,
+.section-header h3,
+.projects-bento-intro h2,
+.home-cta-band h2,
+.dark-signal-stage h3,
+.light-royal-stage h3,
+.featured-post h2,
+.skill-category-header h2,
+.principle-card h3,
+.bento-card h2,
+.bento-card h3,
+.feature-card h2,
+.feature-card h3,
+.widget-card h2,
+.widget-card h3,
+.rail-card h2,
+.rail-card h3,
+.step-card h2,
+.step-card h3,
+.project-card h2,
+.project-card h3,
+.post-card h2,
+.post-card h3,
+.cert-card h2,
+.cert-card h3,
+.timeline-card h2,
+.timeline-card h3,
+.accordion-card summary,
+.contact-detail h3,
+.contact-form h2,
+.contact-form h3,
+.footer-panel h2,
+.footer-panel h3 {
+  position: relative;
+  display: inline-block;
+}
+
+.hero-title::after,
+.page-hero h1::after,
+.section-header h2::after,
+.section-header h3::after,
+.projects-bento-intro h2::after,
+.home-cta-band h2::after,
+.dark-signal-stage h3::after,
+.light-royal-stage h3::after,
+.featured-post h2::after,
+.skill-category-header h2::after,
+.principle-card h3::after,
+.bento-card h2::after,
+.bento-card h3::after,
+.feature-card h2::after,
+.feature-card h3::after,
+.widget-card h2::after,
+.widget-card h3::after,
+.rail-card h2::after,
+.rail-card h3::after,
+.step-card h2::after,
+.step-card h3::after,
+.project-card h2::after,
+.project-card h3::after,
+.post-card h2::after,
+.post-card h3::after,
+.cert-card h2::after,
+.cert-card h3::after,
+.timeline-card h2::after,
+.timeline-card h3::after,
+.accordion-card summary::after,
+.contact-detail h3::after,
+.contact-form h2::after,
+.contact-form h3::after,
+.footer-panel h2::after,
+.footer-panel h3::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -0.22rem;
+  width: min(8rem, 42%);
+  height: 0.22rem;
+  border-radius: 999px;
+  opacity: 0.85;
+  transform-origin: left center;
+  animation: signatureHeadingBar 4.8s ease-in-out infinite;
+}
+
+:root .hero-title::after,
+:root .page-hero h1::after,
+:root .section-header h2::after,
+:root .section-header h3::after,
+:root .projects-bento-intro h2::after,
+:root .home-cta-band h2::after,
+:root .dark-signal-stage h3::after,
+:root .light-royal-stage h3::after,
+:root .featured-post h2::after,
+:root .skill-category-header h2::after,
+:root .principle-card h3::after,
+:root .bento-card h2::after,
+:root .bento-card h3::after,
+:root .feature-card h2::after,
+:root .feature-card h3::after,
+:root .widget-card h2::after,
+:root .widget-card h3::after,
+:root .rail-card h2::after,
+:root .rail-card h3::after,
+:root .step-card h2::after,
+:root .step-card h3::after,
+:root .project-card h2::after,
+:root .project-card h3::after,
+:root .post-card h2::after,
+:root .post-card h3::after,
+:root .cert-card h2::after,
+:root .cert-card h3::after,
+:root .timeline-card h2::after,
+:root .timeline-card h3::after,
+:root .accordion-card summary::after,
+:root .contact-detail h3::after,
+:root .contact-form h2::after,
+:root .contact-form h3::after,
+:root .footer-panel h2::after,
+:root .footer-panel h3::after {
+  background: linear-gradient(90deg, rgba(226, 116, 63, 0.92), rgba(243, 195, 87, 0.86), rgba(52, 86, 209, 0.18));
+  box-shadow: 0 0 18px rgba(226, 116, 63, 0.18);
+}
+
+[data-theme="dark"] .hero-title::after,
+[data-theme="dark"] .page-hero h1::after,
+[data-theme="dark"] .section-header h2::after,
+[data-theme="dark"] .section-header h3::after,
+[data-theme="dark"] .projects-bento-intro h2::after,
+[data-theme="dark"] .home-cta-band h2::after,
+[data-theme="dark"] .dark-signal-stage h3::after,
+[data-theme="dark"] .light-royal-stage h3::after,
+[data-theme="dark"] .featured-post h2::after,
+[data-theme="dark"] .skill-category-header h2::after,
+[data-theme="dark"] .principle-card h3::after,
+[data-theme="dark"] .bento-card h2::after,
+[data-theme="dark"] .bento-card h3::after,
+[data-theme="dark"] .feature-card h2::after,
+[data-theme="dark"] .feature-card h3::after,
+[data-theme="dark"] .widget-card h2::after,
+[data-theme="dark"] .widget-card h3::after,
+[data-theme="dark"] .rail-card h2::after,
+[data-theme="dark"] .rail-card h3::after,
+[data-theme="dark"] .step-card h2::after,
+[data-theme="dark"] .step-card h3::after,
+[data-theme="dark"] .project-card h2::after,
+[data-theme="dark"] .project-card h3::after,
+[data-theme="dark"] .post-card h2::after,
+[data-theme="dark"] .post-card h3::after,
+[data-theme="dark"] .cert-card h2::after,
+[data-theme="dark"] .cert-card h3::after,
+[data-theme="dark"] .timeline-card h2::after,
+[data-theme="dark"] .timeline-card h3::after,
+[data-theme="dark"] .accordion-card summary::after,
+[data-theme="dark"] .contact-detail h3::after,
+[data-theme="dark"] .contact-form h2::after,
+[data-theme="dark"] .contact-form h3::after,
+[data-theme="dark"] .footer-panel h2::after,
+[data-theme="dark"] .footer-panel h3::after {
+  background: linear-gradient(90deg, rgba(105, 226, 255, 0.95), rgba(156, 124, 255, 0.92), rgba(109, 240, 207, 0.24));
+  box-shadow: 0 0 18px rgba(105, 226, 255, 0.24);
+}
+
+@keyframes signatureHeadingBar {
+  0%,
+  100% {
+    transform: scaleX(0.86);
+    opacity: 0.74;
+  }
+
+  50% {
+    transform: scaleX(1.08);
+    opacity: 1;
+  }
+}
+
+[data-theme="dark"] .page-shell .bento-card,
+[data-theme="dark"] .page-shell .feature-card,
+[data-theme="dark"] .page-shell .widget-card,
+[data-theme="dark"] .page-shell .rail-card,
+[data-theme="dark"] .page-shell .step-card,
+[data-theme="dark"] .page-shell .project-card,
+[data-theme="dark"] .page-shell .skill-category,
+[data-theme="dark"] .page-shell .post-card,
+[data-theme="dark"] .page-shell .cert-card,
+[data-theme="dark"] .page-shell .timeline-card,
+[data-theme="dark"] .page-shell .accordion-card,
+[data-theme="dark"] .page-shell .principle-card,
+[data-theme="dark"] .page-shell .contact-detail,
+[data-theme="dark"] .page-shell .contact-form,
+[data-theme="dark"] .page-shell .footer-panel {
+  color: #eef8ff !important;
+}
+
+[data-theme="dark"] .page-shell .bento-card p,
+[data-theme="dark"] .page-shell .feature-card p,
+[data-theme="dark"] .page-shell .widget-card p,
+[data-theme="dark"] .page-shell .rail-card p,
+[data-theme="dark"] .page-shell .step-card p,
+[data-theme="dark"] .page-shell .project-card p,
+[data-theme="dark"] .page-shell .skill-category p,
+[data-theme="dark"] .page-shell .post-card p,
+[data-theme="dark"] .page-shell .cert-card p,
+[data-theme="dark"] .page-shell .timeline-card p,
+[data-theme="dark"] .page-shell .accordion-card p,
+[data-theme="dark"] .page-shell .principle-card p,
+[data-theme="dark"] .page-shell .contact-detail p,
+[data-theme="dark"] .page-shell .contact-form p,
+[data-theme="dark"] .page-shell .footer-panel p,
+[data-theme="dark"] .page-shell .bento-card li,
+[data-theme="dark"] .page-shell .feature-card li,
+[data-theme="dark"] .page-shell .widget-card li,
+[data-theme="dark"] .page-shell .rail-card li,
+[data-theme="dark"] .page-shell .step-card li,
+[data-theme="dark"] .page-shell .project-card li,
+[data-theme="dark"] .page-shell .skill-category li,
+[data-theme="dark"] .page-shell .post-card li,
+[data-theme="dark"] .page-shell .cert-card li,
+[data-theme="dark"] .page-shell .timeline-card li,
+[data-theme="dark"] .page-shell .accordion-card li,
+[data-theme="dark"] .page-shell .principle-card li,
+[data-theme="dark"] .page-shell .contact-detail li,
+[data-theme="dark"] .page-shell .contact-form li,
+[data-theme="dark"] .page-shell .footer-panel li,
+[data-theme="dark"] .page-shell .bento-card small,
+[data-theme="dark"] .page-shell .feature-card small,
+[data-theme="dark"] .page-shell .widget-card small,
+[data-theme="dark"] .page-shell .rail-card small,
+[data-theme="dark"] .page-shell .step-card small,
+[data-theme="dark"] .page-shell .project-card small,
+[data-theme="dark"] .page-shell .skill-category small,
+[data-theme="dark"] .page-shell .post-card small,
+[data-theme="dark"] .page-shell .cert-card small,
+[data-theme="dark"] .page-shell .timeline-card small,
+[data-theme="dark"] .page-shell .accordion-card small,
+[data-theme="dark"] .page-shell .principle-card small,
+[data-theme="dark"] .page-shell .contact-detail small,
+[data-theme="dark"] .page-shell .contact-form small,
+[data-theme="dark"] .page-shell .footer-panel small {
+  color: #dbe9f6 !important;
+}
+
+[data-theme="dark"] .page-shell .bento-card strong:not(.eyebrow),
+[data-theme="dark"] .page-shell .feature-card strong:not(.eyebrow),
+[data-theme="dark"] .page-shell .widget-card strong:not(.eyebrow),
+[data-theme="dark"] .page-shell .rail-card strong:not(.eyebrow),
+[data-theme="dark"] .page-shell .step-card strong:not(.eyebrow),
+[data-theme="dark"] .page-shell .project-card strong:not(.eyebrow),
+[data-theme="dark"] .page-shell .skill-category strong:not(.eyebrow),
+[data-theme="dark"] .page-shell .post-card strong:not(.eyebrow),
+[data-theme="dark"] .page-shell .cert-card strong:not(.eyebrow),
+[data-theme="dark"] .page-shell .timeline-card strong:not(.eyebrow),
+[data-theme="dark"] .page-shell .accordion-card strong:not(.eyebrow),
+[data-theme="dark"] .page-shell .principle-card strong:not(.eyebrow),
+[data-theme="dark"] .page-shell .contact-detail strong:not(.eyebrow),
+[data-theme="dark"] .page-shell .contact-form strong:not(.eyebrow),
+[data-theme="dark"] .page-shell .footer-panel strong:not(.eyebrow),
+[data-theme="dark"] .page-shell .bento-card span:not(.eyebrow):not(.metric-pill):not(.picker-chip):not(.ticker-pill),
+[data-theme="dark"] .page-shell .feature-card span:not(.eyebrow):not(.metric-pill),
+[data-theme="dark"] .page-shell .widget-card span:not(.eyebrow):not(.metric-pill),
+[data-theme="dark"] .page-shell .rail-card span:not(.eyebrow):not(.metric-pill),
+[data-theme="dark"] .page-shell .step-card span:not(.eyebrow):not(.metric-pill),
+[data-theme="dark"] .page-shell .project-card span:not(.eyebrow):not(.tech-badge):not(.metric-pill),
+[data-theme="dark"] .page-shell .skill-category span:not(.eyebrow):not(.skill-tag):not(.metric-pill),
+[data-theme="dark"] .page-shell .post-card span:not(.eyebrow):not(.metric-pill),
+[data-theme="dark"] .page-shell .cert-card span:not(.eyebrow):not(.metric-pill),
+[data-theme="dark"] .page-shell .timeline-card span:not(.eyebrow):not(.metric-pill),
+[data-theme="dark"] .page-shell .accordion-card span:not(.eyebrow):not(.metric-pill),
+[data-theme="dark"] .page-shell .principle-card span:not(.eyebrow):not(.metric-pill),
+[data-theme="dark"] .page-shell .contact-detail span:not(.eyebrow):not(.metric-pill),
+[data-theme="dark"] .page-shell .contact-form span:not(.eyebrow):not(.metric-pill),
+[data-theme="dark"] .page-shell .footer-panel span:not(.eyebrow):not(.metric-pill),
+[data-theme="dark"] .page-shell .graph-row-meta span,
+[data-theme="dark"] .page-shell .graph-row-meta strong,
+[data-theme="dark"] .page-shell .project-card-top span,
+[data-theme="dark"] .page-shell .skill-tile span,
+[data-theme="dark"] .page-shell .skill-tile strong,
+[data-theme="dark"] .page-shell .signal-panel small,
+[data-theme="dark"] .page-shell .signal-panel strong,
+[data-theme="dark"] .page-shell .stat-line span,
+[data-theme="dark"] .page-shell .stat-line strong,
+[data-theme="dark"] .page-shell .text-visual-card span,
+[data-theme="dark"] .page-shell .text-visual-card strong,
+[data-theme="dark"] .page-shell .command-tile,
+[data-theme="dark"] .page-shell .royal-note-card,
+[data-theme="dark"] .page-shell .project-links a,
+[data-theme="dark"] .page-shell .accordion-card summary {
+  color: #f3fbff !important;
+}
