@@ -1,0 +1,11 @@
+{
+  "Variables": {
+    "ALLOWED_ORIGINS": "http://localhost:5173,https://lucifernewstar-2006.xyz",
+    "GITHUB_REPO": "portfolio",
+    "GITHUB_OWNER": "Lucifer-Newstar",
+    "GITHUB_WORKFLOW_FILE": "deploy.yml",
+    "GITHUB_REF": "main",
+    "GITHUB_TOKEN_PARAMETER": "/portfolio/github/token",
+    "COGNITO_USERINFO_URL": "https://us-east-1iwnapdbk8.auth.us-east-1.amazoncognito.com/oauth2/userInfo"
+  }
+}
