@@ -1,0 +1,32 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Upload admin-managed images to the portfolio bucket
+
+Resources:
+  uploadadminimage:
+    Type: AWS::Serverless::Function
+    Properties:
+      Architectures:
+        - x86_64
+      CodeUri: ./src
+      Handler: index.handler
+      Runtime: nodejs20.x
+      MemorySize: 256
+      Timeout: 15
+      Environment:
+        Variables:
+          S3_BUCKET: navin-portfolio
+          SITE_URL: https://lucifernewstar-2006.xyz
+          COGNITO_USERINFO_URL: https://us-east-1iwnapdbk8.auth.us-east-1.amazoncognito.com/oauth2/userInfo
+          ALLOWED_ORIGINS: http://localhost:5173,https://lucifernewstar-2006.xyz
+      Events:
+        UploadPost:
+          Type: Api
+          Properties:
+            Path: /admin/upload-image
+            Method: POST
+        UploadOptions:
+          Type: Api
+          Properties:
+            Path: /admin/upload-image
+            Method: OPTIONS

@@ -109,6 +109,14 @@ export const saveSiteContentRemote = async (content) => {
   })
 }
 
+export const uploadAdminImage = async ({ filename, contentType, data }) => {
+  return request('/admin/upload-image', {
+    method: 'POST',
+    body: JSON.stringify({ filename, contentType, data }),
+    includeAdminAuth: true,
+  })
+}
+
 export const fetchSkills = async () => fetchCollection('/skills')
 export const createSkill = async (skill) => request('/skills', { method: 'POST', body: JSON.stringify(skill) })
 export const updateSkill = async (id, updates) => request(`/skills/${id}`, { method: 'PUT', body: JSON.stringify(updates) })

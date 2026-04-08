@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { mergeWithDefaultContent } from '../../content/siteContent'
 import { useSiteContent } from '../../context/useSiteContent'
+import { uploadAdminImage } from '../../utils/api'
 
 function updateByPath(target, path, value) {
   if (path.length === 0) return value
@@ -48,7 +49,21 @@ function getRecommendedImageSize(label, path) {
   return 'Recommended: at least 1200 px wide for crisp display'
 }
 
+async function fileToBase64(file) {
+  const dataUrl = await new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.onload = () => resolve(String(reader.result || ''))
+    reader.onerror = () => reject(new Error('Unable to read image file.'))
+    reader.readAsDataURL(file)
+  })
+
+  const [, base64 = ''] = dataUrl.split(',', 2)
+  return base64
+}
+
 function ContentNodeEditor({ label, value, path, onChange }) {
+  const [isUploading, setIsUploading] = useState(false)
+
   if (Array.isArray(value)) {
     const allPrimitive = value.every((item) => typeof item !== 'object' || item === null)
     return (
@@ -110,16 +125,37 @@ function ContentNodeEditor({ label, value, path, onChange }) {
         <div className="content-upload-actions">
           <span className="content-upload-hint">{getRecommendedImageSize(label, path)}</span>
           <label className="btn btn-secondary btn-sm">
-            Upload image
+            {isUploading ? 'Uploading...' : 'Upload image'}
             <input
               type="file"
               accept="image/*"
               hidden
-              onChange={(event) => {
+              disabled={isUploading}
+              onChange={async (event) => {
                 const file = event.target.files?.[0]
                 if (!file) return
-                alert('Direct image file embedding is disabled because it breaks admin saves. Upload the file to a public URL first, then paste that URL here.')
-                event.target.value = ''
+
+                if (file.size > 3.5 * 1024 * 1024) {
+                  alert('Image is too large. Keep uploads under 3.5 MB.')
+                  event.target.value = ''
+                  return
+                }
+
+                setIsUploading(true)
+                try {
+                  const data = await fileToBase64(file)
+                  const result = await uploadAdminImage({
+                    filename: file.name,
+                    contentType: file.type,
+                    data,
+                  })
+                  onChange(path, result.url || '')
+                } catch (error) {
+                  alert(`Image upload failed: ${error.message}`)
+                } finally {
+                  setIsUploading(false)
+                  event.target.value = ''
+                }
               }}
             />
           </label>

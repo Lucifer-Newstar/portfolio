@@ -3,6 +3,7 @@ import { CloudFrontClient, GetDistributionCommand } from "@aws-sdk/client-cloudf
 import { APIGatewayClient, GetRestApiCommand } from "@aws-sdk/client-api-gateway";
 import { S3Client, GetBucketLocationCommand } from "@aws-sdk/client-s3";
 import { CloudWatchLogsClient, FilterLogEventsCommand } from "@aws-sdk/client-cloudwatch-logs";
+import { GetParameterCommand, SSMClient } from "@aws-sdk/client-ssm";
 
 const REGION = process.env.AWS_REGION || "us-east-1";
 const cloudWatch = new CloudWatchClient({ region: REGION });
@@ -10,6 +11,8 @@ const cloudFront = new CloudFrontClient({ region: REGION });
 const apiGateway = new APIGatewayClient({ region: REGION });
 const s3 = new S3Client({ region: REGION });
 const logsClient = new CloudWatchLogsClient({ region: REGION });
+const ssm = new SSMClient({ region: REGION });
+let cachedGitHubTokenPromise;
 
 const DEFAULT_ALLOWED_ORIGINS = "http://localhost:5173,https://lucifernewstar-2006.xyz";
 const DEFAULT_SITE_URL = "https://lucifernewstar-2006.xyz";
@@ -21,6 +24,35 @@ const DEFAULT_BUCKET = "navin-portfolio";
 const DEFAULT_CLOUDFRONT_DISTRIBUTION_ID = "ECVS4UV0ZKGHO";
 const DEFAULT_LOG_GROUPS = "/aws/lambda/deploy-website,/aws/lambda/save-site-content,/aws/lambda/get-site-content,/aws/lambda/send-contact-email";
 const DEFAULT_OBSERVED_LAMBDAS = "deploy-website,save-site-content,get-site-content,send-contact-email";
+
+async function getGitHubToken() {
+  if (cachedGitHubTokenPromise) {
+    return cachedGitHubTokenPromise;
+  }
+
+  cachedGitHubTokenPromise = (async () => {
+    const parameterName = process.env.GITHUB_TOKEN_PARAMETER;
+    if (parameterName) {
+      const response = await ssm.send(new GetParameterCommand({
+        Name: parameterName,
+        WithDecryption: true,
+      }));
+      const parameterValue = response?.Parameter?.Value?.trim();
+      if (parameterValue) {
+        return parameterValue;
+      }
+    }
+
+    return String(process.env.GITHUB_TOKEN || "").trim();
+  })();
+
+  try {
+    return await cachedGitHubTokenPromise;
+  } catch (error) {
+    cachedGitHubTokenPromise = undefined;
+    throw error;
+  }
+}
 
 function getAllowedOrigin(event) {
   const allowedOrigins = String(process.env.ALLOWED_ORIGINS || DEFAULT_ALLOWED_ORIGINS)
@@ -384,7 +416,7 @@ async function getInfrastructureStatus() {
 }
 
 async function getDeployHistory() {
-  const token = process.env.GITHUB_TOKEN;
+  const token = await getGitHubToken();
   const owner = process.env.GITHUB_OWNER;
   const repo = process.env.GITHUB_REPO;
   const workflowFile = process.env.GITHUB_WORKFLOW_FILE || "deploy.yml";

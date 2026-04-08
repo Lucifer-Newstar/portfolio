@@ -1,3 +1,38 @@
+import { GetParameterCommand, SSMClient } from "@aws-sdk/client-ssm";
+
+const REGION = process.env.AWS_REGION || "us-east-1";
+const ssm = new SSMClient({ region: REGION });
+let cachedGitHubTokenPromise;
+
+async function getGitHubToken() {
+  if (cachedGitHubTokenPromise) {
+    return cachedGitHubTokenPromise;
+  }
+
+  cachedGitHubTokenPromise = (async () => {
+    const parameterName = process.env.GITHUB_TOKEN_PARAMETER;
+    if (parameterName) {
+      const response = await ssm.send(new GetParameterCommand({
+        Name: parameterName,
+        WithDecryption: true,
+      }));
+      const parameterValue = response?.Parameter?.Value?.trim();
+      if (parameterValue) {
+        return parameterValue;
+      }
+    }
+
+    return String(process.env.GITHUB_TOKEN || "").trim();
+  })();
+
+  try {
+    return await cachedGitHubTokenPromise;
+  } catch (error) {
+    cachedGitHubTokenPromise = undefined;
+    throw error;
+  }
+}
+
 function corsHeaders(event) {
   const allowedOrigins = String(process.env.ALLOWED_ORIGINS || "http://localhost:5173,https://lucifernewstar-2006.xyz")
     .split(",")
@@ -93,7 +128,7 @@ export const handler = async (event) => {
 
     const source = String(body?.source || "admin-dashboard").slice(0, 64);
 
-    const token = process.env.GITHUB_TOKEN;
+    const token = await getGitHubToken();
     const owner = process.env.GITHUB_OWNER;
     const repo = process.env.GITHUB_REPO;
     const workflowFile = process.env.GITHUB_WORKFLOW_FILE || "deploy.yml";
@@ -104,7 +139,7 @@ export const handler = async (event) => {
         statusCode: 500,
         headers: corsHeaders(event),
         body: JSON.stringify({
-          error: "Deploy lambda misconfigured. Missing GITHUB_TOKEN/GITHUB_OWNER/GITHUB_REPO.",
+          error: "Deploy lambda misconfigured. Missing GitHub token, owner, or repo configuration.",
         }),
       };
     }
