@@ -90,7 +90,14 @@ function AdminDashboard() {
             </button>
             <button
               type="button"
-              onClick={saveSiteContent}
+              onClick={async () => {
+                try {
+                  await saveSiteContent()
+                  alert('Dashboard content saved successfully.')
+                } catch (error) {
+                  alert(`Save failed: ${error.message}`)
+                }
+              }}
               className="btn btn-primary"
               disabled={!hasUnsavedChanges}
             >

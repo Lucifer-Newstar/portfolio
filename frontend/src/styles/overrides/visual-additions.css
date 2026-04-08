@@ -1,0 +1,176 @@
+.page-hero,
+.page-section,
+.section-header,
+.bento-card,
+.feature-card,
+.project-card,
+.post-card,
+.cert-card,
+.timeline-card,
+.widget-card,
+.rail-card,
+.step-card {
+  position: relative;
+}
+
+/* Section atmosphere rails */
+.page-section::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.2rem;
+  width: 4.2rem;
+  height: 2px;
+  border-radius: 999px;
+  opacity: 0.65;
+  pointer-events: none;
+}
+
+.page-section::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0.1rem;
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 999px;
+  pointer-events: none;
+}
+
+/* Additive card sheen without changing base colors */
+.bento-card::selection,
+.feature-card::selection,
+.project-card::selection,
+.post-card::selection,
+.cert-card::selection {
+  background: rgba(255, 210, 126, 0.35);
+}
+
+.bento-card::after,
+.feature-card::after,
+.project-card::after,
+.post-card::after,
+.cert-card::after,
+.timeline-card::after,
+.widget-card::after,
+.rail-card::after,
+.step-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.24;
+  background:
+    radial-gradient(circle at 92% 12%, rgba(255, 255, 255, 0.32), transparent 24%),
+    linear-gradient(115deg, transparent 0%, rgba(255, 255, 255, 0.08) 36%, transparent 62%);
+}
+
+.bento-card:hover::after,
+.feature-card:hover::after,
+.project-card:hover::after,
+.post-card:hover::after,
+.cert-card:hover::after,
+.timeline-card:hover::after,
+.widget-card:hover::after,
+.rail-card:hover::after,
+.step-card:hover::after {
+  opacity: 0.36;
+}
+
+/* Hero and heading ornaments */
+.page-hero h1::before,
+.hero-title::after {
+  content: '';
+  position: absolute;
+  right: -0.9rem;
+  top: -0.3rem;
+  width: 0.42rem;
+  height: 0.42rem;
+  border-radius: 999px;
+  pointer-events: none;
+}
+
+.section-header h2::before {
+  content: '';
+  position: absolute;
+  left: -1.1rem;
+  top: 0.5rem;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 999px;
+  pointer-events: none;
+}
+
+/* Theme-specific visual language */
+[data-theme="light"] .page-section::before {
+  background: linear-gradient(90deg, rgba(227, 116, 63, 0.86), rgba(244, 195, 88, 0.78), rgba(65, 86, 209, 0.18));
+  box-shadow: 0 0 14px rgba(227, 116, 63, 0.16);
+}
+
+[data-theme="light"] .page-section::after,
+[data-theme="light"] .page-hero h1::before,
+[data-theme="light"] .hero-title::after,
+[data-theme="light"] .section-header h2::before {
+  background: radial-gradient(circle at 35% 35%, rgba(255, 239, 201, 0.95), rgba(227, 116, 63, 0.72));
+  box-shadow: 0 0 14px rgba(227, 116, 63, 0.22);
+}
+
+[data-theme="dark"] .page-section::before {
+  background: linear-gradient(90deg, rgba(105, 226, 255, 0.92), rgba(146, 119, 255, 0.84), rgba(109, 232, 215, 0.2));
+  box-shadow: 0 0 16px rgba(105, 226, 255, 0.2);
+}
+
+[data-theme="dark"] .page-section::after,
+[data-theme="dark"] .page-hero h1::before,
+[data-theme="dark"] .hero-title::after,
+[data-theme="dark"] .section-header h2::before {
+  background: radial-gradient(circle at 35% 35%, rgba(219, 247, 255, 0.96), rgba(105, 226, 255, 0.72));
+  box-shadow: 0 0 16px rgba(105, 226, 255, 0.24);
+}
+
+[data-theme="dark"] .bento-card::after,
+[data-theme="dark"] .feature-card::after,
+[data-theme="dark"] .project-card::after,
+[data-theme="dark"] .post-card::after,
+[data-theme="dark"] .cert-card::after,
+[data-theme="dark"] .timeline-card::after,
+[data-theme="dark"] .widget-card::after,
+[data-theme="dark"] .rail-card::after,
+[data-theme="dark"] .step-card::after {
+  background:
+    radial-gradient(circle at 90% 14%, rgba(105, 226, 255, 0.24), transparent 24%),
+    linear-gradient(115deg, transparent 0%, rgba(146, 119, 255, 0.1) 36%, transparent 62%);
+}
+
+/* Project and posts extra identity bands */
+.projects-shell .projects-bento-grid::before,
+.posts-shell .posts-grid::before {
+  content: '';
+  position: absolute;
+  inset: -0.35rem 0 auto;
+  height: 1px;
+  pointer-events: none;
+  opacity: 0.58;
+}
+
+[data-theme="light"] .projects-shell .projects-bento-grid::before,
+[data-theme="light"] .posts-shell .posts-grid::before {
+  background: linear-gradient(90deg, rgba(227, 116, 63, 0.22), rgba(244, 195, 88, 0.65), rgba(227, 116, 63, 0.22));
+}
+
+[data-theme="dark"] .projects-shell .projects-bento-grid::before,
+[data-theme="dark"] .posts-shell .posts-grid::before {
+  background: linear-gradient(90deg, rgba(105, 226, 255, 0.2), rgba(146, 119, 255, 0.64), rgba(105, 226, 255, 0.2));
+}
+
+@media (max-width: 768px) {
+  .page-section::before {
+    width: 3.2rem;
+  }
+
+  .page-hero h1::before,
+  .hero-title::after,
+  .section-header h2::before {
+    display: none;
+  }
+}

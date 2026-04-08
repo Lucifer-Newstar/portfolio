@@ -1,0 +1,348 @@
+:root {
+  --scroll-progress: 0;
+  --scroll-velocity: 0;
+}
+
+/* Cinematic scene layers */
+.advanced-cinematic-layer,
+.advanced-telemetry-layer {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.cinematic-fog,
+.cinematic-beam,
+.telemetry-orbit,
+.telemetry-node {
+  position: absolute;
+  will-change: transform, opacity;
+}
+
+.cinematic-fog {
+  border-radius: 999px;
+  filter: blur(26px);
+  opacity: calc(0.28 + var(--scroll-velocity) * 0.18);
+}
+
+.cinematic-fog-a {
+  width: 32rem;
+  height: 32rem;
+  left: -8rem;
+  top: calc(14% + (var(--scroll-progress) * 24%));
+  transform: translate3d(0, calc(var(--scroll-progress) * -4rem), 0);
+}
+
+.cinematic-fog-b {
+  width: 28rem;
+  height: 28rem;
+  right: -6rem;
+  top: calc(58% - (var(--scroll-progress) * 16%));
+  transform: translate3d(0, calc(var(--scroll-progress) * 3rem), 0);
+}
+
+.cinematic-beam {
+  width: min(38rem, 74vw);
+  height: 1px;
+  opacity: calc(0.24 + var(--scroll-velocity) * 0.26);
+  transform-origin: center;
+}
+
+.cinematic-beam-a {
+  left: -4rem;
+  top: calc(28% + (var(--scroll-progress) * 12%));
+  transform: rotate(12deg);
+}
+
+.cinematic-beam-b {
+  right: -8rem;
+  top: calc(66% - (var(--scroll-progress) * 10%));
+  transform: rotate(-14deg);
+}
+
+/* Ambient telemetry */
+.telemetry-orbit {
+  border-radius: 999px;
+  border: 1px solid transparent;
+  animation: telemetrySpin linear infinite;
+}
+
+.telemetry-orbit-a {
+  width: 8.5rem;
+  height: 8.5rem;
+  right: 5vw;
+  top: 17vh;
+  animation-duration: 16s;
+}
+
+.telemetry-orbit-b {
+  width: 5rem;
+  height: 5rem;
+  left: 4vw;
+  bottom: 14vh;
+  animation-duration: 12s;
+  animation-direction: reverse;
+}
+
+.telemetry-node {
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 999px;
+  animation: telemetryPulse ease-in-out infinite;
+}
+
+.telemetry-node-a {
+  right: 11vw;
+  top: 24vh;
+  animation-duration: 3.8s;
+}
+
+.telemetry-node-b {
+  left: 10vw;
+  bottom: 20vh;
+  animation-duration: 4.4s;
+}
+
+.telemetry-node-c {
+  right: 34vw;
+  top: 10vh;
+  animation-duration: 5.1s;
+}
+
+/* Advanced pointer aura */
+.advanced-pointer-aura {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 999px;
+  pointer-events: none;
+  z-index: 1205;
+  transform: translate3d(-120px, -120px, 0);
+  transition:
+    box-shadow 220ms ease,
+    background 220ms ease,
+    width 220ms ease,
+    height 220ms ease;
+}
+
+.advanced-pointer-aura::before {
+  content: '';
+  position: absolute;
+  inset: -0.6rem;
+  border-radius: inherit;
+  opacity: 0.8;
+}
+
+.advanced-pointer-neutral {
+  width: 0.85rem;
+  height: 0.85rem;
+}
+
+.advanced-pointer-navigate {
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+.advanced-pointer-action {
+  width: 1.35rem;
+  height: 1.35rem;
+}
+
+.advanced-pointer-inspect {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+/* Signature motion choreography */
+[data-reveal] {
+  animation-duration: calc(420ms + (var(--scroll-velocity) * 260ms));
+}
+
+body[data-scene-seed="projects"] .projects-bento-grid .project-card {
+  animation: sceneRise 760ms both;
+}
+
+body[data-scene-seed="skills"] .skills-grid .skill-category {
+  animation: sceneRise 700ms both;
+}
+
+body[data-scene-seed="posts"] .posts-grid .post-card {
+  animation: sceneRise 680ms both;
+}
+
+/* Adaptive heading kinetics */
+.page-hero h1,
+.hero-title,
+.section-header h2 {
+  text-shadow:
+    0 0 calc(2px + var(--scroll-velocity) * 5px) rgba(255, 255, 255, 0.05),
+    0 0 calc(8px + var(--scroll-velocity) * 12px) rgba(255, 255, 255, 0.04);
+}
+
+/* Expressive but accessible interactive states */
+.btn:focus-visible,
+.picker-chip:focus-visible,
+.tech-badge:focus-visible,
+.nav-radial-link:focus-visible,
+.command-tile:focus-visible {
+  outline: 2px solid transparent;
+  box-shadow:
+    0 0 0 2px rgba(255, 255, 255, 0.18),
+    0 0 0 5px rgba(255, 255, 255, 0.08);
+}
+
+/* Light theme advanced language */
+[data-theme="light"] .cinematic-fog-a {
+  background: radial-gradient(circle at 30% 30%, rgba(255, 232, 189, 0.58), rgba(226, 116, 63, 0.16));
+}
+
+[data-theme="light"] .cinematic-fog-b {
+  background: radial-gradient(circle at 35% 35%, rgba(255, 240, 214, 0.62), rgba(66, 86, 209, 0.14));
+}
+
+[data-theme="light"] .cinematic-beam {
+  background: linear-gradient(90deg, transparent, rgba(226, 116, 63, 0.56), rgba(243, 195, 88, 0.74), transparent);
+}
+
+[data-theme="light"] .telemetry-orbit {
+  border-color: rgba(186, 125, 61, 0.32);
+  box-shadow: 0 0 16px rgba(226, 116, 63, 0.14);
+}
+
+[data-theme="light"] .telemetry-node {
+  background: radial-gradient(circle at 35% 35%, rgba(255, 247, 225, 0.96), rgba(226, 116, 63, 0.82));
+  box-shadow:
+    0 0 0 0.25rem rgba(226, 116, 63, 0.08),
+    0 0 14px rgba(226, 116, 63, 0.2);
+}
+
+[data-theme="light"] .advanced-pointer-aura {
+  background: radial-gradient(circle at 35% 35%, rgba(255, 243, 215, 0.95), rgba(226, 116, 63, 0.74));
+  box-shadow: 0 0 18px rgba(226, 116, 63, 0.22);
+}
+
+[data-theme="light"] .advanced-pointer-aura::before {
+  background: radial-gradient(circle, rgba(255, 225, 181, 0.4), transparent 72%);
+}
+
+[data-theme="light"] .btn:focus-visible,
+[data-theme="light"] .picker-chip:focus-visible,
+[data-theme="light"] .tech-badge:focus-visible,
+[data-theme="light"] .nav-radial-link:focus-visible,
+[data-theme="light"] .command-tile:focus-visible {
+  box-shadow:
+    0 0 0 2px rgba(255, 247, 230, 0.84),
+    0 0 0 5px rgba(226, 116, 63, 0.24);
+}
+
+/* Dark theme advanced language */
+[data-theme="dark"] .cinematic-fog-a {
+  background: radial-gradient(circle at 35% 35%, rgba(105, 226, 255, 0.34), rgba(102, 74, 228, 0.18));
+}
+
+[data-theme="dark"] .cinematic-fog-b {
+  background: radial-gradient(circle at 30% 30%, rgba(146, 119, 255, 0.34), rgba(109, 232, 215, 0.14));
+}
+
+[data-theme="dark"] .cinematic-beam {
+  background: linear-gradient(90deg, transparent, rgba(105, 226, 255, 0.5), rgba(146, 119, 255, 0.72), transparent);
+}
+
+[data-theme="dark"] .telemetry-orbit {
+  border-color: rgba(105, 226, 255, 0.34);
+  box-shadow: 0 0 18px rgba(105, 226, 255, 0.16);
+}
+
+[data-theme="dark"] .telemetry-node {
+  background: radial-gradient(circle at 35% 35%, rgba(233, 249, 255, 0.95), rgba(105, 226, 255, 0.8));
+  box-shadow:
+    0 0 0 0.25rem rgba(105, 226, 255, 0.11),
+    0 0 16px rgba(105, 226, 255, 0.24);
+}
+
+[data-theme="dark"] .advanced-pointer-aura {
+  background: radial-gradient(circle at 35% 35%, rgba(222, 247, 255, 0.96), rgba(105, 226, 255, 0.74));
+  box-shadow: 0 0 20px rgba(105, 226, 255, 0.24);
+}
+
+[data-theme="dark"] .advanced-pointer-aura::before {
+  background: radial-gradient(circle, rgba(105, 226, 255, 0.34), transparent 72%);
+}
+
+[data-theme="dark"] .btn:focus-visible,
+[data-theme="dark"] .picker-chip:focus-visible,
+[data-theme="dark"] .tech-badge:focus-visible,
+[data-theme="dark"] .nav-radial-link:focus-visible,
+[data-theme="dark"] .command-tile:focus-visible {
+  box-shadow:
+    0 0 0 2px rgba(208, 244, 255, 0.48),
+    0 0 0 5px rgba(105, 226, 255, 0.26);
+}
+
+/* Device-aware rendering tiers */
+:root[data-visual-tier="low"] .advanced-cinematic-layer,
+:root[data-visual-tier="low"] .advanced-telemetry-layer,
+:root[data-visual-tier="low"] .advanced-pointer-aura {
+  display: none;
+}
+
+:root[data-visual-tier="mid"] .cinematic-fog-b,
+:root[data-visual-tier="mid"] .telemetry-node-c {
+  display: none;
+}
+
+@media (max-width: 980px) {
+  .advanced-cinematic-layer,
+  .advanced-telemetry-layer {
+    opacity: 0.72;
+  }
+}
+
+@media (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .advanced-cinematic-layer,
+  .advanced-telemetry-layer,
+  .advanced-pointer-aura {
+    display: none;
+  }
+
+  .page-hero h1,
+  .hero-title,
+  .section-header h2 {
+    text-shadow: none;
+  }
+}
+
+@keyframes telemetrySpin {
+  from {
+    transform: rotate(0deg) scale(0.96);
+  }
+  to {
+    transform: rotate(360deg) scale(1.04);
+  }
+}
+
+@keyframes telemetryPulse {
+  0%,
+  100% {
+    transform: scale(0.88);
+    opacity: 0.74;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+}
+
+@keyframes sceneRise {
+  from {
+    transform: translate3d(0, 14px, 0);
+    opacity: 0.84;
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+}

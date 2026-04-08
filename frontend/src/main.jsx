@@ -8,6 +8,8 @@ import './styles/overrides/interaction.css'
 import './styles/overrides/home-hero.css'
 import './styles/overrides/admin-content.css'
 import './styles/overrides/scroll-story.css'
+import './styles/overrides/visual-additions.css'
+import './styles/overrides/advanced-visuals.css'
 import { ThemeProvider } from './context/ThemeContext'
 import { SiteContentProvider } from './context/SiteContentContext'
 

@@ -224,7 +224,19 @@ function ContentManager() {
             <button type="button" className="btn btn-secondary btn-sm" onClick={handleExport}>
               Export JSON
             </button>
-            <button type="button" className="btn btn-primary btn-sm" onClick={saveSiteContent} disabled={!hasUnsavedChanges}>
+            <button
+              type="button"
+              className="btn btn-primary btn-sm"
+              onClick={async () => {
+                try {
+                  await saveSiteContent()
+                  alert('Content saved to cloud and local draft.')
+                } catch (error) {
+                  alert(`Save failed: ${error.message}`)
+                }
+              }}
+              disabled={!hasUnsavedChanges}
+            >
               {managerContent?.saveLabel ?? 'Save content'}
             </button>
             <button type="button" className="btn btn-secondary btn-sm" onClick={discardDraftChanges} disabled={!hasUnsavedChanges}>

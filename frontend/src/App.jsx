@@ -9,6 +9,7 @@ import ThemeAtmosphere from './components/ThemeAtmosphere'
 import Breadcrumbs from './components/Breadcrumbs'
 import ScrollProgress from './components/ScrollProgress'
 import InteractionEffects from './components/InteractionEffects'
+import AdvancedVisualOverlays from './components/AdvancedVisualOverlays'
 
 // Public pages
 import Home from './pages/public/Home'
@@ -34,6 +35,7 @@ function AppFrame() {
       <PageThemeHandler />
       <ParticleBackground />
       <ThemeAtmosphere />
+      <AdvancedVisualOverlays />
       <InteractionEffects />
       <ScrollAnimations />
       {!isAdminRoute && <ScrollProgress />}

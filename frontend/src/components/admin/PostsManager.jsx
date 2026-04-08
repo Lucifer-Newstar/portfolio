@@ -12,7 +12,7 @@ function PostsManager() {
   useEffect(() => {
     const loadPosts = async () => {
       try {
-        const data = await fetchPosts()
+        const data = await fetchPosts({ includeHidden: true })
         setPosts(Array.isArray(data) ? data : [])
       } finally {
         setLoading(false)
@@ -23,7 +23,7 @@ function PostsManager() {
   }, [])
 
   const refreshPosts = async () => {
-    const data = await fetchPosts()
+    const data = await fetchPosts({ includeHidden: true })
     setPosts(Array.isArray(data) ? data : [])
   }
 

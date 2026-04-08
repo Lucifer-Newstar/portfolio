@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { deepCloneContent, mergeWithDefaultContent } from '../content/siteContent'
 import { SiteContentContext } from './site-content-context'
+import { fetchSiteContentRemote, saveSiteContentRemote } from '../utils/api'
 
 const STORAGE_KEY = 'portfolio-site-content-v1'
 const DRAFT_STORAGE_KEY = 'portfolio-site-content-draft-v1'
@@ -34,6 +35,26 @@ export function SiteContentProvider({ children }) {
   const previewDraft = isDraftPreviewMode()
 
   useEffect(() => {
+    let mounted = true
+
+    const loadRemoteContent = async () => {
+      const remote = await fetchSiteContentRemote()
+      if (!remote || !mounted) return
+
+      const merged = mergeWithDefaultContent(remote)
+      setSavedContent(merged)
+      setDraftContent(merged)
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(merged))
+      localStorage.setItem(DRAFT_STORAGE_KEY, JSON.stringify(merged))
+    }
+
+    loadRemoteContent()
+    return () => {
+      mounted = false
+    }
+  }, [])
+
+  useEffect(() => {
     localStorage.setItem(DRAFT_STORAGE_KEY, JSON.stringify(draftContent))
   }, [draftContent])
 
@@ -42,7 +63,7 @@ export function SiteContentProvider({ children }) {
     [draftContent, savedContent],
   )
 
-  const saveSiteContent = useCallback(() => {
+  const saveSiteContent = useCallback(async () => {
     const snapshot = JSON.parse(JSON.stringify(draftContent))
     const savedAt = new Date().toISOString()
 
@@ -51,6 +72,7 @@ export function SiteContentProvider({ children }) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(snapshot))
     localStorage.setItem(DRAFT_STORAGE_KEY, JSON.stringify(snapshot))
     localStorage.setItem(SAVED_AT_STORAGE_KEY, savedAt)
+    await saveSiteContentRemote(snapshot)
   }, [draftContent])
 
   const discardDraftChanges = useCallback(() => {
