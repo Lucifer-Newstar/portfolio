@@ -17,8 +17,9 @@ export function getAdminAuthConfig() {
   const cognitoDomain = import.meta.env.VITE_COGNITO_DOMAIN || 'https://us-east-1iwnapdbk8.auth.us-east-1.amazoncognito.com'
   return {
     cognitoDomain,
-    clientId: import.meta.env.VITE_COGNITO_CLIENT_ID || '2kqig6fjtjb5rot22ccttr398n',
+    clientId: import.meta.env.VITE_COGNITO_CLIENT_ID || '7tdl4lp5g8iiam88m38737di4h',
     redirectUri: import.meta.env.VITE_COGNITO_REDIRECT_URI || `${getOrigin()}/callback`,
+    scope: import.meta.env.VITE_COGNITO_SCOPE || 'openid email phone',
     tokenEndpoint: `${cognitoDomain}/oauth2/token`,
   }
 }
@@ -34,10 +35,20 @@ function randomString(length = 64) {
   return result
 }
 
+async function sha256Base64Url(input) {
+  const encoder = new TextEncoder()
+  const data = encoder.encode(input)
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data)
+  const hashArray = Array.from(new Uint8Array(hashBuffer))
+  const base64 = btoa(String.fromCharCode(...hashArray))
+  return base64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '')
+}
+
 export async function createAdminLoginUrl() {
-  const { cognitoDomain, clientId, redirectUri } = getAdminAuthConfig()
+  const { cognitoDomain, clientId, redirectUri, scope } = getAdminAuthConfig()
   const state = randomString(40)
   const codeVerifier = randomString(96)
+  const codeChallenge = await sha256Base64Url(codeVerifier)
   if (isBrowser()) {
     sessionStorage.setItem(STATE_KEY, state)
     sessionStorage.setItem(VERIFIER_KEY, codeVerifier)
@@ -47,9 +58,10 @@ export async function createAdminLoginUrl() {
     response_type: 'code',
     client_id: clientId,
     redirect_uri: redirectUri,
+    scope,
     state,
-    code_challenge_method: 'plain',
-    code_challenge: codeVerifier,
+    code_challenge_method: 'S256',
+    code_challenge: codeChallenge,
   })
 
   return `${cognitoDomain}/login?${params.toString()}`
