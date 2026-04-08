@@ -69,11 +69,12 @@ Use these docs for full detail:
 ## 5. Security and Access Notes
 
 - Admin area uses hidden route + Cognito login flow entry.
-- Session handling currently uses fallback session strategy post callback.
+- Session handling now uses OAuth code exchange against Cognito `/oauth2/token` (no local-only auth fallback).
 - Sensitive values should remain in environment variables, AWS Systems Manager/Secrets Manager, and GitHub secrets.
 - Contact email sender requires SES identity verification and least-privilege IAM.
 - Do not store GitHub Personal Access Tokens in repository docs or committed code.
 - Rotate any token that was previously written in plaintext.
+- Admin write/deploy APIs require bearer token validation via Cognito userinfo endpoint.
 
 ## 6. Operational Notes
 

@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { completeFallbackAdminSession } from '../../utils/adminAuth'
+import { completeAdminSessionFromCallback } from '../../utils/adminAuth'
 
 function Callback() {
   const navigate = useNavigate()
@@ -11,12 +11,16 @@ function Callback() {
     const code = params.get('code')
     const state = params.get('state')
 
-    if (code) {
-      const completed = completeFallbackAdminSession(state)
+    const complete = async () => {
+      if (!code) {
+        navigate('/')
+        return
+      }
+      const completed = await completeAdminSessionFromCallback(code, state)
       navigate(completed ? '/lucifer-newstar_dashboard' : '/')
-    } else {
-      navigate('/')
     }
+
+    complete()
   }, [location, navigate])
 
   return <div className="container text-center mt-4">Processing login...</div>

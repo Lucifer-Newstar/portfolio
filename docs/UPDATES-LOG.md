@@ -20,9 +20,11 @@ This log captures major functional and visual updates currently present in the w
 
 - Admin route protected with `ProtectedRoute`.
 - Cognito Hosted UI login link generation through `adminAuth`.
-- Callback flow writes fallback admin session.
+- Callback now exchanges authorization code with Cognito `/oauth2/token`.
+- PKCE-like verifier flow (plain challenge) added and validated with `state`.
+- Access token is stored in session storage with expiry checks.
 - Admin logout clears session.
-- Current model is fallback session-based post-callback (not PKCE token exchange).
+- Removed insecure local fallback admin session.
 
 ## 3. Content Persistence and Cloud Sync
 
@@ -30,6 +32,7 @@ This log captures major functional and visual updates currently present in the w
 - Added remote site content snapshot mechanism using hidden posts record `__site-content__`.
 - Added save operations to sync local + remote.
 - Added admin save feedback UX.
+- Save writes now go through authenticated `POST /admin/content` only (legacy insecure write fallback removed).
 
 ## 4. Admin Dashboard UX
 
@@ -107,6 +110,18 @@ This log captures major functional and visual updates currently present in the w
 - Error messaging improved around deploy/contact submission paths.
 - Backend contact payload validation added (name/email/message constraints).
 - CORS-friendly Lambda responses standardized in new contact function.
+- Added bearer-token validation on:
+- `POST /admin/content`
+- `POST /admin/deploy`
+- Added Cognito userInfo verification in admin-write lambdas.
+- Added request payload validation and size limit (1 MB) for site-content save.
+- Tightened IAM on `lambda-dynamodb-role`:
+- detached broad managed policies:
+- `AmazonDynamoDBFullAccesswithDataPipeline`
+- `AmazonDynamoDBFullAccess`
+- `AmazonDynamoDBFullAccess_v2`
+- expanded and promoted `lambda-dynamodb-custom-policy` to include only required tables:
+- `skills`, `projects`, `experience`, `certifications`, `posts`, `site_content`
 
 ## 11. Commit Lineage Snapshot (Recent)
 

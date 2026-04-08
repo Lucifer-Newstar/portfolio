@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { getCurrentUser } from 'aws-amplify/auth'
 import LoginButton from './LoginButton'
-import { hasFallbackAdminSession } from '../utils/adminAuth'
+import { hasAdminSession } from '../utils/adminAuth'
 
 function ProtectedRoute({ children }) {
   const [status, setStatus] = useState('checking')
@@ -15,7 +15,7 @@ function ProtectedRoute({ children }) {
         if (mounted) setStatus('authenticated')
       } catch {
         if (mounted) {
-          setStatus(hasFallbackAdminSession() ? 'authenticated' : 'unauthenticated')
+          setStatus(hasAdminSession() ? 'authenticated' : 'unauthenticated')
         }
       }
     }

@@ -13,6 +13,10 @@ Resources:
       Runtime: nodejs20.x
       MemorySize: 128
       Timeout: 10
+      Environment:
+        Variables:
+          COGNITO_USERINFO_URL: https://us-east-1iwnapdbk8.auth.us-east-1.amazoncognito.com/oauth2/userInfo
+          ALLOWED_ORIGINS: http://localhost:5173,https://lucifernewstar-2006.xyz
       Policies:
         - DynamoDBCrudPolicy:
             TableName: site_content

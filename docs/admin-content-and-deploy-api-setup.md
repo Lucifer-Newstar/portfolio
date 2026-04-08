@@ -19,9 +19,12 @@ This project now expects API routes for admin content persistence and deploy tri
 
 `frontend/src/utils/api.js` now does:
 - site content load/save via `/admin/content` first
-- fallback to posts-based system record for backward compatibility
+- save writes only through `/admin/content` (no insecure write fallback)
+- read fallback to posts-based system record remains for legacy compatibility
 - deploy button via `/admin/deploy` first
 - fallback to `VITE_DEPLOY_WEBHOOK_URL` if API deploy route fails
+
+Admin write/deploy requests now attach `Authorization: Bearer <access_token>` from Cognito callback session.
 
 ## 3. Deploy Lambda Config (`deploy-website`)
 
@@ -73,3 +76,10 @@ Recommended response headers:
 ## 7. Security note
 
 Do not keep PAT values in repository files. Prefer AWS Secrets Manager/SSM and rotate any exposed token.
+
+## 8. Admin endpoint auth guard
+
+- `POST /admin/content` and `POST /admin/deploy` validate bearer tokens using `COGNITO_USERINFO_URL`.
+- Configure lambda environment variables:
+  - `COGNITO_USERINFO_URL=https://<your-cognito-domain>/oauth2/userInfo`
+  - `ALLOWED_ORIGINS=http://localhost:5173,https://lucifernewstar-2006.xyz`

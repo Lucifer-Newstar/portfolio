@@ -1,3 +1,5 @@
+import { getAdminAccessToken } from './adminAuth'
+
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://6e2n1oy6k9.execute-api.us-east-1.amazonaws.com/prod'
 const REQUEST_TIMEOUT_MS = 12000
 const SITE_CONTENT_POST_ID = '__site-content__'
@@ -39,12 +41,19 @@ async function handleResponse(response) {
 async function request(path, options = {}) {
   const controller = new AbortController()
   const timeoutId = window.setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS)
+  const includeAdminAuth = options.includeAdminAuth === true
+  const accessToken = includeAdminAuth ? getAdminAccessToken() : ''
+
+  if (includeAdminAuth && !accessToken) {
+    throw new Error('Admin session missing or expired. Please login again.')
+  }
 
   try {
     const response = await fetch(`${API_BASE_URL}${path}`, {
       ...options,
       headers: {
         'Content-Type': 'application/json',
+        ...(includeAdminAuth ? { Authorization: `Bearer ${accessToken}` } : {}),
         ...(options.headers || {}),
       },
       signal: controller.signal,
@@ -93,24 +102,11 @@ export const fetchSiteContentRemote = async () => {
 }
 
 export const saveSiteContentRemote = async (content) => {
-  try {
-    return await request('/admin/content', {
-      method: 'POST',
-      body: JSON.stringify(content),
-    })
-  } catch {
-    const payload = {
-      id: SITE_CONTENT_POST_ID,
-      type: 'system',
-      title: 'Site Content Snapshot',
-      content: JSON.stringify(content),
-      link: '',
-      date: new Date().toISOString(),
-      visible: false,
-      order: 999999,
-    }
-    return request('/posts', { method: 'POST', body: JSON.stringify(payload) })
-  }
+  return request('/admin/content', {
+    method: 'POST',
+    body: JSON.stringify(content),
+    includeAdminAuth: true,
+  })
 }
 
 export const fetchSkills = async () => fetchCollection('/skills')
@@ -166,6 +162,7 @@ export const triggerWebsiteDeploy = async () => {
         source: 'admin-dashboard',
         requestedAt: new Date().toISOString(),
       }),
+      includeAdminAuth: true,
     })
   } catch (apiError) {
     if (!DEPLOY_WEBHOOK_URL) {
