@@ -1,0 +1,27 @@
+{
+    "Role": {
+        "Path": "/",
+        "RoleName": "lambda-dynamodb-role",
+        "RoleId": "AROA6DT4JPPTCEPAZADAP",
+        "Arn": "arn:aws:iam::969849535462:role/lambda-dynamodb-role",
+        "CreateDate": "2026-03-28T18:12:46+00:00",
+        "AssumeRolePolicyDocument": {
+            "Version": "2012-10-17",
+            "Statement": [
+                {
+                    "Effect": "Allow",
+                    "Principal": {
+                        "Service": "lambda.amazonaws.com"
+                    },
+                    "Action": "sts:AssumeRole"
+                }
+            ]
+        },
+        "Description": "Allows Lambda functions to call AWS services on your behalf.",
+        "MaxSessionDuration": 3600,
+        "RoleLastUsed": {
+            "LastUsedDate": "2026-04-08T17:37:06+00:00",
+            "Region": "us-east-1"
+        }
+    }
+}

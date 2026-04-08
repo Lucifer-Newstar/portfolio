@@ -1,0 +1,38 @@
+{
+    "FunctionName": "get-certifications",
+    "FunctionArn": "arn:aws:lambda:us-east-1:969849535462:function:get-certifications",
+    "Runtime": "nodejs24.x",
+    "Role": "arn:aws:iam::969849535462:role/service-role/get-certifications-role-hxeswfu1",
+    "Handler": "index.handler",
+    "CodeSize": 565,
+    "Description": "",
+    "Timeout": 3,
+    "MemorySize": 128,
+    "LastModified": "2026-03-28T19:42:52.000+0000",
+    "CodeSha256": "wB8Pn6fe5sNuXE7SSNTE0uVti3JQHQLM17Hfw1//FZw=",
+    "Version": "$LATEST",
+    "TracingConfig": {
+        "Mode": "PassThrough"
+    },
+    "RevisionId": "d12e9924-84a8-408d-b110-0af502985efd",
+    "State": "Active",
+    "LastUpdateStatus": "Successful",
+    "PackageType": "Zip",
+    "Architectures": [
+        "x86_64"
+    ],
+    "EphemeralStorage": {
+        "Size": 512
+    },
+    "SnapStart": {
+        "ApplyOn": "None",
+        "OptimizationStatus": "Off"
+    },
+    "RuntimeVersionConfig": {
+        "RuntimeVersionArn": "arn:aws:lambda:us-east-1::runtime:b0bb5dea1b12bb0e2c3b50ed434af2fd2d16d383f7324c7b455111008b6112ba"
+    },
+    "LoggingConfig": {
+        "LogFormat": "Text",
+        "LogGroup": "/aws/lambda/get-certifications"
+    }
+}

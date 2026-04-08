@@ -1,0 +1,48 @@
+{
+    "Items": [
+        {
+            "category": {
+                "S": "DevOps & CI/CD"
+            },
+            "concepts": {
+                "M": {
+                    "Images": {
+                        "S": "Intermediate"
+                    }
+                }
+            },
+            "order": {
+                "N": "1"
+            },
+            "id": {
+                "S": "skill-docker"
+            },
+            "name": {
+                "S": "Docker"
+            },
+            "level": {
+                "S": "Learning"
+            }
+        },
+        {
+            "category": {
+                "S": "Testing"
+            },
+            "order": {
+                "N": "2"
+            },
+            "id": {
+                "S": "test-skill"
+            },
+            "level": {
+                "S": "Learning"
+            },
+            "name": {
+                "S": "Test Skill"
+            }
+        }
+    ],
+    "Count": 2,
+    "ScannedCount": 2,
+    "ConsumedCapacity": null
+}

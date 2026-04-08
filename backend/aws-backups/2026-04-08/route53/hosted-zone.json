@@ -1,0 +1,20 @@
+{
+    "HostedZone": {
+        "Id": "/hostedzone/Z02261853G6PLRJZNCNRP",
+        "Name": "lucifernewstar-2006.xyz.",
+        "CallerReference": "ccbe63d6-cc58-4023-8218-d2c0ce69cfd6",
+        "Config": {
+            "Comment": "Portfolio Website",
+            "PrivateZone": false
+        },
+        "ResourceRecordSetCount": 4
+    },
+    "DelegationSet": {
+        "NameServers": [
+            "ns-1171.awsdns-18.org",
+            "ns-1815.awsdns-34.co.uk",
+            "ns-125.awsdns-15.com",
+            "ns-564.awsdns-06.net"
+        ]
+    }
+}

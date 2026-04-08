@@ -1,0 +1,59 @@
+{
+    "Items": [
+        {
+            "content": {
+                "S": "ksadfh"
+            },
+            "date": {
+                "S": "2026-03-29"
+            },
+            "visible": {
+                "BOOL": true
+            },
+            "link": {
+                "S": "https://github.com/Lucifer-Newstar"
+            },
+            "order": {
+                "N": "63"
+            },
+            "id": {
+                "S": "newgit"
+            },
+            "type": {
+                "S": "github"
+            },
+            "title": {
+                "S": "Gitgub"
+            }
+        },
+        {
+            "content": {
+                "S": "Testing from Lambda"
+            },
+            "date": {
+                "S": "2026-03-29"
+            },
+            "visible": {
+                "BOOL": true
+            },
+            "link": {
+                "S": ""
+            },
+            "order": {
+                "N": "998"
+            },
+            "id": {
+                "S": "test-lambda-1"
+            },
+            "title": {
+                "S": "Lambda Test"
+            },
+            "type": {
+                "S": "manual"
+            }
+        }
+    ],
+    "Count": 2,
+    "ScannedCount": 2,
+    "ConsumedCapacity": null
+}

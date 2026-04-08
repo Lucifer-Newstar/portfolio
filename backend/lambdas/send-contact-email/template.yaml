@@ -21,6 +21,7 @@ Resources:
       Description: ''
       Environment:
         Variables:
+          ALLOWED_ORIGINS: http://localhost:5173,https://lucifernewstar-2006.xyz
           CONTACT_SOURCE_EMAIL: navin.jairam@gmail.com
           CONTACT_TARGET_EMAIL: navin.jairam@gmail.com
       EphemeralStorage:
@@ -45,4 +46,9 @@ Resources:
           Type: Api
           Properties:
             Method: POST
+            Path: /contact
+        Trigger1Options:
+          Type: Api
+          Properties:
+            Method: OPTIONS
             Path: /contact

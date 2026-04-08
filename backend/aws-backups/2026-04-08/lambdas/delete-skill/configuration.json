@@ -1,0 +1,38 @@
+{
+    "FunctionName": "delete-skill",
+    "FunctionArn": "arn:aws:lambda:us-east-1:969849535462:function:delete-skill",
+    "Runtime": "nodejs24.x",
+    "Role": "arn:aws:iam::969849535462:role/service-role/delete-skill-role-80hllf0x",
+    "Handler": "index.handler",
+    "CodeSize": 1135,
+    "Description": "",
+    "Timeout": 3,
+    "MemorySize": 128,
+    "LastModified": "2026-04-05T08:20:15.000+0000",
+    "CodeSha256": "hVSchGoBam5jBWK4I5mpXTrVlNR75xpyhcGtvweTh4o=",
+    "Version": "$LATEST",
+    "TracingConfig": {
+        "Mode": "PassThrough"
+    },
+    "RevisionId": "2a059bd4-4178-4a26-ad62-98cf017b6943",
+    "State": "Active",
+    "LastUpdateStatus": "Successful",
+    "PackageType": "Zip",
+    "Architectures": [
+        "x86_64"
+    ],
+    "EphemeralStorage": {
+        "Size": 512
+    },
+    "SnapStart": {
+        "ApplyOn": "None",
+        "OptimizationStatus": "Off"
+    },
+    "RuntimeVersionConfig": {
+        "RuntimeVersionArn": "arn:aws:lambda:us-east-1::runtime:b0bb5dea1b12bb0e2c3b50ed434af2fd2d16d383f7324c7b455111008b6112ba"
+    },
+    "LoggingConfig": {
+        "LogFormat": "Text",
+        "LogGroup": "/aws/lambda/delete-skill"
+    }
+}

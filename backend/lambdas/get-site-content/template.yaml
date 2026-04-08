@@ -13,6 +13,9 @@ Resources:
       Runtime: nodejs20.x
       MemorySize: 128
       Timeout: 10
+      Environment:
+        Variables:
+          ALLOWED_ORIGINS: http://localhost:5173,https://lucifernewstar-2006.xyz
       Policies:
         - DynamoDBCrudPolicy:
             TableName: site_content

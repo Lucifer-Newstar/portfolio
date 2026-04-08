@@ -1,0 +1,50 @@
+{
+    "Configuration": {
+        "FunctionName": "save-site-content",
+        "FunctionArn": "arn:aws:lambda:us-east-1:969849535462:function:save-site-content",
+        "Runtime": "nodejs20.x",
+        "Role": "arn:aws:iam::969849535462:role/lambda-dynamodb-role",
+        "Handler": "index.handler",
+        "CodeSize": 3438600,
+        "Description": "",
+        "Timeout": 10,
+        "MemorySize": 128,
+        "LastModified": "2026-04-08T16:13:47.000+0000",
+        "CodeSha256": "3us+B9rO7jWx1DUn/rlCHvK6hr7YOdCgdE7wedn5ds0=",
+        "Version": "$LATEST",
+        "Environment": {
+            "Variables": {
+                "ALLOWED_ORIGINS": "http://localhost:5173,https://lucifernewstar-2006.xyz",
+                "COGNITO_USERINFO_URL": "https://us-east-1iwnapdbk8.auth.us-east-1.amazoncognito.com/oauth2/userInfo"
+            }
+        },
+        "TracingConfig": {
+            "Mode": "PassThrough"
+        },
+        "RevisionId": "507e7088-16b5-4028-a192-fc7e6e26a91a",
+        "State": "Active",
+        "LastUpdateStatus": "Successful",
+        "PackageType": "Zip",
+        "Architectures": [
+            "x86_64"
+        ],
+        "EphemeralStorage": {
+            "Size": 512
+        },
+        "SnapStart": {
+            "ApplyOn": "None",
+            "OptimizationStatus": "Off"
+        },
+        "RuntimeVersionConfig": {
+            "RuntimeVersionArn": "arn:aws:lambda:us-east-1::runtime:2d788b26ac416854c5eb831c9f46cb2e0a0ddcee84b1a9b114acbdfdb644c8c1"
+        },
+        "LoggingConfig": {
+            "LogFormat": "Text",
+            "LogGroup": "/aws/lambda/save-site-content"
+        }
+    },
+    "Code": {
+        "RepositoryType": "S3",
+        "Location": "https://prod-04-2014-tasks.s3.us-east-1.amazonaws.com/snapshots/969849535462/save-site-content-0e4f61cb-3268-4f43-9aee-fcddaefbd388?versionId=7bSccZaxGRFvIFBk6HJnLM1Br23T.LwG&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEDgaCXVzLWVhc3QtMSJHMEUCIDP9ZQywh9Z0Lnz0vYH%2FxGGBjZMkeY0PF95P0WFmpsi1AiEAv1%2F2vYxF8CupyyH%2FH7d04UfISYmI56MduPhZrIGKiA4qiwIIARAAGgw3NDk2Nzg5MDI4MzkiDNV7JrF71lkMUz%2FU5iroAdyNphPMU1O93F%2FpR099slUuPilpTfzjFqq8jR3n6YCL75TnWT38kH4UyToRwp5tEz%2BuPhDrJw0tWZLF9Mllh%2BbHhZxrcgH01Nac%2BTtRIo%2B1uxkd6A8K%2F9M%2BhmE00MZHGCeOld5ihwAF9wyt2JqV%2Fwcey5UNVRdeJ6Sb69Tb2jswPEh9efeUwqoAF1%2F4FvvMHdLJfpJjyKtIa7ApsWgxR2Wg9Sz6thajA%2BCJ%2BLb0xR1plg1zCfLTQTkUze%2B8DVP69wO5DKWIkV16mG6Vp2gBtD2cGFiM9YvffiZSU%2BMzEqY4ksSAHVr9wt4wxerZzgY6jQEs6vAXqgU2CrweScfuDVPmEeE2HrP4k5ZNgjy90jrUjDHPZ7ZDPfMOKsa22j8gv22yKMe85rI9p0LAmI0zec%2BiBlxMhzV4I7rorz0Tp7Seab6mL5HvxNUtxlsDdU7O%2FRo4BBj%2FezyRZhSfMCqg6eX4KThh26y8L2tFRxEy0uLYYy0rfNWWNjcjQZ8BgdQ%3D&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20260408T174740Z&X-Amz-SignedHeaders=host&X-Amz-Expires=600&X-Amz-Credential=ASIA25DCYHY35CNQUEUS%2F20260408%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=99c7a1e96fd903ea53ab7e11dd07bda0dc4d5376a502c0019403f3ade491e18c"
+    }
+}

@@ -1,0 +1,44 @@
+{
+    "Configuration": {
+        "FunctionName": "update-skill",
+        "FunctionArn": "arn:aws:lambda:us-east-1:969849535462:function:update-skill",
+        "Runtime": "nodejs24.x",
+        "Role": "arn:aws:iam::969849535462:role/service-role/update-skill-role-z6v9ygn0",
+        "Handler": "index.handler",
+        "CodeSize": 1073,
+        "Description": "",
+        "Timeout": 3,
+        "MemorySize": 128,
+        "LastModified": "2026-04-05T08:20:16.000+0000",
+        "CodeSha256": "j2cD41tsPdRI96Z2SbpmVFFLy1+pWKHeJLitale3W2I=",
+        "Version": "$LATEST",
+        "TracingConfig": {
+            "Mode": "PassThrough"
+        },
+        "RevisionId": "ee8e597f-ff5b-4047-8e92-8b8631971b15",
+        "State": "Active",
+        "LastUpdateStatus": "Successful",
+        "PackageType": "Zip",
+        "Architectures": [
+            "x86_64"
+        ],
+        "EphemeralStorage": {
+            "Size": 512
+        },
+        "SnapStart": {
+            "ApplyOn": "None",
+            "OptimizationStatus": "Off"
+        },
+        "RuntimeVersionConfig": {
+            "RuntimeVersionArn": "arn:aws:lambda:us-east-1::runtime:b0bb5dea1b12bb0e2c3b50ed434af2fd2d16d383f7324c7b455111008b6112ba"
+        },
+        "LoggingConfig": {
+            "LogFormat": "Text",
+            "LogGroup": "/aws/lambda/update-skill"
+        }
+    },
+    "Code": {
+        "RepositoryType": "S3",
+        "Location": "https://prod-04-2014-tasks.s3.us-east-1.amazonaws.com/snapshots/969849535462/update-skill-62a0793b-9b94-4bc3-8cec-4acdefa7f0e9?versionId=SB7UdtNg_Xk7an5BIdjcq7RFdepnJzE0&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEDUaCXVzLWVhc3QtMSJIMEYCIQDcLmFgv1ZznzjHh%2BGYgDkcHL%2BZTxMR%2FGUSy7g9gadb4QIhAJQlQuwcoE0i9Zh%2BcEtDzbiSyTDyAZEqRJHQ9nV2q658KpQCCP7%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEQABoMNzQ5Njc4OTAyODM5IgyBZHLdR3MhKdlewoIq6AEGRKpK%2B7LyeUHPcct9aUlVbssVoCg8a6Imc6esMY6KMxiPMxUBfFRwq9P5S9pGxTg74p6wMhkzWta%2BL8PHBKPNQ8uY5wZ17mSIA62LaGtpkfoXNG5UIMx42h%2BhB0IO5bQRjXPs0LC3u5AwJOk%2F0ezNHA%2BVNVsW46%2Br98yKikTSq%2FIIODsKBslYSCrDszHK3JmuIJrLZa3%2FbtA1pNSxzxz2ZIxqaT555NuzY6NUGEHA8WH8Q5APdBCeaXfk4wwqA%2Fro4moI%2F%2FwPMU7w5X%2Fxfr%2FO7pSURZG4bnm6nY5BUNfxNW93KPFQ3ZAHMLOi2c4GOowBQPyeIF0w7V%2FTco3ovkGWKWuGPu5YaWdEhwsHckJdDbbZA3b9xcRL2%2F4RQoBQXupUCN9QhN1ayItUk6vF6H6J4qKjfXB8XJMb7%2FvLQLGOHX2AV2CjM%2FKc6IwihIVGPt89hXphWbCyRKsoAgUJHtmHJsJljCmvlC0GMw6wn3oP9QTH%2BR8UJFdMn8y11aQ%3D&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20260408T174841Z&X-Amz-SignedHeaders=host&X-Amz-Expires=600&X-Amz-Credential=ASIA25DCYHY36Y2JIC4Q%2F20260408%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=f5776da114fcbafa06d63daf867f3877fc8ae31f119bed7d3c07d61fd81d9806"
+    }
+}

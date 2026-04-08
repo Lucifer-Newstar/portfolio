@@ -1,0 +1,18 @@
+{
+    "items": [
+        {
+            "id": "2dsvvf",
+            "name": "Empty",
+            "description": "This is a default empty schema model",
+            "schema": "{\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\n  \"title\" : \"Empty Schema\",\n  \"type\" : \"object\"\n}",
+            "contentType": "application/json"
+        },
+        {
+            "id": "gns6si",
+            "name": "Error",
+            "description": "This is a default error schema model",
+            "schema": "{\n  \"$schema\" : \"http://json-schema.org/draft-04/schema#\",\n  \"title\" : \"Error Schema\",\n  \"type\" : \"object\",\n  \"properties\" : {\n    \"message\" : { \"type\" : \"string\" }\n  }\n}",
+            "contentType": "application/json"
+        }
+    ]
+}

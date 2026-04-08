@@ -1,0 +1,17 @@
+{
+    "id": "6e2n1oy6k9",
+    "name": "portfolio-rest-api",
+    "createdDate": "2026-03-29T01:28:45+05:30",
+    "apiKeySource": "HEADER",
+    "endpointConfiguration": {
+        "types": [
+            "REGIONAL"
+        ],
+        "ipAddressType": "dualstack"
+    },
+    "tags": {},
+    "disableExecuteApiEndpoint": false,
+    "rootResourceId": "0dtlakkj48",
+    "securityPolicy": "TLS_1_0",
+    "apiStatus": "AVAILABLE"
+}

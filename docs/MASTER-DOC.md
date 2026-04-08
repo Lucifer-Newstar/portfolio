@@ -1,101 +1,171 @@
-# Portfolio Project — Master Documentation
+# Portfolio Master Doc
 
 Last updated: 2026-04-08
 
-## 1. Executive Summary
+## 1. Project Summary
 
-This project is a production-style portfolio platform with:
-- public website (multi-page, themed, motion-rich)
-- hidden admin dashboard (`/lucifer-newstar_dashboard`)
-- AWS-backed CRUD content APIs
-- cloud-synced editable site content
-- source-specific feed cards (GitHub/LinkedIn/LeetCode/Notion/Other)
-- CI/CD deployment to S3 + CloudFront
-- contact email pipeline via Lambda + SES
+This repository contains a production-style portfolio platform made of:
 
-The previous version of this file was from an early build phase and is now superseded by the architecture and rebuild docs listed below.
+- a public Vite + React SPA in `frontend/`
+- a hidden admin dashboard at `/lucifer-newstar_dashboard`
+- AWS Lambda + API Gateway CRUD and utility APIs
+- Cognito-protected admin write and deploy actions
+- DynamoDB-backed editable site content with chunked storage
+- admin image uploads to S3 under `images/uploads/`
+- GitHub Actions deployment to S3 + CloudFront
+- SES-backed contact form delivery
+- public and admin operations / observability views
+- an AWS recovery snapshot in `backend/aws-backups/2026-04-08/`
 
-## 2. Current Documentation Source of Truth
+Live site:
 
-Use these docs for full detail:
+- `https://lucifernewstar-2006.xyz`
 
-1. [DOCS-INDEX.md](/D:/navin/Resume%20and%20Portfolio/portfolio/docs/DOCS-INDEX.md)
-2. [PROJECT-HIERARCHY.md](/D:/navin/Resume%20and%20Portfolio/portfolio/docs/PROJECT-HIERARCHY.md)
-3. [TECH-STACK-AND-ARCHITECTURE.md](/D:/navin/Resume%20and%20Portfolio/portfolio/docs/TECH-STACK-AND-ARCHITECTURE.md)
-4. [INFRASTRUCTURE-REBUILD-PLAYBOOK.md](/D:/navin/Resume%20and%20Portfolio/portfolio/docs/INFRASTRUCTURE-REBUILD-PLAYBOOK.md)
-5. [UPDATES-LOG.md](/D:/navin/Resume%20and%20Portfolio/portfolio/docs/UPDATES-LOG.md)
-6. [PROJECT-PROGRESS-LOG-2026-03-28_to_2026-04-08.md](/D:/navin/Resume%20and%20Portfolio/portfolio/docs/PROJECT-PROGRESS-LOG-2026-03-28_to_2026-04-08.md)
-7. [contact-email-setup.md](/D:/navin/Resume%20and%20Portfolio/portfolio/docs/contact-email-setup.md)
+## 2. Active Code Paths
 
-## 3. Current Architecture Snapshot
+Important repo truth:
 
-## Frontend
-- React + Vite SPA
-- Route system for public + admin pages
-- layered visual engine (theme-aware overrides, overlays, interaction polish)
-- route-level metadata (`RouteMeta`) for SEO/OG
+- the production app is `frontend/`
+- the root-level `src/` folder is an older stub, not the active site
+- backend Lambda source lives under `backend/lambdas/*/src`
+- API export lives in `backend/api-gateway/portfolio-rest-api-prod-oas30.json`
 
-## Backend
-- API Gateway + Lambda CRUD for `skills/projects/experience/certifications/posts`
-- additional lambdas:
-- `get-site-content` (`GET/OPTIONS /admin/content`)
-- `save-site-content` (`POST /admin/content`)
-- `deploy-website` (`POST/OPTIONS /admin/deploy`)
+## 3. Live Resource Snapshot
+
+### Hosting and edge
+
+- S3 bucket: `navin-portfolio`
+- CloudFront distribution: `ECVS4UV0ZKGHO`
+- Route 53 hosted zone: `lucifernewstar-2006.xyz`
+- ACM certificate ARN: `arn:aws:acm:us-east-1:969849535462:certificate/9ec7d419-495c-4160-86eb-c8cb57a60c45`
+- WAF Web ACL attached to CloudFront
+
+### API and auth
+
+- REST API: `portfolio-rest-api`
+- REST API id: `6e2n1oy6k9`
+- stage: `prod`
+- Cognito user pool: `us-east-1_IWnaPdbK8`
+- Cognito app client: `2kqig6fjtjb5rot22ccttr398n`
+- Cognito domain: `us-east-1iwnapdbk8.auth.us-east-1.amazoncognito.com`
+
+### Data stores
+
+- `skills`
+- `projects`
+- `experience`
+- `certifications`
+- `posts`
+- `site_content`
+
+### Security / config
+
+- shared Lambda role: `lambda-dynamodb-role`
+- SSM token path: `/portfolio/github/token`
+- deployed website URL: `https://lucifernewstar-2006.xyz`
+
+## 4. Lambda Surface
+
+### CRUD handlers
+
+- create / get / update / delete for skills
+- create / get / update / delete for projects
+- create / get / update / delete for experience
+- create / get / update / delete for certifications
+- create / get / update / delete for posts
+
+### Platform handlers
+
 - `fetch-github-activity`
 - `send-contact-email`
-- DynamoDB as primary content store
-- posts table doubles as hidden system-content store for admin content snapshot sync
+- `get-site-content`
+- `save-site-content`
+- `deploy-website`
+- `ops-insights`
+- `upload-admin-image`
 
-## API -> Lambda route map (prod)
-- `GET /admin/content` -> `get-site-content`
-- `POST /admin/content` -> `save-site-content`
-- `OPTIONS /admin/content` -> `get-site-content` (proxy integration for stable CORS headers)
-- `POST /admin/deploy` -> `deploy-website`
-- `OPTIONS /admin/deploy` -> `deploy-website`
+## 5. API Surface
 
-## Delivery
-- CI workflow on PR (`ci.yml`)
-- deploy workflow on push main (`deploy.yml`)
-- S3 sync + CloudFront invalidation
+### Public routes
 
-## 4. Key Functional Capabilities (Now Implemented)
+- entity CRUD routes for skills, projects, experience, certifications, and posts
+- `POST /posts/sync-github`
+- `POST /contact`
+- `GET /ops/summary`
 
-- Admin content editing with save/discard and preview modes.
-- Draft/saved content model with remote sync.
-- Deploy trigger button in admin with explicit error reason output.
-- Contact form submission wired to backend route (`POST /contact`) and SES mail send.
-- Feed cards themed by source platform.
-- Major visual and UX upgrades across pages with light/dark differentiation.
+### Admin routes
 
-## 5. Security and Access Notes
+- `GET /admin/content`
+- `POST /admin/content`
+- `POST /admin/deploy`
+- `GET /admin/ops-insights`
+- `POST /admin/upload-image`
 
-- Admin area uses hidden route + Cognito login flow entry.
-- Session handling now uses OAuth code exchange against Cognito `/oauth2/token` (no local-only auth fallback).
-- Sensitive values should remain in environment variables, AWS Systems Manager/Secrets Manager, and GitHub secrets.
-- Contact email sender requires SES identity verification and least-privilege IAM.
-- Do not store GitHub Personal Access Tokens in repository docs or committed code.
-- Rotate any token that was previously written in plaintext.
-- Admin write/deploy APIs require bearer token validation via Cognito userinfo endpoint.
+Browser-facing routes also require `OPTIONS`.
 
-## 6. Operational Notes
+## 6. Core Runtime Rules
 
-- For contact email to work in production, deploy the contact Lambda and configure SES identities.
-- For admin deploy button to work through API: `deploy.yml` on GitHub default branch must include `workflow_dispatch`.
-- If API deploy trigger is unavailable, optional fallback uses `VITE_DEPLOY_WEBHOOK_URL`.
-- Build status currently passes (`npm run build`).
+- admin mutations validate Cognito bearer tokens on the backend
+- content saves store only override payloads, not the full expanded content tree
+- `site_content` is chunked in DynamoDB to avoid item-size failures
+- embedded base64 image payloads are stripped before save
+- uploaded admin images go to S3 first and content stores only the returned public URL
+- GitHub PAT must come from SSM, not plaintext Lambda env vars
+- deploy workflow must exclude `images/uploads/*` from destructive sync deletes
+- repo backups may be stored in git, but secrets in those backups must be redacted for the repo copy
 
-## 7. Change Control
+## 7. AWS Backup Snapshot
 
-This `MASTER-DOC.md` now acts as a top-level index/summary document.  
-Detailed and evolving technical truth should be maintained in:
-- `PROJECT-HIERARCHY.md`
-- `TECH-STACK-AND-ARCHITECTURE.md`
-- `INFRASTRUCTURE-REBUILD-PLAYBOOK.md`
-- `UPDATES-LOG.md`
-- `PROJECT-PROGRESS-LOG-2026-03-28_to_2026-04-08.md`
+Current backup:
 
-## 8. Current IAM snapshot
+- `backend/aws-backups/2026-04-08/`
 
-- Shared API role: `lambda-dynamodb-role`
-- Contact role: `send-contact-email-role` (inline SES send policy)
-- Deploy trigger lambda currently runs on shared role and calls GitHub REST Actions API.
+Covered services:
+
+- Lambda
+- API Gateway
+- DynamoDB
+- Cognito
+- CloudFront
+- S3
+- Route 53
+- ACM
+- SES
+- IAM
+- WAF
+- SSM
+
+Repo safety notes:
+
+- Cognito `ClientSecret` is redacted in the checked-in backup copy
+- SSM backup stores encrypted SecureString metadata rather than a decrypted token
+- `backend/export-aws-backup.cmd` documents how the snapshot was collected
+
+## 8. Current Verification Status
+
+Completed locally on 2026-04-08:
+
+- frontend lint: passed
+- frontend production build: passed
+
+Still requiring manual or live validation:
+
+- full click-through of all public pages
+- admin login round-trip through Cognito Hosted UI
+- button/card/effect validation across both themes in a real browser
+- live API, SES, deploy, and S3 upload behavior against AWS
+
+Current non-blocking build warnings:
+
+- very large `three-stack` bundle chunk
+- `LinkedDataModal.jsx` is both static and dynamic imported, so intended code-splitting is partially defeated
+
+## 9. Primary Reference Docs
+
+Use these as the source of truth:
+
+1. `docs/INFRASTRUCTURE-REBUILD-PLAYBOOK.md`
+2. `docs/TECH-STACK-AND-ARCHITECTURE.md`
+3. `docs/CRITICAL-ISSUES-WARNINGS-AND-PRECAUTIONS.md`
+4. `docs/VISUAL-EFFECTS-CATALOG.md`
+5. `docs/UPDATES-LOG.md`

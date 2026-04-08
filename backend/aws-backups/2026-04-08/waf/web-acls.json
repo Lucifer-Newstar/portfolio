@@ -1,0 +1,12 @@
+{
+    "NextMarker": "CreatedByCloudFront-6187136a",
+    "WebACLs": [
+        {
+            "Name": "CreatedByCloudFront-6187136a",
+            "Id": "ce93e6ab-a586-4811-8047-a8af4556e879",
+            "Description": "",
+            "LockToken": "c8182be8-3c66-4ae7-9251-018a280916e2",
+            "ARN": "arn:aws:wafv2:us-east-1:969849535462:global/webacl/CreatedByCloudFront-6187136a/ce93e6ab-a586-4811-8047-a8af4556e879"
+        }
+    ]
+}

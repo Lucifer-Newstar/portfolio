@@ -1,36 +1,70 @@
 # Contact Email Setup
 
-The contact form now sends `POST /contact` with:
+Last updated: 2026-04-08
+
+The contact form is backed by:
+
+- `POST /contact`
+- Lambda: `backend/lambdas/send-contact-email/src/index.mjs`
+
+## 1. Frontend Contract
+
+Submitted fields:
+
 - `name`
 - `email`
 - `reason`
 - `message`
 
-Backend Lambda:
-- `backend/lambdas/send-contact-email/src/index.mjs`
+Frontend entry points:
 
-## Required AWS setup
+- `frontend/src/pages/public/Contact.jsx`
+- `frontend/src/utils/api.js`
 
-1. Deploy the new Lambda and API route:
-- `POST /contact`
-- `OPTIONS /contact`
+## 2. Lambda Requirements
 
-2. Configure Lambda environment variables:
+The Lambda must:
+
+- parse JSON
+- validate required fields
+- validate email format
+- reject oversized messages
+- send SES email
+- return allowlisted CORS headers for browser calls
+
+## 3. Required Environment Variables
+
 - `CONTACT_TARGET_EMAIL=navin.jairam@gmail.com`
 - `CONTACT_SOURCE_EMAIL=navin.jairam@gmail.com`
+- `ALLOWED_ORIGINS=http://localhost:5173,https://lucifernewstar-2006.xyz`
 
-3. SES verification:
-- Verify the sender identity for `CONTACT_SOURCE_EMAIL` in SES.
-- If SES account is in sandbox, verify recipient too (or move SES out of sandbox).
+## 4. Required IAM
 
-4. Lambda IAM permissions:
 - `ses:SendEmail`
 - `ses:SendRawEmail`
 
-## Frontend behavior
+## 5. API Gateway Setup
 
-Frontend calls:
-- `submitContactForm()` in `frontend/src/utils/api.js`
-- Contact UI in `frontend/src/pages/public/Contact.jsx`
+Routes:
 
-If API route is not deployed yet, form will show an error message.
+- `POST /contact`
+- `OPTIONS /contact`
+
+## 6. SES Checklist
+
+- verify sender identity
+- verify recipient too if SES is still in sandbox
+- confirm region alignment with Lambda
+
+## 7. Failure Modes and Warnings
+
+- invalid payload should return `400`
+- SES/runtime issues should return `500`
+- wildcard CORS should not be used when the site only needs known origins
+
+## 8. Validation Checklist
+
+- invalid payload is rejected
+- valid payload returns success
+- inbox receives the email
+- browser can submit from localhost and production origin

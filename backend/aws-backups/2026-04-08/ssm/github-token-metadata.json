@@ -1,0 +1,11 @@
+{
+    "Parameter": {
+        "Name": "/portfolio/github/token",
+        "Type": "SecureString",
+        "Value": "AQICAHhMlJZxtZi5g7gVkPBUBTb4houYBOD8ChT+BGn35u7cPgGeaLONaNEq0V2TFndf73jcAAAAhzCBhAYJKoZIhvcNAQcGoHcwdQIBADBwBgkqhkiG9w0BBwEwHgYJYIZIAWUDBAEuMBEEDJKH3c6KIXwkjxDPxwIBEIBD1jAsU5jJ0JFTR4vI9xcY7R3miFqPvDOHhPWLECJ/hD9408obZn9P+fisdi5sC+rKt4T0hZM3r+fUAmVKhTx9LGJlYg==",
+        "Version": 1,
+        "LastModifiedDate": "2026-04-08T22:50:28.176000+05:30",
+        "ARN": "arn:aws:ssm:us-east-1:969849535462:parameter/portfolio/github/token",
+        "DataType": "text"
+    }
+}

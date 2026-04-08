@@ -1,0 +1,11 @@
+{
+    "deploymentId": "7hv78s",
+    "stageName": "prod",
+    "cacheClusterEnabled": false,
+    "cacheClusterSize": "0.5",
+    "cacheClusterStatus": "NOT_AVAILABLE",
+    "methodSettings": {},
+    "tracingEnabled": false,
+    "createdDate": "2026-03-29T01:35:27+05:30",
+    "lastUpdatedDate": "2026-04-08T22:59:57+05:30"
+}

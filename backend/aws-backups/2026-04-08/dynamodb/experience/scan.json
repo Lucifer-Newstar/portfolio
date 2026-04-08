@@ -1,0 +1,43 @@
+{
+    "Items": [
+        {
+            "location": {
+                "S": "Chennai"
+            },
+            "organization": {
+                "S": "Adroit Technologies Innovative Solutions Pvt. Ltd."
+            },
+            "skills": {
+                "L": [
+                    {
+                        "S": "Docker"
+                    },
+                    {
+                        "S": "GitHub Actions"
+                    },
+                    {
+                        "S": "AWS"
+                    }
+                ]
+            },
+            "period": {
+                "S": "Dec 2025 - Feb 2026"
+            },
+            "order": {
+                "N": "1"
+            },
+            "description": {
+                "S": "\"Worked on software deployment and automation\",\"Gained hands-on experience with DevOps practices\",\"Collaborated with team on deployment strategies\""
+            },
+            "id": {
+                "S": "exp-intern-adroit"
+            },
+            "title": {
+                "S": "Software Deployment Intern"
+            }
+        }
+    ],
+    "Count": 1,
+    "ScannedCount": 1,
+    "ConsumedCapacity": null
+}

@@ -1,0 +1,38 @@
+{
+    "FunctionName": "update-certification",
+    "FunctionArn": "arn:aws:lambda:us-east-1:969849535462:function:update-certification",
+    "Runtime": "nodejs24.x",
+    "Role": "arn:aws:iam::969849535462:role/service-role/update-certification-role-wio53u3x",
+    "Handler": "index.handler",
+    "CodeSize": 1020,
+    "Description": "",
+    "Timeout": 3,
+    "MemorySize": 128,
+    "LastModified": "2026-04-05T09:05:49.000+0000",
+    "CodeSha256": "tTi7+djy/zl/phCEh9LfdclD+H56EL5Ly0N68/K4TwA=",
+    "Version": "$LATEST",
+    "TracingConfig": {
+        "Mode": "PassThrough"
+    },
+    "RevisionId": "33a68775-879a-47d2-bc2c-9a524d2b5024",
+    "State": "Active",
+    "LastUpdateStatus": "Successful",
+    "PackageType": "Zip",
+    "Architectures": [
+        "x86_64"
+    ],
+    "EphemeralStorage": {
+        "Size": 512
+    },
+    "SnapStart": {
+        "ApplyOn": "None",
+        "OptimizationStatus": "Off"
+    },
+    "RuntimeVersionConfig": {
+        "RuntimeVersionArn": "arn:aws:lambda:us-east-1::runtime:b0bb5dea1b12bb0e2c3b50ed434af2fd2d16d383f7324c7b455111008b6112ba"
+    },
+    "LoggingConfig": {
+        "LogFormat": "Text",
+        "LogGroup": "/aws/lambda/update-certification"
+    }
+}

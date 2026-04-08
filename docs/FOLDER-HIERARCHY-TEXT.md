@@ -1,8 +1,8 @@
-# Folder Hierarchy (Text Format)
+# Folder Hierarchy (Text)
 
 Last updated: 2026-04-08
 
-Note: this hierarchy is the project source/infrastructure tree and intentionally excludes generated/vendor directories such as `.git`, `node_modules`, and `frontend/dist`.
+This tree omits bulky generated folders such as `node_modules`, Lambda `dist/node_modules`, and most synced S3 object contents.
 
 ```text
 portfolio/
@@ -13,252 +13,123 @@ portfolio/
 |- backend/
 |  |- api-gateway/
 |  |  \- portfolio-rest-api-prod-oas30.json
+|  |- aws-backups/
+|  |  \- 2026-04-08/
+|  |     |- BACKUP-MANIFEST.md
+|  |     |- README.txt
+|  |     |- acm/
+|  |     |- apigateway/
+|  |     |- cloudfront/
+|  |     |- cognito/
+|  |     |- dynamodb/
+|  |     |- iam/
+|  |     |- inventory/
+|  |     |- lambdas/
+|  |     |- route53/
+|  |     |- s3/
+|  |     |- ses/
+|  |     |- ssm/
+|  |     \- waf/
 |  |- dynamodb/
-|  |  \- schemas/
-|  |     |- certifications.json
-|  |     |- experience.json
-|  |     |- posts.json
-|  |     |- projects.json
-|  |     \- skills.json
+|  |- export-aws-backup.cmd
 |  \- lambdas/
 |     |- create-certification/
-|     |  |- template.yaml
-|     |  \- src/
-|     |     \- index.mjs
 |     |- create-experience/
-|     |  |- template.yaml
-|     |  \- src/
-|     |     \- index.mjs
 |     |- create-post/
-|     |  |- template.yaml
-|     |  \- src/
-|     |     \- index.mjs
 |     |- create-project/
-|     |  |- template.yaml
-|     |  \- src/
-|     |     \- index.mjs
 |     |- create-skill/
-|     |  |- template.yaml
-|     |  \- src/
-|     |     \- index.mjs
 |     |- delete-certification/
-|     |  |- template.yaml
-|     |  \- src/
-|     |     \- index.mjs
 |     |- delete-experience/
-|     |  |- template.yaml
-|     |  \- src/
-|     |     \- index.mjs
 |     |- delete-post/
-|     |  |- template.yaml
-|     |  \- src/
-|     |     \- index.mjs
 |     |- delete-project/
-|     |  |- template.yaml
-|     |  \- src/
-|     |     \- index.mjs
 |     |- delete-skill/
-|     |  |- template.yaml
-|     |  \- src/
-|     |     |- index.mjs
-|     |     \- .vscode/
-|     |        \- launch.json
+|     |- deploy-website/
 |     |- fetch-github-activity/
-|     |  |- template.yaml
-|     |  \- src/
-|     |     \- index.mjs
 |     |- get-certifications/
-|     |  |- template.yaml
-|     |  \- src/
-|     |     \- index.mjs
 |     |- get-experience/
-|     |  |- template.yaml
-|     |  \- src/
-|     |     \- index.mjs
 |     |- get-post/
-|     |  |- template.yaml
-|     |  \- src/
-|     |     \- index.mjs
 |     |- get-projects/
-|     |  |- template.yaml
-|     |  \- src/
-|     |     \- index.mjs
+|     |- get-site-content/
 |     |- get-skills/
-|     |  |- template.yaml
-|     |  \- src/
-|     |     \- index.mjs
+|     |- ops-insights/
+|     |- save-site-content/
 |     |- send-contact-email/
-|     |  |- template.yaml
-|     |  \- src/
-|     |     \- index.mjs
 |     |- update-certification/
-|     |  |- template.yaml
-|     |  \- src/
-|     |     \- index.mjs
 |     |- update-experience/
-|     |  |- template.yaml
-|     |  \- src/
-|     |     \- index.mjs
 |     |- update-post/
-|     |  |- template.yaml
-|     |  \- src/
-|     |     \- index.mjs
 |     |- update-project/
-|     |  |- template.yaml
-|     |  \- src/
-|     |     \- index.mjs
-|     \- update-skill/
-|        |- template.yaml
-|        \- src/
-|           \- index.mjs
+|     |- update-skill/
+|     \- upload-admin-image/
 |- docs/
-|  |- contact-email-setup.md
 |  |- DOCS-INDEX.md
-|  |- FOLDER-HIERARCHY-TEXT.md
-|  |- INFRASTRUCTURE-REBUILD-PLAYBOOK.md
 |  |- MASTER-DOC.md
-|  |- PROJECT-HIERARCHY.md
 |  |- TECH-STACK-AND-ARCHITECTURE.md
-|  \- UPDATES-LOG.md
+|  |- INFRASTRUCTURE-REBUILD-PLAYBOOK.md
+|  |- PROJECT-HIERARCHY.md
+|  |- FOLDER-HIERARCHY-TEXT.md
+|  |- UPDATES-LOG.md
+|  |- PROJECT-PROGRESS-LOG-2026-03-28_to_2026-04-08.md
+|  |- CRITICAL-ISSUES-WARNINGS-AND-PRECAUTIONS.md
+|  |- VISUAL-EFFECTS-CATALOG.md
+|  |- admin-content-and-deploy-api-setup.md
+|  \- contact-email-setup.md
 |- frontend/
-|  |- .gitignore
 |  |- .nvmrc
-|  |- eslint.config.js
 |  |- index.html
-|  |- package-lock.json
 |  |- package.json
-|  |- README.md
 |  |- vite.config.js
 |  \- src/
-|     |- App.css
 |     |- App.jsx
-|     |- index.css
 |     |- main.jsx
 |     |- assets/
-|     |  |- hero.png
-|     |  |- react.svg
-|     |  \- vite.svg
 |     |- components/
 |     |  |- AdvancedVisualOverlays.jsx
 |     |  |- Breadcrumbs.jsx
-|     |  |- DepthPrism.jsx
 |     |  |- Footer.jsx
-|     |  |- InsightCharts.jsx
 |     |  |- InteractionEffects.jsx
 |     |  |- LinkedDataModal.jsx
-|     |  |- LoginButton.jsx
 |     |  |- Navbar.jsx
+|     |  |- OperationsInsights.jsx
 |     |  |- PageThemeHandler.jsx
 |     |  |- ParticleBackground.jsx
 |     |  |- ProjectCaseStudyModal.jsx
 |     |  |- ProtectedRoute.jsx
 |     |  |- RouteMeta.jsx
-|     |  |- SceneOrb.jsx
 |     |  |- ScrollAnimations.jsx
-|     |  |- ScrollProgress.jsx
-|     |  |- ThemeAtmosphere.jsx
 |     |  |- ThemeToggle.jsx
 |     |  \- admin/
-|     |     |- CertificationsManager.jsx
-|     |     |- ContentManager.jsx
-|     |     |- ExperienceManager.jsx
-|     |     |- PostsManager.jsx
-|     |     |- PreviewManager.jsx
-|     |     |- ProjectsManager.jsx
-|     |     \- SkillsManager.jsx
 |     |- content/
-|     |  \- siteContent.js
 |     |- context/
-|     |  |- site-content-context.js
-|     |  |- SiteContentContext.jsx
-|     |  |- theme-context.js
-|     |  |- ThemeContext.jsx
-|     |  |- useSiteContent.js
-|     |  \- useTheme.js
 |     |- data/
-|     |  \- relationships.js
 |     |- effects/
-|     |  |- DarkParticleSphere.js
-|     |  \- LightGoldRings.js
 |     |- pages/
 |     |  |- admin/
-|     |  |  \- AdminDashboard.jsx
 |     |  \- public/
-|     |     |- About.jsx
-|     |     |- Callback.jsx
-|     |     |- Certifications.jsx
-|     |     |- Contact.jsx
-|     |     |- DevOpsLab.jsx
-|     |     |- Experience.jsx
-|     |     |- Home.jsx
-|     |     |- Login.jsx
-|     |     |- Posts.jsx
-|     |     |- Projects.jsx
-|     |     \- Skills.jsx
 |     |- styles/
 |     |  |- global.css
 |     |  |- main.css
 |     |  |- theme.css
 |     |  |- components/
-|     |  |  |- buttons.css
-|     |  |  |- cards.css
-|     |  |  |- FloatingIcons.jsx
-|     |  |  \- ScrollProgress.jsx
-|     |  |- pages/
-|     |  |  |- certifications.css
-|     |  |  |- contact.css
-|     |  |  |- experience.css
-|     |  |  |- posts.css
-|     |  |  |- projects.css
-|     |  |  \- skills.css
-|     |  \- overrides/
-|     |     |- admin-content.css
-|     |     |- advanced-visuals.css
-|     |     |- home-hero.css
-|     |     |- interaction-mobile-polish.css
-|     |     |- interaction.css
-|     |     |- layout.css
-|     |     |- navbar-explore.css
-|     |     |- page-experiences.css
-|     |     |- posts-source-cards.css
-|     |     |- scroll-story.css
-|     |     |- theme-signatures.css
-|     |     |- typography-rhythm.css
-|     |     \- visual-additions.css
+|     |  |- overrides/
+|     |  \- pages/
 |     \- utils/
-|        |- adminAuth.js
-|        |- api.js
-|        \- portfolioInsights.js
 |- public/
+|  |- 404.html
 |  |- favicon.svg
 |  \- icons.svg
-|- src/
-|  |- App.css
-|  |- App.jsx
-|  |- index.css
-|  |- main.jsx
-|  |- assets/
-|  |  |- hero.png
-|  |  |- react.svg
-|  |  \- vite.svg
-|  |- components/
-|  |  |- Footer.jsx
-|  |  \- Navbar.jsx
-|  \- pages/
-|     |- admin/
-|     |  \- AdminDashboard.jsx
-|     \- public/
-|        |- Achievements.jsx
-|        |- Contact.jsx
-|        |- Home.jsx
-|        |- Posts.jsx
-|        |- Projects.jsx
-|        \- Skills.jsx
-|- .gitignore
-|- eslint.config.js
-|- index.html
-|- package-lock.json
-|- package.json
-|- README.md
-\- vite.config.js
+|- scripts/
+|  |- deploy-website-env-secure.json
+|  |- ops-insights-env-secure.json
+|  |- ssm-github-token-policy.json
+|  |- upload-admin-image-env.json
+|  \- upload-admin-image-s3-policy.json
+|- src/      # legacy root stub
+\- README.md
 ```
+
+Notes:
+
+- `frontend/` is the active website and admin app.
+- `backend/aws-backups/2026-04-08/` is the current restore/reference snapshot.
+- `backend/export-aws-backup.cmd` shows exactly how the AWS state was exported.
+- `docs/CRITICAL-ISSUES-WARNINGS-AND-PRECAUTIONS.md` documents why several architectural guardrails exist.

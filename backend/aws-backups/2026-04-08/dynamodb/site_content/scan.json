@@ -1,0 +1,35 @@
+{
+    "Items": [
+        {
+            "chunk": {
+                "S": "{\"global\":{\"nav\":{\"brandName\":\"Navin Jairam M\"}},\"home\":{\"titleEcho\":\"Navin Jairam \",\"portraitImage\":\"https://lucifernewstar-2006.xyz/images/uploads/2026-04-08T17-36-24-665Z-newprofile.png\",\"portraitImageLight\":\"https://lucifernewstar-2006.xyz/images/uploads/2026-04-08T17-36-30-864Z-newprofile.png\",\"portraitImageDark\":\"https://lucifernewstar-2006.xyz/images/uploads/2026-04-08T17-36-37-073Z-newprofile.png\"},\"test\":\"Admin dashboard cloud save check\",\"siteTitle\":\"Navin Portfolio\"}"
+            },
+            "id": {
+                "S": "global#0001"
+            },
+            "part": {
+                "N": "1"
+            },
+            "updatedAt": {
+                "S": "2026-04-08T17:36:52.474Z"
+            }
+        },
+        {
+            "chunkCount": {
+                "N": "1"
+            },
+            "storage": {
+                "S": "chunked"
+            },
+            "id": {
+                "S": "global"
+            },
+            "updatedAt": {
+                "S": "2026-04-08T17:36:52.474Z"
+            }
+        }
+    ],
+    "Count": 2,
+    "ScannedCount": 2,
+    "ConsumedCapacity": null
+}

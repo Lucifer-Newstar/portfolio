@@ -1,0 +1,57 @@
+{
+    "FunctionName": "ops-insights",
+    "FunctionArn": "arn:aws:lambda:us-east-1:969849535462:function:ops-insights",
+    "Runtime": "nodejs20.x",
+    "Role": "arn:aws:iam::969849535462:role/lambda-dynamodb-role",
+    "Handler": "index.handler",
+    "CodeSize": 7372600,
+    "Description": "",
+    "Timeout": 12,
+    "MemorySize": 256,
+    "LastModified": "2026-04-08T17:22:12.000+0000",
+    "CodeSha256": "5bZ1o6kVL8WmWITav71jWdknzCn76f94NrwqYA7RfFM=",
+    "Version": "$LATEST",
+    "Environment": {
+        "Variables": {
+            "API_BASE_URL": "https://6e2n1oy6k9.execute-api.us-east-1.amazonaws.com/prod",
+            "S3_BUCKET": "navin-portfolio",
+            "API_STAGE": "prod",
+            "GITHUB_OWNER": "Lucifer-Newstar",
+            "OBSERVED_LAMBDAS": "deploy-website,save-site-content,get-site-content,send-contact-email",
+            "CLOUDFRONT_DISTRIBUTION_ID": "ECVS4UV0ZKGHO",
+            "COGNITO_USERINFO_URL": "https://us-east-1iwnapdbk8.auth.us-east-1.amazoncognito.com/oauth2/userInfo",
+            "LOG_GROUPS": "/aws/lambda/deploy-website,/aws/lambda/save-site-content,/aws/lambda/get-site-content,/aws/lambda/send-contact-email",
+            "SITE_URL": "https://lucifernewstar-2006.xyz",
+            "ALLOWED_ORIGINS": "http://localhost:5173,https://lucifernewstar-2006.xyz",
+            "API_ID": "6e2n1oy6k9",
+            "GITHUB_REPO": "portfolio",
+            "GITHUB_TOKEN_PARAMETER": "/portfolio/github/token",
+            "GITHUB_WORKFLOW_FILE": "deploy.yml",
+            "API_NAME": "portfolio-rest-api"
+        }
+    },
+    "TracingConfig": {
+        "Mode": "PassThrough"
+    },
+    "RevisionId": "ef71e0b2-a0a3-4bcb-b5d2-094e2aac17d2",
+    "State": "Active",
+    "LastUpdateStatus": "Successful",
+    "PackageType": "Zip",
+    "Architectures": [
+        "x86_64"
+    ],
+    "EphemeralStorage": {
+        "Size": 512
+    },
+    "SnapStart": {
+        "ApplyOn": "None",
+        "OptimizationStatus": "Off"
+    },
+    "RuntimeVersionConfig": {
+        "RuntimeVersionArn": "arn:aws:lambda:us-east-1::runtime:2d788b26ac416854c5eb831c9f46cb2e0a0ddcee84b1a9b114acbdfdb644c8c1"
+    },
+    "LoggingConfig": {
+        "LogFormat": "Text",
+        "LogGroup": "/aws/lambda/ops-insights"
+    }
+}

@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Redirecting...</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      (function redirectToSpaEntry() {
+        var search = new URLSearchParams(window.location.search);
+        var target = new URLSearchParams();
+        target.set('p', window.location.pathname);
+
+        var query = search.toString();
+        if (query) target.set('q', '?' + query);
+        if (window.location.hash) target.set('h', window.location.hash);
+
+        window.location.replace('/?' + target.toString());
+      })();
+    </script>
+  </head>
+  <body></body>
+</html>

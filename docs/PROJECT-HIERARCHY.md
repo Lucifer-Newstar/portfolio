@@ -1,161 +1,130 @@
-# Project Hierarchy (Current)
+# Project Hierarchy
 
 Last updated: 2026-04-08
 
-## 1. Top-Level
+## 1. Top-Level Structure
 
 ```text
 portfolio/
 |- .github/
-|  \- workflows/
-|     |- ci.yml
-|     \- deploy.yml
 |- backend/
-|  |- api-gateway/
-|  |  \- portfolio-rest-api-prod-oas30.json
-|  |- dynamodb/
-|  |  \- schemas/
-|  |     |- certifications.json
-|  |     |- experience.json
-|  |     |- posts.json
-|  |     |- projects.json
-|  |     \- skills.json
-|  \- lambdas/
-|     |- create-certification/
-|     |- create-experience/
-|     |- create-post/
-|     |- create-project/
-|     |- create-skill/
-|     |- delete-certification/
-|     |- delete-experience/
-|     |- delete-post/
-|     |- delete-project/
-|     |- delete-skill/
-|     |- fetch-github-activity/
-|     |- get-certifications/
-|     |- get-experience/
-|     |- get-post/
-|     |- get-projects/
-|     |- get-skills/
-|     |- send-contact-email/
-|     |- update-certification/
-|     |- update-experience/
-|     |- update-post/
-|     |- update-project/
-|     \- update-skill/
 |- docs/
 |- frontend/
-|  |- src/
-|  |- package.json
-|  \- ...
 |- public/
-|- package.json
+|- scripts/
+|- src/              # legacy stub, not active production app
 \- README.md
 ```
 
-## 2. Frontend Source Structure
+## 2. Top-Level Responsibilities
 
-```text
-frontend/src/
-|- App.jsx
-|- main.jsx
-|- components/
-|  |- admin/
-|  |  |- CertificationsManager.jsx
-|  |  |- ContentManager.jsx
-|  |  |- ExperienceManager.jsx
-|  |  |- PostsManager.jsx
-|  |  |- PreviewManager.jsx
-|  |  |- ProjectsManager.jsx
-|  |  \- SkillsManager.jsx
-|  |- AdvancedVisualOverlays.jsx
-|  |- Breadcrumbs.jsx
-|  |- DepthPrism.jsx
-|  |- Footer.jsx
-|  |- InsightCharts.jsx
-|  |- InteractionEffects.jsx
-|  |- LinkedDataModal.jsx
-|  |- LoginButton.jsx
-|  |- Navbar.jsx
-|  |- PageThemeHandler.jsx
-|  |- ParticleBackground.jsx
-|  |- ProjectCaseStudyModal.jsx
-|  |- ProtectedRoute.jsx
-|  |- RouteMeta.jsx
-|  |- SceneOrb.jsx
-|  |- ScrollAnimations.jsx
-|  |- ScrollProgress.jsx
-|  |- ThemeAtmosphere.jsx
-|  \- ThemeToggle.jsx
-|- content/
-|- context/
-|  |- SiteContentContext.jsx
-|  |- ThemeContext.jsx
-|  |- site-content-context.js
-|  |- theme-context.js
-|  |- useSiteContent.js
-|  \- useTheme.js
-|- pages/
-|  |- admin/
-|  |  \- AdminDashboard.jsx
-|  \- public/
-|     |- About.jsx
-|     |- Callback.jsx
-|     |- Certifications.jsx
-|     |- Contact.jsx
-|     |- DevOpsLab.jsx
-|     |- Experience.jsx
-|     |- Home.jsx
-|     |- Login.jsx
-|     |- Posts.jsx
-|     |- Projects.jsx
-|     \- Skills.jsx
-|- styles/
-|  \- overrides/
-|     |- admin-content.css
-|     |- advanced-visuals.css
-|     |- home-hero.css
-|     |- interaction-mobile-polish.css
-|     |- interaction.css
-|     |- layout.css
-|     |- navbar-explore.css
-|     |- page-experiences.css
-|     |- posts-source-cards.css
-|     |- scroll-story.css
-|     |- theme-signatures.css
-|     |- typography-rhythm.css
-|     \- visual-additions.css
-\- utils/
-   |- adminAuth.js
-   |- api.js
-   \- portfolioInsights.js
-```
+### `.github/`
 
-## 3. Backend Lambda Pattern
+- CI workflow
+- production deploy workflow
 
-Each Lambda folder typically contains:
+### `backend/`
 
-```text
-backend/lambdas/<function-name>/
-|- src/
-|  \- index.mjs
-\- template.yaml
-```
+- Lambda source
+- API Gateway exports
+- DynamoDB references
+- AWS backup snapshots
+- export helper scripts
 
-The project follows a CRUD-per-resource pattern:
-- Skills: create/get/update/delete
-- Projects: create/get/update/delete
-- Experience: create/get/update/delete
-- Certifications: create/get/update/delete
-- Posts: create/get/update/delete
-- Automation:
+### `docs/`
+
+- rebuild blueprint
+- architecture and hierarchy docs
+- visual system catalog
+- critical issue history
+- focused setup guides
+
+### `frontend/`
+
+- active production SPA
+- admin dashboard
+- theme and motion systems
+
+### `public/`
+
+- static frontend assets such as `404.html`
+
+### `scripts/`
+
+- Lambda env payload snapshots
+- IAM policy references
+- helper artifacts used during ops/debugging
+
+### `src/`
+
+- older root-level starter code
+- should not be treated as the current production frontend
+
+## 3. Backend Modules
+
+### `backend/lambdas/`
+
+CRUD groups:
+
+- skills
+- projects
+- experience
+- certifications
+- posts
+
+Platform handlers:
+
+- `deploy-website`
 - `fetch-github-activity`
+- `get-site-content`
+- `save-site-content`
 - `send-contact-email`
+- `ops-insights`
+- `upload-admin-image`
 
-## 4. Key Runtime Boundaries
+### `backend/aws-backups/`
 
-- Public experience: `frontend/src/pages/public/*`
-- Admin experience: `frontend/src/pages/admin/AdminDashboard.jsx` + `components/admin/*`
-- API integration layer: `frontend/src/utils/api.js`
-- Auth flow: `frontend/src/utils/adminAuth.js`, `LoginButton.jsx`, `Callback.jsx`, `ProtectedRoute.jsx`
-- Content persistence state machine: `SiteContentContext.jsx`
+- exported AWS state snapshots
+- current snapshot: `2026-04-08`
+
+### `backend/api-gateway/`
+
+- exported REST API definition for the live API
+
+## 4. Frontend Modules
+
+### Shared components
+
+- navigation
+- overlays
+- 3D background
+- interaction effects
+- scroll effects
+- route metadata
+- operations insights
+
+### Admin components
+
+- content manager
+- preview manager
+- resource managers
+- operations manager
+
+### Context modules
+
+- theme context
+- site content context
+
+### Styling modules
+
+- base theme and layout
+- page-specific layers
+- override layers for motion, glow, observability, and theme polish
+
+## 5. Runtime Boundaries
+
+- auth boundary: frontend session + server-side bearer validation
+- content boundary: default content, draft state, override saves, remote sync
+- deploy boundary: admin UI -> API -> GitHub Actions -> S3 -> CloudFront
+- image boundary: admin UI -> upload API -> S3 -> URL stored in content
+- backup boundary: source repo + AWS export snapshot together form recovery set

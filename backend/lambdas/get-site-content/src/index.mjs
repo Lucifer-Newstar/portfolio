@@ -6,14 +6,24 @@ const docClient = DynamoDBDocumentClient.from(client);
 
 const TABLE_NAME = "site_content";
 const CONTENT_ID = "global";
+const DEFAULT_ALLOWED_ORIGINS = "http://localhost:5173,https://lucifernewstar-2006.xyz";
 
 function getChunkId(index) {
   return `${CONTENT_ID}#${String(index + 1).padStart(4, "0")}`;
 }
 
-function corsHeaders() {
+function corsHeaders(event) {
+  const allowedOrigins = String(process.env.ALLOWED_ORIGINS || DEFAULT_ALLOWED_ORIGINS)
+    .split(",")
+    .map((origin) => origin.trim())
+    .filter(Boolean);
+  const requestOrigin = event?.headers?.origin || event?.headers?.Origin || "";
+  const origin = allowedOrigins.includes(requestOrigin)
+    ? requestOrigin
+    : (allowedOrigins[0] || "*");
+
   return {
-    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Origin": origin,
     "Access-Control-Allow-Headers": "Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token",
     "Access-Control-Allow-Methods": "GET,POST,OPTIONS",
     "Content-Type": "application/json",
@@ -30,7 +40,7 @@ export const handler = async (event) => {
 
     // Handle OPTIONS preflight
     if (method === "OPTIONS") {
-      return { statusCode: 200, headers: corsHeaders(), body: JSON.stringify({ ok: true }) };
+      return { statusCode: 200, headers: corsHeaders(event), body: JSON.stringify({ ok: true }) };
     }
 
     const command = new GetCommand({
@@ -60,14 +70,14 @@ export const handler = async (event) => {
 
     return {
       statusCode: 200,
-      headers: corsHeaders(),
+      headers: corsHeaders(event),
       body: JSON.stringify(content)
     };
   } catch (error) {
     console.error("get-site-content failed:", error);
     return {
       statusCode: 500,
-      headers: corsHeaders(),
+      headers: corsHeaders(event),
       body: JSON.stringify({ error: "Unable to retrieve content." })
     };
   }

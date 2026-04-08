@@ -1,0 +1,1 @@
+Cognito domain backup is captured in describe-user-pool-domain.json for domain us-east-1iwnapdbk8.

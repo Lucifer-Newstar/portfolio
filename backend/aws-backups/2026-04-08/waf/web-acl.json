@@ -1,0 +1,116 @@
+{
+    "WebACL": {
+        "Name": "CreatedByCloudFront-6187136a",
+        "Id": "ce93e6ab-a586-4811-8047-a8af4556e879",
+        "ARN": "arn:aws:wafv2:us-east-1:969849535462:global/webacl/CreatedByCloudFront-6187136a/ce93e6ab-a586-4811-8047-a8af4556e879",
+        "DefaultAction": {
+            "Allow": {}
+        },
+        "Description": "",
+        "Rules": [
+            {
+                "Name": "AWS-AWSManagedRulesAntiDDoSRuleSet",
+                "Priority": 0,
+                "Statement": {
+                    "ManagedRuleGroupStatement": {
+                        "VendorName": "AWS",
+                        "Name": "AWSManagedRulesAntiDDoSRuleSet",
+                        "ManagedRuleGroupConfigs": [
+                            {
+                                "AWSManagedRulesAntiDDoSRuleSet": {
+                                    "ClientSideActionConfig": {
+                                        "Challenge": {
+                                            "UsageOfAction": "ENABLED",
+                                            "Sensitivity": "HIGH",
+                                            "ExemptUriRegularExpressions": [
+                                                {
+                                                    "RegexString": "\\/api\\/|\\.(acc|avi|css|gif|ico|jpe?g|js|json|mp[34]|ogg|otf|pdf|png|tiff?|ttf|webm|webp|woff2?|xml)$"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "SensitivityToBlock": "LOW"
+                                }
+                            }
+                        ]
+                    }
+                },
+                "OverrideAction": {
+                    "Count": {}
+                },
+                "VisibilityConfig": {
+                    "SampledRequestsEnabled": true,
+                    "CloudWatchMetricsEnabled": true,
+                    "MetricName": "AWS-AWSManagedRulesAntiDDoSRuleSet"
+                }
+            },
+            {
+                "Name": "AWS-AWSManagedRulesAmazonIpReputationList",
+                "Priority": 1,
+                "Statement": {
+                    "ManagedRuleGroupStatement": {
+                        "VendorName": "AWS",
+                        "Name": "AWSManagedRulesAmazonIpReputationList"
+                    }
+                },
+                "OverrideAction": {
+                    "Count": {}
+                },
+                "VisibilityConfig": {
+                    "SampledRequestsEnabled": true,
+                    "CloudWatchMetricsEnabled": true,
+                    "MetricName": "AWS-AWSManagedRulesAmazonIpReputationList"
+                }
+            },
+            {
+                "Name": "AWS-AWSManagedRulesCommonRuleSet",
+                "Priority": 2,
+                "Statement": {
+                    "ManagedRuleGroupStatement": {
+                        "VendorName": "AWS",
+                        "Name": "AWSManagedRulesCommonRuleSet"
+                    }
+                },
+                "OverrideAction": {
+                    "Count": {}
+                },
+                "VisibilityConfig": {
+                    "SampledRequestsEnabled": true,
+                    "CloudWatchMetricsEnabled": true,
+                    "MetricName": "AWS-AWSManagedRulesCommonRuleSet"
+                }
+            },
+            {
+                "Name": "AWS-AWSManagedRulesKnownBadInputsRuleSet",
+                "Priority": 3,
+                "Statement": {
+                    "ManagedRuleGroupStatement": {
+                        "VendorName": "AWS",
+                        "Name": "AWSManagedRulesKnownBadInputsRuleSet"
+                    }
+                },
+                "OverrideAction": {
+                    "Count": {}
+                },
+                "VisibilityConfig": {
+                    "SampledRequestsEnabled": true,
+                    "CloudWatchMetricsEnabled": true,
+                    "MetricName": "AWS-AWSManagedRulesKnownBadInputsRuleSet"
+                }
+            }
+        ],
+        "VisibilityConfig": {
+            "SampledRequestsEnabled": true,
+            "CloudWatchMetricsEnabled": true,
+            "MetricName": "CreatedByCloudFront-6187136a"
+        },
+        "Capacity": 975,
+        "ManagedByFirewallManager": false,
+        "LabelNamespace": "awswaf:969849535462:webacl:CreatedByCloudFront-6187136a:",
+        "RetrofittedByFirewallManager": false,
+        "OnSourceDDoSProtectionConfig": {
+            "ALBLowReputationMode": "ACTIVE_UNDER_DDOS"
+        }
+    },
+    "LockToken": "c8182be8-3c66-4ae7-9251-018a280916e2"
+}

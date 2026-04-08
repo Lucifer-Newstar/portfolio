@@ -1,0 +1,7 @@
+{
+    "PolicyNames": [
+        "lambda-ops-read-inline",
+        "lambda-ssm-github-token-read",
+        "lambda-upload-admin-image-s3"
+    ]
+}

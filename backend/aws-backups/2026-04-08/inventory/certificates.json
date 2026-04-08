@@ -1,0 +1,30 @@
+{
+    "CertificateSummaryList": [
+        {
+            "CertificateArn": "arn:aws:acm:us-east-1:969849535462:certificate/9ec7d419-495c-4160-86eb-c8cb57a60c45",
+            "DomainName": "lucifernewstar-2006.xyz",
+            "SubjectAlternativeNameSummaries": [
+                "lucifernewstar-2006.xyz"
+            ],
+            "HasAdditionalSubjectAlternativeNames": false,
+            "Status": "ISSUED",
+            "Type": "AMAZON_ISSUED",
+            "KeyAlgorithm": "RSA-2048",
+            "KeyUsages": [
+                "DIGITAL_SIGNATURE",
+                "KEY_ENCIPHERMENT"
+            ],
+            "ExtendedKeyUsages": [
+                "TLS_WEB_SERVER_AUTHENTICATION"
+            ],
+            "ExportOption": "DISABLED",
+            "InUse": true,
+            "Exported": false,
+            "RenewalEligibility": "ELIGIBLE",
+            "NotBefore": "2026-03-27T05:30:00+05:30",
+            "NotAfter": "2026-10-11T05:29:59+05:30",
+            "CreatedAt": "2026-03-25T18:36:37.269000+05:30",
+            "IssuedAt": "2026-03-27T13:55:12.111000+05:30"
+        }
+    ]
+}

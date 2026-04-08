@@ -1,0 +1,11 @@
+{
+    "UserPools": [
+        {
+            "Id": "us-east-1_IWnaPdbK8",
+            "Name": "User pool - ugblrz",
+            "LambdaConfig": {},
+            "LastModifiedDate": "2026-04-08T12:34:57.581000+05:30",
+            "CreationDate": "2026-03-28T22:09:36.673000+05:30"
+        }
+    ]
+}

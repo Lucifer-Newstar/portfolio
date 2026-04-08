@@ -1,0 +1,17 @@
+{
+    "RoleName": "lambda-dynamodb-role",
+    "PolicyName": "lambda-upload-admin-image-s3",
+    "PolicyDocument": {
+        "Version": "2012-10-17",
+        "Statement": [
+            {
+                "Sid": "UploadAdminImagesToPortfolioBucket",
+                "Effect": "Allow",
+                "Action": [
+                    "s3:PutObject"
+                ],
+                "Resource": "arn:aws:s3:::navin-portfolio/images/uploads/*"
+            }
+        ]
+    }
+}

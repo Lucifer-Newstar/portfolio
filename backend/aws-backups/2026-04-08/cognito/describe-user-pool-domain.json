@@ -1,0 +1,12 @@
+{
+    "DomainDescription": {
+        "UserPoolId": "us-east-1_IWnaPdbK8",
+        "AWSAccountId": "969849535462",
+        "Domain": "us-east-1iwnapdbk8",
+        "S3Bucket": "aws-cognito-prod-iad-assets",
+        "CloudFrontDistribution": "d3oia8etllorh5.cloudfront.net",
+        "Version": "20260328163937",
+        "Status": "ACTIVE",
+        "ManagedLoginVersion": 2
+    }
+}

@@ -1,0 +1,13 @@
+{
+    "Buckets": [
+        {
+            "Name": "navin-portfolio",
+            "CreationDate": "2026-04-05T09:50:00+00:00",
+            "BucketArn": "arn:aws:s3:::navin-portfolio"
+        }
+    ],
+    "Owner": {
+        "ID": "320e00e3a33fa5acede60aa5747bd706a0d1ad5b0d88a1385777b89821699599"
+    },
+    "Prefix": null
+}

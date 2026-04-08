@@ -1,0 +1,33 @@
+{
+    "Users": [
+        {
+            "Username": "lucifer-newstar",
+            "Attributes": [
+                {
+                    "Name": "email",
+                    "Value": "navin.jairam@gmail.com"
+                },
+                {
+                    "Name": "email_verified",
+                    "Value": "true"
+                },
+                {
+                    "Name": "phone_number",
+                    "Value": "+919941360835"
+                },
+                {
+                    "Name": "phone_number_verified",
+                    "Value": "true"
+                },
+                {
+                    "Name": "sub",
+                    "Value": "a4181498-f061-704e-9d62-c2198e0173ff"
+                }
+            ],
+            "UserCreateDate": "2026-03-28T22:24:20.105000+05:30",
+            "UserLastModifiedDate": "2026-03-28T23:01:15.637000+05:30",
+            "Enabled": true,
+            "UserStatus": "CONFIRMED"
+        }
+    ]
+}

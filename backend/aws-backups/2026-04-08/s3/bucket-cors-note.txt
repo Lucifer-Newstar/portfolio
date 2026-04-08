@@ -1,0 +1,1 @@
+No S3 bucket CORS configuration exists for navin-portfolio. The empty bucket-cors.json file reflects that live AWS state.

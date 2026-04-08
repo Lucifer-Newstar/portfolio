@@ -1,0 +1,44 @@
+{
+    "Configuration": {
+        "FunctionName": "delete-experience",
+        "FunctionArn": "arn:aws:lambda:us-east-1:969849535462:function:delete-experience",
+        "Runtime": "nodejs24.x",
+        "Role": "arn:aws:iam::969849535462:role/service-role/delete-experience-role-8iu3428p",
+        "Handler": "index.handler",
+        "CodeSize": 591,
+        "Description": "",
+        "Timeout": 3,
+        "MemorySize": 128,
+        "LastModified": "2026-03-28T21:17:07.000+0000",
+        "CodeSha256": "3c6WKys2nlftG6tw4NrQSOsmmTZejPgfZiVOemd9p1M=",
+        "Version": "$LATEST",
+        "TracingConfig": {
+            "Mode": "PassThrough"
+        },
+        "RevisionId": "6f228d2d-f190-46ef-97fc-b14e64a3308f",
+        "State": "Active",
+        "LastUpdateStatus": "Successful",
+        "PackageType": "Zip",
+        "Architectures": [
+            "x86_64"
+        ],
+        "EphemeralStorage": {
+            "Size": 512
+        },
+        "SnapStart": {
+            "ApplyOn": "None",
+            "OptimizationStatus": "Off"
+        },
+        "RuntimeVersionConfig": {
+            "RuntimeVersionArn": "arn:aws:lambda:us-east-1::runtime:b0bb5dea1b12bb0e2c3b50ed434af2fd2d16d383f7324c7b455111008b6112ba"
+        },
+        "LoggingConfig": {
+            "LogFormat": "Text",
+            "LogGroup": "/aws/lambda/delete-experience"
+        }
+    },
+    "Code": {
+        "RepositoryType": "S3",
+        "Location": "https://prod-04-2014-tasks.s3.us-east-1.amazonaws.com/snapshots/969849535462/delete-experience-5cb817d1-376d-41d1-b43e-aa19d516e29f?versionId=vfuZlsHTWt663X_MgVi5BY4S0B2UL6hF&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEDYaCXVzLWVhc3QtMSJHMEUCIQDIjZd%2BjWVl2KrMGwe7t7R0N9EF827f7nN%2Bga7%2FWizBOwIgMSV19nUwQ%2FEI%2FPXS2hJZevnvAyggpQDN%2Fid3OF%2FnH5QqlAII%2Fv%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARAAGgw3NDk2Nzg5MDI4MzkiDDYMkO0zVXqFey0txCroAd4desWpcLk076Wv0sqONY6LGnmgqtsqT6QFPqahvUQuTS0vTmEXhqxdfmyOLExZaeDwZsbIAUtm%2BJ63pbllwrQLCd6FLN%2BFtheDQFWQXbDYvThjgSoX3fZKomrNvCo5qb0AhlSrZT0A77k2g%2BVAMxE1fAD%2B%2BjhlNceXImnzztp7Z48kMtTs7zvWuktIFadCeGbS590eqXqqEWZHZ9m5Wjwt6CTttjEV%2BIkSUNXgs0XZznHqgdF7cvgf52QakugggkGgkvTGJOQ8s2EVB2dZ2ef0fJg4aMLip84LVb3WKDq1BlQtPRqZ0Eswn6bZzgY6jQGMajSiNv616WAP%2FcT4b1KO4bXnrw6syP6EIXM0JMWI5RqfYQWWlvO%2B763dSBC6O9qAEPIAWFoNFReoJCpfk4MLAzP2v7w19ZqERIgSwTsWgmEabA4i2OWaqZ2nPFbV0qEUWQoqJ8GjpCPm9yZNvoeGlT3%2FkQ6x4oB44zOk%2BG4%2BbeHz1%2BR5NpMAciTOwu8%3D&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20260408T174500Z&X-Amz-SignedHeaders=host&X-Amz-Expires=600&X-Amz-Credential=ASIA25DCYHY3UGG64TFS%2F20260408%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=9cc666cc245fefaae28218c38c08a979b9e10a26dd4705fa18e4d4b8e877089d"
+    }
+}

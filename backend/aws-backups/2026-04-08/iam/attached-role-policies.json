@@ -1,0 +1,12 @@
+{
+    "AttachedPolicies": [
+        {
+            "PolicyName": "AWSLambdaBasicExecutionRole",
+            "PolicyArn": "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+        },
+        {
+            "PolicyName": "lambda-dynamodb-custom-policy",
+            "PolicyArn": "arn:aws:iam::969849535462:policy/lambda-dynamodb-custom-policy"
+        }
+    ]
+}

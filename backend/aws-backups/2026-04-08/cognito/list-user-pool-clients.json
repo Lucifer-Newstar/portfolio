@@ -1,0 +1,14 @@
+{
+    "UserPoolClients": [
+        {
+            "ClientId": "2kqig6fjtjb5rot22ccttr398n",
+            "UserPoolId": "us-east-1_IWnaPdbK8",
+            "ClientName": "Portfolio"
+        },
+        {
+            "ClientId": "7tdl4lp5g8iiam88m38737di4h",
+            "UserPoolId": "us-east-1_IWnaPdbK8",
+            "ClientName": "Portfolio-SPA"
+        }
+    ]
+}

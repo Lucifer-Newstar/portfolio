@@ -1,0 +1,171 @@
+{
+    "Contents": [
+        {
+            "Key": "404.html",
+            "LastModified": "2026-04-08T17:40:19+00:00",
+            "ETag": "\"b3b0a72fc0b5be88ed1ea719a34948f1\"",
+            "ChecksumAlgorithm": [
+                "CRC64NVME"
+            ],
+            "ChecksumType": "FULL_OBJECT",
+            "Size": 677,
+            "StorageClass": "STANDARD"
+        },
+        {
+            "Key": "assets/ProjectCaseStudyModal-CYCwfM04.js",
+            "LastModified": "2026-04-08T17:40:19+00:00",
+            "ETag": "\"9734259ae830b4fb12e77406f04f6b62\"",
+            "ChecksumAlgorithm": [
+                "CRC64NVME"
+            ],
+            "ChecksumType": "FULL_OBJECT",
+            "Size": 4038,
+            "StorageClass": "STANDARD"
+        },
+        {
+            "Key": "assets/SceneOrb-B_i-9uOp.js",
+            "LastModified": "2026-04-08T17:40:19+00:00",
+            "ETag": "\"9f155bb63d3ddde4325eedd0e8648c69\"",
+            "ChecksumAlgorithm": [
+                "CRC64NVME"
+            ],
+            "ChecksumType": "FULL_OBJECT",
+            "Size": 2664,
+            "StorageClass": "STANDARD"
+        },
+        {
+            "Key": "assets/index-48-XZRln.css",
+            "LastModified": "2026-04-08T17:40:19+00:00",
+            "ETag": "\"9c8ad22583763c557fec688dc6298894\"",
+            "ChecksumAlgorithm": [
+                "CRC64NVME"
+            ],
+            "ChecksumType": "FULL_OBJECT",
+            "Size": 208911,
+            "StorageClass": "STANDARD"
+        },
+        {
+            "Key": "assets/index-CIUPC2Pj.js",
+            "LastModified": "2026-04-08T17:40:19+00:00",
+            "ETag": "\"ede5144eba2fab8574793dc554b5f0bc\"",
+            "ChecksumAlgorithm": [
+                "CRC64NVME"
+            ],
+            "ChecksumType": "FULL_OBJECT",
+            "Size": 159635,
+            "StorageClass": "STANDARD"
+        },
+        {
+            "Key": "assets/motion-0lJgtTtq.js",
+            "LastModified": "2026-04-08T17:40:19+00:00",
+            "ETag": "\"e4b677b64f60e7bb98bf0d92ad1e05c6\"",
+            "ChecksumAlgorithm": [
+                "CRC64NVME"
+            ],
+            "ChecksumType": "FULL_OBJECT",
+            "Size": 114375,
+            "StorageClass": "STANDARD"
+        },
+        {
+            "Key": "assets/react-vendor-5BgQMKia.js",
+            "LastModified": "2026-04-08T17:40:19+00:00",
+            "ETag": "\"8aab46c50b735fbaeaf2296cd68ca202\"",
+            "ChecksumAlgorithm": [
+                "CRC64NVME"
+            ],
+            "ChecksumType": "FULL_OBJECT",
+            "Size": 248488,
+            "StorageClass": "STANDARD"
+        },
+        {
+            "Key": "assets/react-vendor-DR2lCUUQ.css",
+            "LastModified": "2026-04-08T17:40:19+00:00",
+            "ETag": "\"e1cc7f0662bbd71cedfdd749db60559c\"",
+            "ChecksumAlgorithm": [
+                "CRC64NVME"
+            ],
+            "ChecksumType": "FULL_OBJECT",
+            "Size": 768,
+            "StorageClass": "STANDARD"
+        },
+        {
+            "Key": "assets/three-stack-CYipNFX5.js",
+            "LastModified": "2026-04-08T17:40:19+00:00",
+            "ETag": "\"db123ed25fd0de65d66be165a93cf2c2\"",
+            "ChecksumAlgorithm": [
+                "CRC64NVME"
+            ],
+            "ChecksumType": "FULL_OBJECT",
+            "Size": 898636,
+            "StorageClass": "STANDARD"
+        },
+        {
+            "Key": "favicon.svg",
+            "LastModified": "2026-04-08T17:40:19+00:00",
+            "ETag": "\"7e840862161341271697daa99a40d76b\"",
+            "ChecksumAlgorithm": [
+                "CRC64NVME"
+            ],
+            "ChecksumType": "FULL_OBJECT",
+            "Size": 9522,
+            "StorageClass": "STANDARD"
+        },
+        {
+            "Key": "icons.svg",
+            "LastModified": "2026-04-08T17:40:19+00:00",
+            "ETag": "\"3b4fcfcf393eca4d264dca4a4663bc37\"",
+            "ChecksumAlgorithm": [
+                "CRC64NVME"
+            ],
+            "ChecksumType": "FULL_OBJECT",
+            "Size": 5031,
+            "StorageClass": "STANDARD"
+        },
+        {
+            "Key": "images/uploads/2026-04-08T17-36-24-665Z-newprofile.png",
+            "LastModified": "2026-04-08T17:36:26+00:00",
+            "ETag": "\"db2087ee71f604a98785c934a9826a8d\"",
+            "ChecksumAlgorithm": [
+                "CRC32"
+            ],
+            "ChecksumType": "FULL_OBJECT",
+            "Size": 434804,
+            "StorageClass": "STANDARD"
+        },
+        {
+            "Key": "images/uploads/2026-04-08T17-36-30-864Z-newprofile.png",
+            "LastModified": "2026-04-08T17:36:31+00:00",
+            "ETag": "\"db2087ee71f604a98785c934a9826a8d\"",
+            "ChecksumAlgorithm": [
+                "CRC32"
+            ],
+            "ChecksumType": "FULL_OBJECT",
+            "Size": 434804,
+            "StorageClass": "STANDARD"
+        },
+        {
+            "Key": "images/uploads/2026-04-08T17-36-37-073Z-newprofile.png",
+            "LastModified": "2026-04-08T17:36:38+00:00",
+            "ETag": "\"db2087ee71f604a98785c934a9826a8d\"",
+            "ChecksumAlgorithm": [
+                "CRC32"
+            ],
+            "ChecksumType": "FULL_OBJECT",
+            "Size": 434804,
+            "StorageClass": "STANDARD"
+        },
+        {
+            "Key": "index.html",
+            "LastModified": "2026-04-08T17:40:19+00:00",
+            "ETag": "\"291516e81e187df44fc1afffbc9e04d4\"",
+            "ChecksumAlgorithm": [
+                "CRC64NVME"
+            ],
+            "ChecksumType": "FULL_OBJECT",
+            "Size": 1570,
+            "StorageClass": "STANDARD"
+        }
+    ],
+    "RequestCharged": null,
+    "Prefix": ""
+}

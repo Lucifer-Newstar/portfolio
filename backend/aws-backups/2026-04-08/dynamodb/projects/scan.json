@@ -1,0 +1,135 @@
+{
+    "Items": [
+        {
+            "visible": {
+                "BOOL": true
+            },
+            "github_link": {
+                "S": "https://github.com/Lucifer-Newstar/portfolio"
+            },
+            "order": {
+                "N": "1"
+            },
+            "description": {
+                "S": "Full-stack portfolio with hidden admin dashboard, Cognito auth, and DynamoDB backend"
+            },
+            "id": {
+                "S": "project-portfolio"
+            },
+            "tech_stack": {
+                "L": [
+                    {
+                        "S": "React"
+                    },
+                    {
+                        "S": "AWS"
+                    },
+                    {
+                        "S": "Terraform"
+                    },
+                    {
+                        "S": "DynamoDB"
+                    }
+                ]
+            },
+            "title": {
+                "S": "Portfolio Website"
+            }
+        },
+        {
+            "visible": {
+                "BOOL": true
+            },
+            "github_link": {
+                "S": ""
+            },
+            "order": {
+                "N": "2"
+            },
+            "description": {
+                "S": "alskdf"
+            },
+            "id": {
+                "S": "new21"
+            },
+            "tech_stack": {
+                "L": [
+                    {
+                        "S": "laskdfj"
+                    }
+                ]
+            },
+            "title": {
+                "S": "asdkf"
+            }
+        },
+        {
+            "id": {
+                "S": "test-project-1"
+            },
+            "visible": {
+                "BOOL": false
+            },
+            "title": {
+                "S": "Updated Test Project"
+            }
+        },
+        {
+            "visible": {
+                "BOOL": false
+            },
+            "github_link": {
+                "S": ""
+            },
+            "order": {
+                "N": "1"
+            },
+            "description": {
+                "S": "alsdkfj"
+            },
+            "id": {
+                "S": "asdf"
+            },
+            "tech_stack": {
+                "L": [
+                    {
+                        "S": "lasdkj"
+                    }
+                ]
+            },
+            "title": {
+                "S": "aksdfj"
+            }
+        },
+        {
+            "visible": {
+                "BOOL": false
+            },
+            "github_link": {
+                "S": ""
+            },
+            "order": {
+                "N": "2"
+            },
+            "description": {
+                "S": "asldkfj"
+            },
+            "id": {
+                "S": "sadf"
+            },
+            "tech_stack": {
+                "L": [
+                    {
+                        "S": "sldkfj"
+                    }
+                ]
+            },
+            "title": {
+                "S": "asldfkj"
+            }
+        }
+    ],
+    "Count": 5,
+    "ScannedCount": 5,
+    "ConsumedCapacity": null
+}

@@ -1,0 +1,16 @@
+{
+    "Parameters": [
+        {
+            "Name": "/portfolio/github/token",
+            "ARN": "arn:aws:ssm:us-east-1:969849535462:parameter/portfolio/github/token",
+            "Type": "SecureString",
+            "KeyId": "alias/aws/ssm",
+            "LastModifiedDate": "2026-04-08T22:50:28.176000+05:30",
+            "LastModifiedUser": "arn:aws:iam::969849535462:user/cli-user",
+            "Version": 1,
+            "Tier": "Standard",
+            "Policies": [],
+            "DataType": "text"
+        }
+    ]
+}

@@ -1,0 +1,50 @@
+{
+    "UserPoolClient": {
+        "UserPoolId": "us-east-1_IWnaPdbK8",
+        "ClientName": "Portfolio",
+        "ClientId": "2kqig6fjtjb5rot22ccttr398n",
+        "ClientSecret": "REDACTED_IN_REPO_BACKUP",
+        "LastModifiedDate": "2026-04-08T15:21:58.848000+05:30",
+        "CreationDate": "2026-03-28T22:09:37.475000+05:30",
+        "RefreshTokenValidity": 5,
+        "AccessTokenValidity": 60,
+        "IdTokenValidity": 60,
+        "TokenValidityUnits": {
+            "AccessToken": "minutes",
+            "IdToken": "minutes",
+            "RefreshToken": "days"
+        },
+        "ExplicitAuthFlows": [
+            "ALLOW_REFRESH_TOKEN_AUTH",
+            "ALLOW_USER_AUTH",
+            "ALLOW_USER_SRP_AUTH"
+        ],
+        "SupportedIdentityProviders": [
+            "COGNITO"
+        ],
+        "CallbackURLs": [
+            "http://localhost:5173/callback",
+            "https://d84l1y8p4kdic.cloudfront.net",
+            "https://lucifernewstar-2006.xyz/callback",
+            "https://lucifernewstar-2006.xyz/lucifer-newstar_dashboard"
+        ],
+        "LogoutURLs": [
+            "http://localhost:5173",
+            "https://lucifernewstar-2006.xyz",
+            "https://lucifernewstar-2006.xyz/lucifer-newstar_dashboard"
+        ],
+        "AllowedOAuthFlows": [
+            "code"
+        ],
+        "AllowedOAuthScopes": [
+            "email",
+            "openid",
+            "phone"
+        ],
+        "AllowedOAuthFlowsUserPoolClient": true,
+        "PreventUserExistenceErrors": "ENABLED",
+        "EnableTokenRevocation": true,
+        "EnablePropagateAdditionalUserContextData": false,
+        "AuthSessionValidity": 3
+    }
+}

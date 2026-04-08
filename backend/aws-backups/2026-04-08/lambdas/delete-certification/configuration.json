@@ -1,0 +1,38 @@
+{
+    "FunctionName": "delete-certification",
+    "FunctionArn": "arn:aws:lambda:us-east-1:969849535462:function:delete-certification",
+    "Runtime": "nodejs24.x",
+    "Role": "arn:aws:iam::969849535462:role/service-role/delete-certification-role-76pusu84",
+    "Handler": "index.handler",
+    "CodeSize": 590,
+    "Description": "",
+    "Timeout": 3,
+    "MemorySize": 128,
+    "LastModified": "2026-03-28T21:19:54.000+0000",
+    "CodeSha256": "w+ns0DARfDrWN8a1I2ikK0p1GOVtGdH8etCmpTH2dSQ=",
+    "Version": "$LATEST",
+    "TracingConfig": {
+        "Mode": "PassThrough"
+    },
+    "RevisionId": "76ce38dd-b502-4a23-b6d5-c5bf1405f2ec",
+    "State": "Active",
+    "LastUpdateStatus": "Successful",
+    "PackageType": "Zip",
+    "Architectures": [
+        "x86_64"
+    ],
+    "EphemeralStorage": {
+        "Size": 512
+    },
+    "SnapStart": {
+        "ApplyOn": "None",
+        "OptimizationStatus": "Off"
+    },
+    "RuntimeVersionConfig": {
+        "RuntimeVersionArn": "arn:aws:lambda:us-east-1::runtime:b0bb5dea1b12bb0e2c3b50ed434af2fd2d16d383f7324c7b455111008b6112ba"
+    },
+    "LoggingConfig": {
+        "LogFormat": "Text",
+        "LogGroup": "/aws/lambda/delete-certification"
+    }
+}

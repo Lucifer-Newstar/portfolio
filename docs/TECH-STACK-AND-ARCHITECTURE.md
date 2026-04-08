@@ -2,157 +2,263 @@
 
 Last updated: 2026-04-08
 
-## 1. Technologies Used
+## 1. Frontend Stack
 
-## Frontend
 - React 19
 - Vite 5
 - React Router 7
-- GSAP (motion)
-- Three.js + @react-three/fiber + @react-three/drei (3D visuals)
-- aws-amplify (auth integrations)
-- Axios (available)
+- GSAP + ScrollTrigger
+- custom canvas-rendered particle scenes
+- Three.js
+- `@react-three/fiber`
+- `@react-three/drei`
+- CSS-first styling with layered override files
 
-## Styling and UX
-- Global CSS with layered override architecture
-- Theme-aware design (light/dark)
-- Route-level visual identities
-- Scroll and interaction effect systems
-- Source-specific feed cards
+## 2. Backend Stack
 
-## Backend
-- AWS Lambda (Node.js ESM style `index.mjs`)
-- Amazon API Gateway (REST)
-- Amazon DynamoDB (primary app data)
-- Amazon SES (contact email delivery)
+- AWS Lambda
+- API Gateway REST API
+- DynamoDB
+- Cognito Hosted UI + OAuth code flow with PKCE
+- S3
+- CloudFront
+- Route 53
+- ACM
+- SES
+- WAF
+- SSM Parameter Store
+- GitHub Actions
 
-## Auth
-- Amazon Cognito Hosted UI (code callback in current fallback session approach)
-- Client-side protected route checks + session storage
+## 3. Frontend Runtime Architecture
 
-## Delivery and Ops
-- GitHub Actions CI (`.github/workflows/ci.yml`)
-- GitHub Actions Deploy (`.github/workflows/deploy.yml`)
-- AWS S3 static hosting (deploy target)
-- AWS CloudFront invalidation post-deploy
+### Entry and shell
 
-## 2. High-Level Architecture
+- `frontend/src/main.jsx`
+- `frontend/src/App.jsx`
 
-```text
-Browser (Public/Admin React SPA)
-  -> API layer (frontend/src/utils/api.js)
-    -> API Gateway /prod/*
-      -> Lambda functions
-        -> DynamoDB tables (skills/projects/experience/certifications/posts)
-        -> SES (contact email)
+Global layers mounted at app level:
 
-GitHub Actions (push main)
-  -> Build frontend
-  -> Sync dist to S3
-  -> CloudFront invalidation
+- `PageThemeHandler`
+- `RouteMeta`
+- `ParticleBackground`
+- `ThemeAtmosphere`
+- `AdvancedVisualOverlays`
+- `InteractionEffects`
+- `ScrollAnimations`
+- `ScrollProgress`
+- `Breadcrumbs`
+
+### Routes
+
+Public routes:
+
+- `/`
+- `/about`
+- `/experience`
+- `/skills`
+- `/projects`
+- `/devops-lab`
+- `/certifications`
+- `/posts`
+- `/contact`
+- `/callback`
+
+Protected admin route:
+
+- `/lucifer-newstar_dashboard`
+
+### State layers
+
+Theme state:
+
+- `ThemeContext` handles theme persistence and page-level theming
+
+Content state:
+
+- `SiteContentContext` manages saved content, draft content, local cache, remote hydration, and remote save
+
+### API layer
+
+`frontend/src/utils/api.js` centralizes:
+
+- CRUD requests
+- content load / save
+- image upload
+- deploy trigger
+- public ops summary
+- admin ops insights
+- contact submit
+
+## 4. Styling Architecture
+
+### Base layers
+
+- `frontend/src/styles/global.css`
+- `frontend/src/styles/main.css`
+- `frontend/src/styles/theme.css`
+
+### Override layers
+
+- `layout.css`
+- `navbar-explore.css`
+- `interaction.css`
+- `home-hero.css`
+- `admin-content.css`
+- `scroll-story.css`
+- `visual-additions.css`
+- `advanced-visuals.css`
+- `theme-signatures.css`
+- `typography-rhythm.css`
+- `page-experiences.css`
+- `interaction-mobile-polish.css`
+- `devops-observability.css`
+- `posts-source-cards.css`
+
+### Page layers
+
+- `skills.css`
+- `projects.css`
+- `experience.css`
+- `certifications.css`
+- `posts.css`
+- `contact.css`
+
+## 5. Backend Architecture
+
+### CRUD pattern
+
+Each entity uses dedicated Lambdas for create, get, update, and delete.
+
+Entity groups:
+
+- skills
+- projects
+- experience
+- certifications
+- posts
+
+### Utility handlers
+
+- `get-site-content`
+- `save-site-content`
+- `deploy-website`
+- `ops-insights`
+- `send-contact-email`
+- `fetch-github-activity`
+- `upload-admin-image`
+
+### Data storage model
+
+- entity tables store records directly in DynamoDB
+- site content stores a root record plus chunk records in `site_content`
+- admin-uploaded images are stored in S3 and referenced by public URL
+
+## 6. Auth Architecture
+
+Frontend:
+
+- login button creates Cognito Hosted UI URL with PKCE
+- callback route exchanges auth code for access token
+- protected route checks session and expiry in `sessionStorage`
+
+Backend:
+
+- admin-sensitive handlers call Cognito userinfo endpoint with bearer token
+- successful validation requires a valid `sub`
+
+Important envs:
+
+- `VITE_COGNITO_DOMAIN`
+- `VITE_COGNITO_CLIENT_ID`
+- `VITE_COGNITO_REDIRECT_URI`
+- `COGNITO_USERINFO_URL`
+
+## 7. Content Architecture
+
+Save path:
+
+1. admin edits draft content
+2. frontend strips embedded image data and computes overrides
+3. frontend posts override object to `/admin/content`
+4. backend serializes JSON
+5. backend chunks content into `site_content`
+6. frontend stores saved snapshot locally after success
+
+Read path:
+
+1. frontend tries `GET /admin/content`
+2. backend assembles chunked payload from DynamoDB
+3. frontend merges overrides with default content
+
+## 8. Deploy Architecture
+
+### CI
+
+`ci.yml` runs:
+
+- checkout
+- Node setup
+- `npm ci --legacy-peer-deps`
+- lint
+- production dependency audit
+- build
+
+### Production deploy
+
+`deploy.yml` runs:
+
+- checkout
+- Node setup using `frontend/.nvmrc`
+- install
+- lint
+- production dependency audit
+- build
+- S3 sync
+- CloudFront invalidation
+
+Critical deploy rule:
+
+```bash
+aws s3 sync frontend/dist s3://<bucket> --delete --exclude "images/uploads/*"
 ```
 
-## 3. Frontend Architecture
+### Admin-triggered deploy
 
-## Core shell
-- `App.jsx` manages route frame.
-- Shared layers:
-- `PageThemeHandler` (sets `data-page`)
-- `RouteMeta` (SEO/OG metadata per route)
-- `ParticleBackground`, `ThemeAtmosphere`, `AdvancedVisualOverlays`, `InteractionEffects`
-- `ScrollAnimations`, `ScrollProgress`, `Breadcrumbs`
+1. admin UI posts to `/admin/deploy`
+2. `deploy-website` validates bearer token
+3. Lambda fetches GitHub PAT from SSM
+4. Lambda dispatches GitHub Actions workflow
 
-## State model
-- `ThemeContext` handles light/dark theme and theme query support.
-- `SiteContentContext` handles:
-- saved content
-- draft content
-- local persistence
-- remote snapshot sync via posts system record
+## 9. Operations Architecture
 
-## Admin model
-- Single admin route: `/lucifer-newstar_dashboard`
-- Tabbed managers:
-- content
-- preview
-- CRUD sections
-- posts manager
-- Save and deploy workflows surfaced in UI.
+Public:
 
-## 4. Backend Architecture
+- `GET /ops/summary`
 
-## CRUD Functions
-Per resource Lambda functions back `GET/POST/PUT/DELETE` routes.
+Admin:
 
-## Posts system role
-Posts are dual-purpose:
-- public feed content
-- hidden system records (for site-content snapshot persistence)
+- `GET /admin/ops-insights`
 
-## Contact route
-- New route contract: `POST /contact`
-- Lambda: `send-contact-email`
-- Sends to SES target mailbox.
+Signals collected:
 
-## 5. Data and Contracts
+- Lambda metrics
+- Lambda logs
+- API Gateway status
+- CloudFront request telemetry
+- S3/site health context
+- GitHub Actions deploy history
 
-## Canonical front-end API module
-`frontend/src/utils/api.js`
+## 10. Backup and Restore Architecture
 
-Primary contracts:
-- `fetchSkills/createSkill/updateSkill/deleteSkill`
-- `fetchProjects/createProject/updateProject/deleteProject`
-- `fetchExperience/...`
-- `fetchCertifications/...`
-- `fetchPosts/createPost/updatePost/deletePost`
-- `syncGitHubActivity()`
-- `fetchSiteContentRemote()/saveSiteContentRemote()`
-- `submitContactForm()`
-- `triggerWebsiteDeploy()`
+Reference artifacts:
 
-## 6. Theming and Visual System
+- `backend/aws-backups/2026-04-08/`
+- `backend/export-aws-backup.cmd`
+- `backend/api-gateway/portfolio-rest-api-prod-oas30.json`
 
-Layered CSS architecture in `frontend/src/styles/overrides/`:
-- layout and navbar behavior
-- interaction behaviors
-- home hero/bento specializations
-- admin content experience
-- story scroll rails
-- advanced overlays and cinematic atmospherics
-- theme signatures (page-unique)
-- typography rhythm
-- posts source-card themes
-- mobile and anti-flinch polish
+Design intent:
 
-## 7. CI/CD and Deployment
-
-## CI
-`ci.yml` on PRs to main:
-- install
-- lint
-- npm audit (`--omit=dev`)
-- build
-
-## Deploy
-`deploy.yml` on push to main:
-- install
-- lint
-- npm audit
-- build
-- aws configure creds
-- `aws s3 sync frontend/dist s3://<bucket> --delete`
-- cloudfront invalidation
-
-## Optional Admin-triggered deploy
-- Uses `VITE_DEPLOY_WEBHOOK_URL`
-- `triggerWebsiteDeploy()` sends POST payload to webhook.
-
-## 8. Security Posture (Current)
-
-- Private admin route
-- Cognito-based login entry
-- Client fallback session guard
-- API CORS headers in Lambdas
-- Deploy credentials in GitHub Secrets
-- `.env` ignored by git
-- Contact form validated server-side before SES send
+- docs explain the build order and rules
+- templates capture local Lambda intent
+- backup snapshot captures the deployed AWS state
+- together they form the practical rebuild blueprint

@@ -1,0 +1,38 @@
+{
+    "FunctionName": "update-experience",
+    "FunctionArn": "arn:aws:lambda:us-east-1:969849535462:function:update-experience",
+    "Runtime": "nodejs24.x",
+    "Role": "arn:aws:iam::969849535462:role/service-role/update-experience-role-p5yvtbev",
+    "Handler": "index.handler",
+    "CodeSize": 987,
+    "Description": "",
+    "Timeout": 3,
+    "MemorySize": 128,
+    "LastModified": "2026-03-28T21:16:46.000+0000",
+    "CodeSha256": "j0QQkgPAX2Zk/DmJZAKWT6//LuGLnnW5taalIU3jLNQ=",
+    "Version": "$LATEST",
+    "TracingConfig": {
+        "Mode": "PassThrough"
+    },
+    "RevisionId": "06fec314-64f4-46a5-8d10-3eedfa7c362b",
+    "State": "Active",
+    "LastUpdateStatus": "Successful",
+    "PackageType": "Zip",
+    "Architectures": [
+        "x86_64"
+    ],
+    "EphemeralStorage": {
+        "Size": 512
+    },
+    "SnapStart": {
+        "ApplyOn": "None",
+        "OptimizationStatus": "Off"
+    },
+    "RuntimeVersionConfig": {
+        "RuntimeVersionArn": "arn:aws:lambda:us-east-1::runtime:b0bb5dea1b12bb0e2c3b50ed434af2fd2d16d383f7324c7b455111008b6112ba"
+    },
+    "LoggingConfig": {
+        "LogFormat": "Text",
+        "LogGroup": "/aws/lambda/update-experience"
+    }
+}

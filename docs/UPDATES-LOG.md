@@ -1,166 +1,129 @@
-# Detailed Updates Log
+# Updates Log
 
 Last updated: 2026-04-08
 
-This log captures major functional and visual updates currently present in the working project state, plus recent implemented upgrades in this session.
+This file groups the latest implementation milestones using the current codebase plus recent commit history.
 
-Related historical record:
-- `docs/PROJECT-PROGRESS-LOG-2026-03-28_to_2026-04-08.md` preserves the phase-by-phase build journey from project setup through live launch.
+## 1. Final Verification Pass
 
-## 1. CI/CD and Deploy Pipeline
+Current pass updates:
 
-- Added/maintained PR CI workflow:
-- lint
-- prod audit
-- build
-- Added/maintained production deploy workflow:
-- build frontend
-- deploy to S3
-- invalidate CloudFront
-- Node and package compatibility cleanup reflected in commit history (`Github Actions` fix series).
+- rewrote `README.md` from template placeholder into a project guide
+- expanded docs to cover AWS backup contents and rebuild flow
+- added dedicated critical-issues document
+- aligned frontend fallback Cognito client ID with the live backup snapshot
+- tightened CORS handling for contact and site-content read handlers to use allowlisted origins
+- redacted Cognito `ClientSecret` from the repo copy of the backup snapshot
 
-## 2. Auth and Admin Access
+## 2. Deploy and Admin Stabilization
 
-- Admin route protected with `ProtectedRoute`.
-- Cognito Hosted UI login link generation through `adminAuth`.
-- Callback now exchanges authorization code with Cognito `/oauth2/token`.
-- PKCE S256 verifier flow added and validated with `state`.
-- Access token is stored in session storage with expiry checks.
-- Admin logout clears session.
-- Removed insecure local fallback admin session.
+Related commits:
 
-## 3. Content Persistence and Cloud Sync
+- `e755d85` Deploy Card fix
+- `e449531` Image Upload Fix
+- `3e0f8f6` enable-admin-image-uploads-safely
+- `b2feb00` fix-admin-save-order
+- `951bd3d` fix-cognito-spa-client-and-scope-for-hosted-ui
+- `b818b6b` security-hardening-admin-auth-api-validation-and-iam-least-privilege
+- `73d69c1` fix-admin-api-wiring-deploy-cors-content-editability
 
-- Added draft/saved content architecture in `SiteContentContext`.
-- Added remote site content snapshot mechanism using hidden posts record `__site-content__`.
-- Added save operations to sync local + remote.
-- Added admin save feedback UX.
-- Save writes now go through authenticated `POST /admin/content` only (legacy insecure write fallback removed).
+Outcomes:
 
-## 4. Admin Dashboard UX
+- deploy trigger wired through GitHub workflow dispatch
+- admin save status sequencing corrected
+- Cognito Hosted UI callback and scope handling improved
+- admin image upload route and Lambda added
+- admin-sensitive routes hardened with bearer validation
 
-- Added tabbed admin console with overview/content/preview/CRUD tabs.
-- Added preview manager with:
-- saved vs draft mode
-- light/dark side-by-side iframe comparison
-- Added topbar status chips for save/deploy states.
-- Added explicit `Deploy to Website` button.
-- Added deploy error visibility (reason shown in admin UI).
-- Added deploy trigger helper via `VITE_DEPLOY_WEBHOOK_URL`.
+## 3. Content Save Reliability
 
-## 5. Visual System Upgrades
+Related commits:
 
-- Added advanced visual overlays:
-- cinematic fog/beam
-- telemetry orbits/nodes
-- pointer aura
-- device-tier fallbacks
-- Added additive visual detail layer:
-- section rails
-- card sheen
-- heading ornaments
-- Added route-specific signature layer per page.
-- Added typography rhythm layer:
-- theme-specific display/body pairings
-- heading underline language
-- restored animated chromatic heading effect for `Navin Jairam`.
-- Added interaction/mobile polish:
-- reduced hover flinch
-- reduced transform jitter
-- mobile spacing and grid hardening
-- overflow safeguards.
+- `2fa4cfe` Devops Tools
+- `b2feb00` fix-admin-save-order
+- `8368fb9` Probably Final API update
 
-## 6. Feed and Posts Enhancements
+Outcomes:
 
-- Added source detection for posts by type/link/title.
-- Added source-specific card themes:
-- GitHub
-- LinkedIn
-- LeetCode
-- Notion
-- Manual
-- Other fallback
-- Added source-specific labels and CTA copy (`View on GitHub`, etc.).
-- Extended admin post type options to include new sources.
+- override-based save model adopted
+- embedded image payloads stripped before save
+- `site_content` moved to chunked DynamoDB storage
+- frontend save state synced more cleanly with successful remote writes
 
-## 7. Contact Form Delivery
+## 4. Observability and Ops
 
-- Added real contact form submit flow from frontend (`submitContactForm`).
-- Added backend Lambda `send-contact-email` with SES integration.
-- Added setup doc for SES verification and route deployment.
-- Contact form now surfaces success/failure messages in UI.
+Related commits:
 
-## 8. SEO/Metadata
+- `2fa4cfe` Devops Tools
+- `e755d85` Deploy Card fix
 
-- Added `RouteMeta` component.
-- Dynamic per-route:
-- document title
-- description meta
-- Open Graph tags
-- Twitter card tags
+Outcomes:
 
-## 9. Project Case Study Experience
+- added `ops-insights` Lambda and operations UI
+- added public `GET /ops/summary`
+- added admin `GET /admin/ops-insights`
+- deploy history, health chips, metrics, and logs surfaced in the UI
 
-- Enhanced `ProjectCaseStudyModal` with structured sections:
-- Problem
-- Approach
-- Result
-- Keeps existing workstream and stats blocks.
+## 5. Image and Asset Handling
 
-## 10. Security and Reliability Improvements
+Related commits:
 
-- `.env` ignore hardening present.
-- Error messaging improved around deploy/contact submission paths.
-- Backend contact payload validation added (name/email/message constraints).
-- CORS-friendly Lambda responses standardized in new contact function.
-- Added bearer-token validation on:
-- `POST /admin/content`
-- `POST /admin/deploy`
-- Added Cognito userInfo verification in admin-write lambdas.
-- Added request payload validation and size limit (1 MB) for site-content save.
-- Tightened IAM on `lambda-dynamodb-role`:
-- detached broad managed policies:
-- `AmazonDynamoDBFullAccesswithDataPipeline`
-- `AmazonDynamoDBFullAccess`
-- `AmazonDynamoDBFullAccess_v2`
-- expanded and promoted `lambda-dynamodb-custom-policy` to include only required tables:
-- `skills`, `projects`, `experience`, `certifications`, `posts`, `site_content`
+- `3e0f8f6` enable-admin-image-uploads-safely
+- `e449531` Image Upload Fix
 
-## 11. Commit Lineage Snapshot (Recent)
+Outcomes:
 
-Recent commit history includes:
-- multiple UI upgrade waves
-- GitHub Actions fixes
-- dependency/runtime compatibility fixes
-- Cognito authentication baseline commit
+- `upload-admin-image` Lambda added
+- `/admin/upload-image` route added
+- uploaded images stored in S3 and saved as URLs
+- deploy workflow preserves `images/uploads/*`
 
-Use:
+## 6. Visual System Work
 
-```bash
-git log --oneline
-```
+Related commits:
 
-for exact sequencing and SHA-level traceability.
+- `35c59bb` UI Upgrade 6
+- `26495e6` UI Upgrade 5
+- `48933b8` UI Upgrade 4
+- `72e20de` Add contact form email via SES
+- `2fa4cfe` Devops Tools
 
-## 12. 2026-04-08 Verification + Deploy Notes
+Outcomes:
 
-- Full local frontend health checks passed:
-- `npm run lint`
-- `npm run build`
-- API smoke checks reconfirmed:
-- `GET /skills` 200
-- `GET /projects` 200
-- `GET /posts` 200
-- `GET /admin/content` 200
-- `OPTIONS /admin/content` 200
-- unauthenticated `POST /admin/content` and `POST /admin/deploy` correctly return 401
-- Forced a clean deploy workflow trigger via empty commit on `main` to ensure GitHub Actions executes a fresh production deployment run.
-- Cognito hosted UI reliability hardening applied at app-client level:
-- callback URLs normalized to:
-- `http://localhost:5173/callback`
-- `https://lucifernewstar-2006.xyz/callback`
-- `https://d84l1y8p4kdic.cloudfront.net/callback`
-- logout URLs normalized to:
-- `http://localhost:5173`
-- `https://lucifernewstar-2006.xyz`
-- `https://d84l1y8p4kdic.cloudfront.net`
+- stronger home hero and editorial layout polish
+- deeper overlay and atmosphere system
+- improved theme toggle presentation
+- DevOps page and admin ops styling upgrades
+- mobile interaction polish layer added
+
+## 7. Contact and Communication
+
+Related commit:
+
+- `72e20de` Add contact form email via SES
+
+Outcomes:
+
+- SES-backed `POST /contact`
+- frontend contact page wiring
+- server-side validation and delivery path
+
+## 8. Backup and Recovery
+
+New repo artifacts:
+
+- `backend/aws-backups/2026-04-08/`
+- `backend/export-aws-backup.cmd`
+
+Coverage:
+
+- Lambda configs and ZIPs
+- API Gateway exports
+- table scans and schema metadata
+- Cognito, CloudFront, Route 53, ACM, SES, IAM, WAF, SSM metadata
+
+## 9. Known Remaining Non-Blocking Items
+
+- no automated end-to-end browser test coverage exists
+- large frontend bundle chunks remain
+- some SAM templates describe key handlers but the AWS backup remains the more complete restore reference

@@ -1,0 +1,222 @@
+{
+    "items": [
+        {
+            "id": "0dtlakkj48",
+            "path": "/",
+            "resourceMethods": {
+                "OPTIONS": {}
+            }
+        },
+        {
+            "id": "27fr1u",
+            "parentId": "uctel3",
+            "pathPart": "{id}",
+            "path": "/experience/{id}",
+            "resourceMethods": {
+                "DELETE": {},
+                "GET": {},
+                "OPTIONS": {},
+                "POST": {},
+                "PUT": {}
+            }
+        },
+        {
+            "id": "2npjpi",
+            "parentId": "n2z35c",
+            "pathPart": "{id}",
+            "path": "/projects/{id}",
+            "resourceMethods": {
+                "DELETE": {},
+                "GET": {},
+                "OPTIONS": {},
+                "POST": {},
+                "PUT": {}
+            }
+        },
+        {
+            "id": "4h35cx",
+            "parentId": "0dtlakkj48",
+            "pathPart": "contact",
+            "path": "/contact",
+            "resourceMethods": {
+                "OPTIONS": {},
+                "POST": {}
+            }
+        },
+        {
+            "id": "7nlqp8",
+            "parentId": "0dtlakkj48",
+            "pathPart": "skills",
+            "path": "/skills",
+            "resourceMethods": {
+                "DELETE": {},
+                "GET": {},
+                "OPTIONS": {},
+                "POST": {},
+                "PUT": {}
+            }
+        },
+        {
+            "id": "8t36il",
+            "parentId": "d9nbjo",
+            "pathPart": "upload-image",
+            "path": "/admin/upload-image",
+            "resourceMethods": {
+                "OPTIONS": {},
+                "POST": {}
+            }
+        },
+        {
+            "id": "d619mx",
+            "parentId": "d9nbjo",
+            "pathPart": "content",
+            "path": "/admin/content",
+            "resourceMethods": {
+                "GET": {},
+                "OPTIONS": {},
+                "POST": {}
+            }
+        },
+        {
+            "id": "d9nbjo",
+            "parentId": "0dtlakkj48",
+            "pathPart": "admin",
+            "path": "/admin"
+        },
+        {
+            "id": "e5u7dj",
+            "parentId": "0dtlakkj48",
+            "pathPart": "posts",
+            "path": "/posts",
+            "resourceMethods": {
+                "GET": {},
+                "OPTIONS": {},
+                "POST": {}
+            }
+        },
+        {
+            "id": "h07cgc",
+            "parentId": "d9nbjo",
+            "pathPart": "ops-insights",
+            "path": "/admin/ops-insights",
+            "resourceMethods": {
+                "GET": {},
+                "OPTIONS": {}
+            }
+        },
+        {
+            "id": "jeva6x",
+            "parentId": "0dtlakkj48",
+            "pathPart": "ops",
+            "path": "/ops"
+        },
+        {
+            "id": "kkyke3",
+            "parentId": "e5u7dj",
+            "pathPart": "sync-github",
+            "path": "/posts/sync-github",
+            "resourceMethods": {
+                "OPTIONS": {},
+                "POST": {}
+            }
+        },
+        {
+            "id": "mfnmtr",
+            "parentId": "d9nbjo",
+            "pathPart": "deploy",
+            "path": "/admin/deploy",
+            "resourceMethods": {
+                "OPTIONS": {},
+                "POST": {}
+            }
+        },
+        {
+            "id": "n2z35c",
+            "parentId": "0dtlakkj48",
+            "pathPart": "projects",
+            "path": "/projects",
+            "resourceMethods": {
+                "DELETE": {},
+                "GET": {},
+                "OPTIONS": {},
+                "POST": {},
+                "PUT": {}
+            }
+        },
+        {
+            "id": "te1npy",
+            "parentId": "x68jex",
+            "pathPart": "{id}",
+            "path": "/certifications/{id}",
+            "resourceMethods": {
+                "DELETE": {},
+                "GET": {},
+                "OPTIONS": {},
+                "POST": {},
+                "PUT": {}
+            }
+        },
+        {
+            "id": "uctel3",
+            "parentId": "0dtlakkj48",
+            "pathPart": "experience",
+            "path": "/experience",
+            "resourceMethods": {
+                "DELETE": {},
+                "GET": {},
+                "OPTIONS": {},
+                "POST": {},
+                "PUT": {}
+            }
+        },
+        {
+            "id": "vj83xe",
+            "parentId": "jeva6x",
+            "pathPart": "summary",
+            "path": "/ops/summary",
+            "resourceMethods": {
+                "GET": {},
+                "OPTIONS": {}
+            }
+        },
+        {
+            "id": "x68jex",
+            "parentId": "0dtlakkj48",
+            "pathPart": "certifications",
+            "path": "/certifications",
+            "resourceMethods": {
+                "DELETE": {},
+                "GET": {},
+                "OPTIONS": {},
+                "POST": {},
+                "PUT": {}
+            }
+        },
+        {
+            "id": "yaw8am",
+            "parentId": "7nlqp8",
+            "pathPart": "{id}",
+            "path": "/skills/{id}",
+            "resourceMethods": {
+                "DELETE": {},
+                "GET": {},
+                "OPTIONS": {},
+                "POST": {},
+                "PUT": {}
+            }
+        },
+        {
+            "id": "zjc5c9",
+            "parentId": "e5u7dj",
+            "pathPart": "{id}",
+            "path": "/posts/{id}",
+            "resourceMethods": {
+                "DELETE": {},
+                "GET": {},
+                "OPTIONS": {},
+                "POST": {},
+                "PUT": {}
+            }
+        }
+    ]
+}

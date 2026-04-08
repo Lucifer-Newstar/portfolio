@@ -1,0 +1,8 @@
+{
+    "DkimAttributes": {
+        "navin.jairam@gmail.com": {
+            "DkimEnabled": false,
+            "DkimVerificationStatus": "NotStarted"
+        }
+    }
+}

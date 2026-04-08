@@ -1,0 +1,50 @@
+{
+    "Configuration": {
+        "FunctionName": "send-contact-email",
+        "FunctionArn": "arn:aws:lambda:us-east-1:969849535462:function:send-contact-email",
+        "Runtime": "nodejs24.x",
+        "Role": "arn:aws:iam::969849535462:role/send-contact-email-role",
+        "Handler": "index.handler",
+        "CodeSize": 1166,
+        "Description": "",
+        "Timeout": 3,
+        "MemorySize": 128,
+        "LastModified": "2026-04-08T12:21:14.000+0000",
+        "CodeSha256": "wk95W6FUnepBX4Vu+w2FHUFNtDQfI5kRRr22KOu3iSg=",
+        "Version": "$LATEST",
+        "Environment": {
+            "Variables": {
+                "CONTACT_SOURCE_EMAIL": "navin.jairam@gmail.com",
+                "CONTACT_TARGET_EMAIL": "navin.jairam@gmail.com"
+            }
+        },
+        "TracingConfig": {
+            "Mode": "PassThrough"
+        },
+        "RevisionId": "888b7833-368d-4d48-9102-4b7e68270f0e",
+        "State": "Active",
+        "LastUpdateStatus": "Successful",
+        "PackageType": "Zip",
+        "Architectures": [
+            "x86_64"
+        ],
+        "EphemeralStorage": {
+            "Size": 512
+        },
+        "SnapStart": {
+            "ApplyOn": "None",
+            "OptimizationStatus": "Off"
+        },
+        "RuntimeVersionConfig": {
+            "RuntimeVersionArn": "arn:aws:lambda:us-east-1::runtime:b0bb5dea1b12bb0e2c3b50ed434af2fd2d16d383f7324c7b455111008b6112ba"
+        },
+        "LoggingConfig": {
+            "LogFormat": "Text",
+            "LogGroup": "/aws/lambda/send-contact-email"
+        }
+    },
+    "Code": {
+        "RepositoryType": "S3",
+        "Location": "https://prod-04-2014-tasks.s3.us-east-1.amazonaws.com/snapshots/969849535462/send-contact-email-c88f09da-69de-4a9f-9e59-826b2642756f?versionId=fOdwvh9xCKCUAa8xe32iuGCfjno2r4r9&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEDgaCXVzLWVhc3QtMSJGMEQCIDzxvoJOj3KA0bEab3xOSs0DZc%2BFqs%2BL5cKB8O5BUVBBAiBcNrZav7XUqhDHAjsuxLleWZSUfCWT0gcNylNU6IkySyqLAggBEAAaDDc0OTY3ODkwMjgzOSIM10wEoc0Vnmx7qcUOKugBWb3HWdNYNodbQfefpJEEztwUFVojfWZ5XpfK1fVcFHP9hZySFVRlKB%2BJS7p%2B7FcrOVlpoiyoqg7zUYnGeLt6hhIbww43a2s5SeAKedC9VxjErqhibY1wOfI40AJB05sQdQQMPwmK98X8mXwLu3ca4jDUVozuMKpZaUOPkkjWdWaUZuzdjabpzsi79OtBRJ8lbhv9N1ZLJ9E8ahmN92VmzbYdYRvaUJ5aCCp7tINGYN4bXmbyofwFWNBElVzA7bVLYfa06ySkF9HIaZ8OmWXSwT6zgkoJVpgsDeOhu0jN6upMlzIFn%2F86%2BjCQ5tnOBjqOAdyIhhak7nYRquTQu0UY1GOR8vUSbXIAByr2QpJlIRi3%2FuCI3r9W%2FJ0z9x7RtUS8zsj%2FbUB%2FkX8nBqufQDZWJTFYnVG7CD7x0idxB14bYek39f2xotJ%2BD5GMBQvqPh1i6laGnxOAC8UeFwq9E3OUHQRKz6Lglv1B41CluOSj3rMcKjwhvZfw7oSN0LETeFY%3D&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20260408T174757Z&X-Amz-SignedHeaders=host&X-Amz-Expires=600&X-Amz-Credential=ASIA25DCYHY3QB67QAGR%2F20260408%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=b14774aab09f57850845665f7a3809b2b0def68760561ab46a66848f577a6472"
+    }
+}

@@ -1,0 +1,37 @@
+{
+    "Items": [
+        {
+            "date": {
+                "S": "Oct 2025"
+            },
+            "issuer": {
+                "S": "Oracle"
+            },
+            "skills": {
+                "L": [
+                    {
+                        "S": "OCI"
+                    },
+                    {
+                        "S": "Cloud Fundementals"
+                    }
+                ]
+            },
+            "link": {
+                "S": "https://catalog-education.oracle.com/ords/certview/sharebadge?id=3E5A5A8C90DB6F61272E7662EF777663C3316544D516C47E054F2357741AC09A"
+            },
+            "order": {
+                "N": "1"
+            },
+            "id": {
+                "S": "cert-oci-foundations"
+            },
+            "name": {
+                "S": "Oracle Cloud Infrastructure 2025 Certified Foundations Associate"
+            }
+        }
+    ],
+    "Count": 1,
+    "ScannedCount": 1,
+    "ConsumedCapacity": null
+}

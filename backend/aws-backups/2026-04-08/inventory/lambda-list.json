@@ -1,0 +1,945 @@
+{
+    "Functions": [
+        {
+            "FunctionName": "update-skill",
+            "FunctionArn": "arn:aws:lambda:us-east-1:969849535462:function:update-skill",
+            "Runtime": "nodejs24.x",
+            "Role": "arn:aws:iam::969849535462:role/service-role/update-skill-role-z6v9ygn0",
+            "Handler": "index.handler",
+            "CodeSize": 1073,
+            "Description": "",
+            "Timeout": 3,
+            "MemorySize": 128,
+            "LastModified": "2026-04-05T08:20:16.000+0000",
+            "CodeSha256": "j2cD41tsPdRI96Z2SbpmVFFLy1+pWKHeJLitale3W2I=",
+            "Version": "$LATEST",
+            "TracingConfig": {
+                "Mode": "PassThrough"
+            },
+            "RevisionId": "ee8e597f-ff5b-4047-8e92-8b8631971b15",
+            "PackageType": "Zip",
+            "Architectures": [
+                "x86_64"
+            ],
+            "EphemeralStorage": {
+                "Size": 512
+            },
+            "SnapStart": {
+                "ApplyOn": "None",
+                "OptimizationStatus": "Off"
+            },
+            "LoggingConfig": {
+                "LogFormat": "Text",
+                "LogGroup": "/aws/lambda/update-skill"
+            }
+        },
+        {
+            "FunctionName": "send-contact-email",
+            "FunctionArn": "arn:aws:lambda:us-east-1:969849535462:function:send-contact-email",
+            "Runtime": "nodejs24.x",
+            "Role": "arn:aws:iam::969849535462:role/send-contact-email-role",
+            "Handler": "index.handler",
+            "CodeSize": 1166,
+            "Description": "",
+            "Timeout": 3,
+            "MemorySize": 128,
+            "LastModified": "2026-04-08T12:21:14.000+0000",
+            "CodeSha256": "wk95W6FUnepBX4Vu+w2FHUFNtDQfI5kRRr22KOu3iSg=",
+            "Version": "$LATEST",
+            "Environment": {
+                "Variables": {
+                    "CONTACT_SOURCE_EMAIL": "navin.jairam@gmail.com",
+                    "CONTACT_TARGET_EMAIL": "navin.jairam@gmail.com"
+                }
+            },
+            "TracingConfig": {
+                "Mode": "PassThrough"
+            },
+            "RevisionId": "888b7833-368d-4d48-9102-4b7e68270f0e",
+            "PackageType": "Zip",
+            "Architectures": [
+                "x86_64"
+            ],
+            "EphemeralStorage": {
+                "Size": 512
+            },
+            "SnapStart": {
+                "ApplyOn": "None",
+                "OptimizationStatus": "Off"
+            },
+            "LoggingConfig": {
+                "LogFormat": "Text",
+                "LogGroup": "/aws/lambda/send-contact-email"
+            }
+        },
+        {
+            "FunctionName": "create-experience",
+            "FunctionArn": "arn:aws:lambda:us-east-1:969849535462:function:create-experience",
+            "Runtime": "nodejs24.x",
+            "Role": "arn:aws:iam::969849535462:role/service-role/create-experience-role-022i4njc",
+            "Handler": "index.handler",
+            "CodeSize": 675,
+            "Description": "",
+            "Timeout": 3,
+            "MemorySize": 128,
+            "LastModified": "2026-03-28T21:16:28.000+0000",
+            "CodeSha256": "0Mmu1u3cqXDQzSTNExW5QuaQbaeNKIHO4IYL0K+wCyI=",
+            "Version": "$LATEST",
+            "TracingConfig": {
+                "Mode": "PassThrough"
+            },
+            "RevisionId": "724909c9-8c70-4a23-bbda-1665650e5d0f",
+            "PackageType": "Zip",
+            "Architectures": [
+                "x86_64"
+            ],
+            "EphemeralStorage": {
+                "Size": 512
+            },
+            "SnapStart": {
+                "ApplyOn": "None",
+                "OptimizationStatus": "Off"
+            },
+            "LoggingConfig": {
+                "LogFormat": "Text",
+                "LogGroup": "/aws/lambda/create-experience"
+            }
+        },
+        {
+            "FunctionName": "delete-project",
+            "FunctionArn": "arn:aws:lambda:us-east-1:969849535462:function:delete-project",
+            "Runtime": "nodejs24.x",
+            "Role": "arn:aws:iam::969849535462:role/service-role/delete-project-role-t552rkl6",
+            "Handler": "index.handler",
+            "CodeSize": 576,
+            "Description": "",
+            "Timeout": 3,
+            "MemorySize": 128,
+            "LastModified": "2026-03-28T21:06:14.000+0000",
+            "CodeSha256": "4ntGccfdt+sstOkZArkK1lYR4pvt9mHiMI0t6rLjQn0=",
+            "Version": "$LATEST",
+            "TracingConfig": {
+                "Mode": "PassThrough"
+            },
+            "RevisionId": "afda2c52-1f2c-44df-a397-deaeac5f376e",
+            "PackageType": "Zip",
+            "Architectures": [
+                "x86_64"
+            ],
+            "EphemeralStorage": {
+                "Size": 512
+            },
+            "SnapStart": {
+                "ApplyOn": "None",
+                "OptimizationStatus": "Off"
+            },
+            "LoggingConfig": {
+                "LogFormat": "Text",
+                "LogGroup": "/aws/lambda/delete-project"
+            }
+        },
+        {
+            "FunctionName": "create-post",
+            "FunctionArn": "arn:aws:lambda:us-east-1:969849535462:function:create-post",
+            "Runtime": "nodejs24.x",
+            "Role": "arn:aws:iam::969849535462:role/service-role/create-post-role-9gxd9fyy",
+            "Handler": "index.handler",
+            "CodeSize": 811,
+            "Description": "",
+            "Timeout": 3,
+            "MemorySize": 128,
+            "LastModified": "2026-03-29T07:43:07.000+0000",
+            "CodeSha256": "8LCBhKr3AQaaG/HfL1A+aM1MyS/7BblH8BOhSBhdsms=",
+            "Version": "$LATEST",
+            "TracingConfig": {
+                "Mode": "PassThrough"
+            },
+            "RevisionId": "7d71dd0d-fdce-4f3f-82cc-444621511832",
+            "PackageType": "Zip",
+            "Architectures": [
+                "x86_64"
+            ],
+            "EphemeralStorage": {
+                "Size": 512
+            },
+            "SnapStart": {
+                "ApplyOn": "None",
+                "OptimizationStatus": "Off"
+            },
+            "LoggingConfig": {
+                "LogFormat": "Text",
+                "LogGroup": "/aws/lambda/create-post"
+            }
+        },
+        {
+            "FunctionName": "fetch-github-activity",
+            "FunctionArn": "arn:aws:lambda:us-east-1:969849535462:function:fetch-github-activity",
+            "Runtime": "nodejs24.x",
+            "Role": "arn:aws:iam::969849535462:role/service-role/fetch-github-activity-role-xfk3a9dt",
+            "Handler": "index.handler",
+            "CodeSize": 1162,
+            "Description": "",
+            "Timeout": 3,
+            "MemorySize": 128,
+            "LastModified": "2026-03-29T06:36:28.000+0000",
+            "CodeSha256": "atlvrT8GzvHLv3ucOBXnxmbwTUPmD5ag3SLaPTeLP2o=",
+            "Version": "$LATEST",
+            "TracingConfig": {
+                "Mode": "PassThrough"
+            },
+            "RevisionId": "dc8ecfb6-4bb5-4df1-9101-236e576d2623",
+            "PackageType": "Zip",
+            "Architectures": [
+                "x86_64"
+            ],
+            "EphemeralStorage": {
+                "Size": 512
+            },
+            "SnapStart": {
+                "ApplyOn": "None",
+                "OptimizationStatus": "Off"
+            },
+            "LoggingConfig": {
+                "LogFormat": "Text",
+                "LogGroup": "/aws/lambda/fetch-github-activity"
+            }
+        },
+        {
+            "FunctionName": "create-skill",
+            "FunctionArn": "arn:aws:lambda:us-east-1:969849535462:function:create-skill",
+            "Runtime": "nodejs24.x",
+            "Role": "arn:aws:iam::969849535462:role/service-role/create-skill-role-rnz0fcyl",
+            "Handler": "index.handler",
+            "CodeSize": 711,
+            "Description": "",
+            "Timeout": 3,
+            "MemorySize": 128,
+            "LastModified": "2026-03-28T20:37:55.000+0000",
+            "CodeSha256": "fvraT2xhU+OJvYRLdnaZIfG10yQEy0XMdeMule1qcYc=",
+            "Version": "$LATEST",
+            "TracingConfig": {
+                "Mode": "PassThrough"
+            },
+            "RevisionId": "05ee9505-be91-4a2d-ba27-5700dde75271",
+            "PackageType": "Zip",
+            "Architectures": [
+                "x86_64"
+            ],
+            "EphemeralStorage": {
+                "Size": 512
+            },
+            "SnapStart": {
+                "ApplyOn": "None",
+                "OptimizationStatus": "Off"
+            },
+            "LoggingConfig": {
+                "LogFormat": "Text",
+                "LogGroup": "/aws/lambda/create-skill"
+            }
+        },
+        {
+            "FunctionName": "create-certification",
+            "FunctionArn": "arn:aws:lambda:us-east-1:969849535462:function:create-certification",
+            "Runtime": "nodejs24.x",
+            "Role": "arn:aws:iam::969849535462:role/service-role/create-certification-role-3xdwoupq",
+            "Handler": "index.handler",
+            "CodeSize": 655,
+            "Description": "",
+            "Timeout": 3,
+            "MemorySize": 128,
+            "LastModified": "2026-03-28T21:19:34.000+0000",
+            "CodeSha256": "TB8Y3FCO3B10zDHO6M7l/IePtWVYPptjMVXBF9q2+fk=",
+            "Version": "$LATEST",
+            "TracingConfig": {
+                "Mode": "PassThrough"
+            },
+            "RevisionId": "a488b4ba-30ff-4a6d-a495-f2b0d6979a05",
+            "PackageType": "Zip",
+            "Architectures": [
+                "x86_64"
+            ],
+            "EphemeralStorage": {
+                "Size": 512
+            },
+            "SnapStart": {
+                "ApplyOn": "None",
+                "OptimizationStatus": "Off"
+            },
+            "LoggingConfig": {
+                "LogFormat": "Text",
+                "LogGroup": "/aws/lambda/create-certification"
+            }
+        },
+        {
+            "FunctionName": "delete-post",
+            "FunctionArn": "arn:aws:lambda:us-east-1:969849535462:function:delete-post",
+            "Runtime": "nodejs24.x",
+            "Role": "arn:aws:iam::969849535462:role/service-role/delete-post-role-4wp55kuu",
+            "Handler": "index.handler",
+            "CodeSize": 797,
+            "Description": "",
+            "Timeout": 3,
+            "MemorySize": 128,
+            "LastModified": "2026-03-29T08:24:09.000+0000",
+            "CodeSha256": "cZWfwCGlGofTdfoiPjO5AxkR4bkebi1Yzc6dcdKowks=",
+            "Version": "$LATEST",
+            "TracingConfig": {
+                "Mode": "PassThrough"
+            },
+            "RevisionId": "f241722c-dc1b-4019-9933-fb31f34e3031",
+            "PackageType": "Zip",
+            "Architectures": [
+                "x86_64"
+            ],
+            "EphemeralStorage": {
+                "Size": 512
+            },
+            "SnapStart": {
+                "ApplyOn": "None",
+                "OptimizationStatus": "Off"
+            },
+            "LoggingConfig": {
+                "LogFormat": "Text",
+                "LogGroup": "/aws/lambda/delete-post"
+            }
+        },
+        {
+            "FunctionName": "update-post",
+            "FunctionArn": "arn:aws:lambda:us-east-1:969849535462:function:update-post",
+            "Runtime": "nodejs24.x",
+            "Role": "arn:aws:iam::969849535462:role/service-role/update-post-role-290uzogy",
+            "Handler": "index.handler",
+            "CodeSize": 1245,
+            "Description": "",
+            "Timeout": 3,
+            "MemorySize": 128,
+            "LastModified": "2026-03-29T08:21:48.000+0000",
+            "CodeSha256": "ZapH4O5GmET4uWSCU1dpNNqPn1kAB+D4kVauXHjvpOc=",
+            "Version": "$LATEST",
+            "TracingConfig": {
+                "Mode": "PassThrough"
+            },
+            "RevisionId": "7278c020-5558-4325-8813-f40725139dab",
+            "PackageType": "Zip",
+            "Architectures": [
+                "x86_64"
+            ],
+            "EphemeralStorage": {
+                "Size": 512
+            },
+            "SnapStart": {
+                "ApplyOn": "None",
+                "OptimizationStatus": "Off"
+            },
+            "LoggingConfig": {
+                "LogFormat": "Text",
+                "LogGroup": "/aws/lambda/update-post"
+            }
+        },
+        {
+            "FunctionName": "update-certification",
+            "FunctionArn": "arn:aws:lambda:us-east-1:969849535462:function:update-certification",
+            "Runtime": "nodejs24.x",
+            "Role": "arn:aws:iam::969849535462:role/service-role/update-certification-role-wio53u3x",
+            "Handler": "index.handler",
+            "CodeSize": 1020,
+            "Description": "",
+            "Timeout": 3,
+            "MemorySize": 128,
+            "LastModified": "2026-04-05T09:05:49.000+0000",
+            "CodeSha256": "tTi7+djy/zl/phCEh9LfdclD+H56EL5Ly0N68/K4TwA=",
+            "Version": "$LATEST",
+            "TracingConfig": {
+                "Mode": "PassThrough"
+            },
+            "RevisionId": "33a68775-879a-47d2-bc2c-9a524d2b5024",
+            "PackageType": "Zip",
+            "Architectures": [
+                "x86_64"
+            ],
+            "EphemeralStorage": {
+                "Size": 512
+            },
+            "SnapStart": {
+                "ApplyOn": "None",
+                "OptimizationStatus": "Off"
+            },
+            "LoggingConfig": {
+                "LogFormat": "Text",
+                "LogGroup": "/aws/lambda/update-certification"
+            }
+        },
+        {
+            "FunctionName": "get-experience",
+            "FunctionArn": "arn:aws:lambda:us-east-1:969849535462:function:get-experience",
+            "Runtime": "nodejs24.x",
+            "Role": "arn:aws:iam::969849535462:role/service-role/get-experience-role-bl7rmefh",
+            "Handler": "index.handler",
+            "CodeSize": 565,
+            "Description": "",
+            "Timeout": 3,
+            "MemorySize": 128,
+            "LastModified": "2026-03-28T19:31:11.000+0000",
+            "CodeSha256": "im9NdIKuk4z/spZtAZMHUk0edOP+OzHLUPcHgT12+y8=",
+            "Version": "$LATEST",
+            "TracingConfig": {
+                "Mode": "PassThrough"
+            },
+            "RevisionId": "2b6c74be-0709-4b58-b4ee-215e51d24eaa",
+            "PackageType": "Zip",
+            "Architectures": [
+                "x86_64"
+            ],
+            "EphemeralStorage": {
+                "Size": 512
+            },
+            "SnapStart": {
+                "ApplyOn": "None",
+                "OptimizationStatus": "Off"
+            },
+            "LoggingConfig": {
+                "LogFormat": "Text",
+                "LogGroup": "/aws/lambda/get-experience"
+            }
+        },
+        {
+            "FunctionName": "save-site-content",
+            "FunctionArn": "arn:aws:lambda:us-east-1:969849535462:function:save-site-content",
+            "Runtime": "nodejs20.x",
+            "Role": "arn:aws:iam::969849535462:role/lambda-dynamodb-role",
+            "Handler": "index.handler",
+            "CodeSize": 3438600,
+            "Description": "",
+            "Timeout": 10,
+            "MemorySize": 128,
+            "LastModified": "2026-04-08T16:13:47.000+0000",
+            "CodeSha256": "3us+B9rO7jWx1DUn/rlCHvK6hr7YOdCgdE7wedn5ds0=",
+            "Version": "$LATEST",
+            "Environment": {
+                "Variables": {
+                    "ALLOWED_ORIGINS": "http://localhost:5173,https://lucifernewstar-2006.xyz",
+                    "COGNITO_USERINFO_URL": "https://us-east-1iwnapdbk8.auth.us-east-1.amazoncognito.com/oauth2/userInfo"
+                }
+            },
+            "TracingConfig": {
+                "Mode": "PassThrough"
+            },
+            "RevisionId": "507e7088-16b5-4028-a192-fc7e6e26a91a",
+            "PackageType": "Zip",
+            "Architectures": [
+                "x86_64"
+            ],
+            "EphemeralStorage": {
+                "Size": 512
+            },
+            "SnapStart": {
+                "ApplyOn": "None",
+                "OptimizationStatus": "Off"
+            },
+            "LoggingConfig": {
+                "LogFormat": "Text",
+                "LogGroup": "/aws/lambda/save-site-content"
+            }
+        },
+        {
+            "FunctionName": "get-site-content",
+            "FunctionArn": "arn:aws:lambda:us-east-1:969849535462:function:get-site-content",
+            "Runtime": "nodejs20.x",
+            "Role": "arn:aws:iam::969849535462:role/lambda-dynamodb-role",
+            "Handler": "index.handler",
+            "CodeSize": 3437764,
+            "Description": "",
+            "Timeout": 10,
+            "MemorySize": 128,
+            "LastModified": "2026-04-08T16:13:47.000+0000",
+            "CodeSha256": "ilI+BCg3qsIBnxxu+G/YPm/P4zqvNYFq0yT0n10RA8M=",
+            "Version": "$LATEST",
+            "TracingConfig": {
+                "Mode": "PassThrough"
+            },
+            "RevisionId": "7f8720a9-2fc7-4e61-8809-e66e952f9f21",
+            "PackageType": "Zip",
+            "Architectures": [
+                "x86_64"
+            ],
+            "EphemeralStorage": {
+                "Size": 512
+            },
+            "SnapStart": {
+                "ApplyOn": "None",
+                "OptimizationStatus": "Off"
+            },
+            "LoggingConfig": {
+                "LogFormat": "Text",
+                "LogGroup": "/aws/lambda/get-site-content"
+            }
+        },
+        {
+            "FunctionName": "create-project",
+            "FunctionArn": "arn:aws:lambda:us-east-1:969849535462:function:create-project",
+            "Runtime": "nodejs24.x",
+            "Role": "arn:aws:iam::969849535462:role/service-role/create-project-role-jzjfrfhs",
+            "Handler": "index.handler",
+            "CodeSize": 675,
+            "Description": "",
+            "Timeout": 3,
+            "MemorySize": 128,
+            "LastModified": "2026-03-28T21:05:29.000+0000",
+            "CodeSha256": "y8t4eJTMf1Ir0DAtWyQpRWtR/6B0mt7LIvJhXRC6HEE=",
+            "Version": "$LATEST",
+            "TracingConfig": {
+                "Mode": "PassThrough"
+            },
+            "RevisionId": "475d1924-e3f9-4f25-9af1-13be358cd4f8",
+            "PackageType": "Zip",
+            "Architectures": [
+                "x86_64"
+            ],
+            "EphemeralStorage": {
+                "Size": 512
+            },
+            "SnapStart": {
+                "ApplyOn": "None",
+                "OptimizationStatus": "Off"
+            },
+            "LoggingConfig": {
+                "LogFormat": "Text",
+                "LogGroup": "/aws/lambda/create-project"
+            }
+        },
+        {
+            "FunctionName": "update-project",
+            "FunctionArn": "arn:aws:lambda:us-east-1:969849535462:function:update-project",
+            "Runtime": "nodejs24.x",
+            "Role": "arn:aws:iam::969849535462:role/service-role/update-project-role-fjf4yncc",
+            "Handler": "index.handler",
+            "CodeSize": 954,
+            "Description": "",
+            "Timeout": 3,
+            "MemorySize": 128,
+            "LastModified": "2026-03-28T21:05:45.000+0000",
+            "CodeSha256": "SRd/Bq7n4JXEHEYG/e+/bdih2RfzwsKqR89VKdjH2IE=",
+            "Version": "$LATEST",
+            "TracingConfig": {
+                "Mode": "PassThrough"
+            },
+            "RevisionId": "3376b404-3fa6-468e-a509-b16a30ac9df0",
+            "PackageType": "Zip",
+            "Architectures": [
+                "x86_64"
+            ],
+            "EphemeralStorage": {
+                "Size": 512
+            },
+            "SnapStart": {
+                "ApplyOn": "None",
+                "OptimizationStatus": "Off"
+            },
+            "LoggingConfig": {
+                "LogFormat": "Text",
+                "LogGroup": "/aws/lambda/update-project"
+            }
+        },
+        {
+            "FunctionName": "get-post",
+            "FunctionArn": "arn:aws:lambda:us-east-1:969849535462:function:get-post",
+            "Runtime": "nodejs24.x",
+            "Role": "arn:aws:iam::969849535462:role/service-role/get-post-role-iyvzc9vt",
+            "Handler": "index.handler",
+            "CodeSize": 618,
+            "Description": "",
+            "Timeout": 3,
+            "MemorySize": 128,
+            "LastModified": "2026-03-29T07:04:16.000+0000",
+            "CodeSha256": "VPggyTpEl0L9o89rlIhcHznK3mn4cbKpPaSHBXBslUQ=",
+            "Version": "$LATEST",
+            "TracingConfig": {
+                "Mode": "PassThrough"
+            },
+            "RevisionId": "452df1ad-41b0-46b8-8717-10c3b45172b3",
+            "PackageType": "Zip",
+            "Architectures": [
+                "x86_64"
+            ],
+            "EphemeralStorage": {
+                "Size": 512
+            },
+            "SnapStart": {
+                "ApplyOn": "None",
+                "OptimizationStatus": "Off"
+            },
+            "LoggingConfig": {
+                "LogFormat": "Text",
+                "LogGroup": "/aws/lambda/get-post"
+            }
+        },
+        {
+            "FunctionName": "delete-certification",
+            "FunctionArn": "arn:aws:lambda:us-east-1:969849535462:function:delete-certification",
+            "Runtime": "nodejs24.x",
+            "Role": "arn:aws:iam::969849535462:role/service-role/delete-certification-role-76pusu84",
+            "Handler": "index.handler",
+            "CodeSize": 590,
+            "Description": "",
+            "Timeout": 3,
+            "MemorySize": 128,
+            "LastModified": "2026-03-28T21:19:54.000+0000",
+            "CodeSha256": "w+ns0DARfDrWN8a1I2ikK0p1GOVtGdH8etCmpTH2dSQ=",
+            "Version": "$LATEST",
+            "TracingConfig": {
+                "Mode": "PassThrough"
+            },
+            "RevisionId": "76ce38dd-b502-4a23-b6d5-c5bf1405f2ec",
+            "PackageType": "Zip",
+            "Architectures": [
+                "x86_64"
+            ],
+            "EphemeralStorage": {
+                "Size": 512
+            },
+            "SnapStart": {
+                "ApplyOn": "None",
+                "OptimizationStatus": "Off"
+            },
+            "LoggingConfig": {
+                "LogFormat": "Text",
+                "LogGroup": "/aws/lambda/delete-certification"
+            }
+        },
+        {
+            "FunctionName": "delete-experience",
+            "FunctionArn": "arn:aws:lambda:us-east-1:969849535462:function:delete-experience",
+            "Runtime": "nodejs24.x",
+            "Role": "arn:aws:iam::969849535462:role/service-role/delete-experience-role-8iu3428p",
+            "Handler": "index.handler",
+            "CodeSize": 591,
+            "Description": "",
+            "Timeout": 3,
+            "MemorySize": 128,
+            "LastModified": "2026-03-28T21:17:07.000+0000",
+            "CodeSha256": "3c6WKys2nlftG6tw4NrQSOsmmTZejPgfZiVOemd9p1M=",
+            "Version": "$LATEST",
+            "TracingConfig": {
+                "Mode": "PassThrough"
+            },
+            "RevisionId": "6f228d2d-f190-46ef-97fc-b14e64a3308f",
+            "PackageType": "Zip",
+            "Architectures": [
+                "x86_64"
+            ],
+            "EphemeralStorage": {
+                "Size": 512
+            },
+            "SnapStart": {
+                "ApplyOn": "None",
+                "OptimizationStatus": "Off"
+            },
+            "LoggingConfig": {
+                "LogFormat": "Text",
+                "LogGroup": "/aws/lambda/delete-experience"
+            }
+        },
+        {
+            "FunctionName": "get-certifications",
+            "FunctionArn": "arn:aws:lambda:us-east-1:969849535462:function:get-certifications",
+            "Runtime": "nodejs24.x",
+            "Role": "arn:aws:iam::969849535462:role/service-role/get-certifications-role-hxeswfu1",
+            "Handler": "index.handler",
+            "CodeSize": 565,
+            "Description": "",
+            "Timeout": 3,
+            "MemorySize": 128,
+            "LastModified": "2026-03-28T19:42:52.000+0000",
+            "CodeSha256": "wB8Pn6fe5sNuXE7SSNTE0uVti3JQHQLM17Hfw1//FZw=",
+            "Version": "$LATEST",
+            "TracingConfig": {
+                "Mode": "PassThrough"
+            },
+            "RevisionId": "d12e9924-84a8-408d-b110-0af502985efd",
+            "PackageType": "Zip",
+            "Architectures": [
+                "x86_64"
+            ],
+            "EphemeralStorage": {
+                "Size": 512
+            },
+            "SnapStart": {
+                "ApplyOn": "None",
+                "OptimizationStatus": "Off"
+            },
+            "LoggingConfig": {
+                "LogFormat": "Text",
+                "LogGroup": "/aws/lambda/get-certifications"
+            }
+        },
+        {
+            "FunctionName": "deploy-website",
+            "FunctionArn": "arn:aws:lambda:us-east-1:969849535462:function:deploy-website",
+            "Runtime": "nodejs20.x",
+            "Role": "arn:aws:iam::969849535462:role/lambda-dynamodb-role",
+            "Handler": "index.handler",
+            "CodeSize": 4470132,
+            "Description": "",
+            "Timeout": 15,
+            "MemorySize": 128,
+            "LastModified": "2026-04-08T17:22:12.000+0000",
+            "CodeSha256": "/CYKCrlthXw7Ym0gBCWfUii3jwkLcbcPY0l3hsN3tyE=",
+            "Version": "$LATEST",
+            "Environment": {
+                "Variables": {
+                    "ALLOWED_ORIGINS": "http://localhost:5173,https://lucifernewstar-2006.xyz",
+                    "GITHUB_REPO": "portfolio",
+                    "GITHUB_TOKEN_PARAMETER": "/portfolio/github/token",
+                    "GITHUB_OWNER": "Lucifer-Newstar",
+                    "GITHUB_WORKFLOW_FILE": "deploy.yml",
+                    "GITHUB_REF": "main",
+                    "COGNITO_USERINFO_URL": "https://us-east-1iwnapdbk8.auth.us-east-1.amazoncognito.com/oauth2/userInfo"
+                }
+            },
+            "TracingConfig": {
+                "Mode": "PassThrough"
+            },
+            "RevisionId": "28094a8a-605a-4e52-a0ca-87d8b09e768b",
+            "PackageType": "Zip",
+            "Architectures": [
+                "x86_64"
+            ],
+            "EphemeralStorage": {
+                "Size": 512
+            },
+            "SnapStart": {
+                "ApplyOn": "None",
+                "OptimizationStatus": "Off"
+            },
+            "LoggingConfig": {
+                "LogFormat": "Text",
+                "LogGroup": "/aws/lambda/deploy-website"
+            }
+        },
+        {
+            "FunctionName": "get-projects",
+            "FunctionArn": "arn:aws:lambda:us-east-1:969849535462:function:get-projects",
+            "Runtime": "nodejs24.x",
+            "Role": "arn:aws:iam::969849535462:role/service-role/get-projects-role-luqwkmsv",
+            "Handler": "index.handler",
+            "CodeSize": 692,
+            "Description": "",
+            "Timeout": 3,
+            "MemorySize": 128,
+            "LastModified": "2026-04-05T08:58:29.000+0000",
+            "CodeSha256": "G/gMM9uW+R+TkJ6vK0yjww09yvN9f3edY7Q9urvjsCo=",
+            "Version": "$LATEST",
+            "TracingConfig": {
+                "Mode": "PassThrough"
+            },
+            "RevisionId": "40c2548d-17ac-40ae-b9f9-71a896ee5d68",
+            "PackageType": "Zip",
+            "Architectures": [
+                "x86_64"
+            ],
+            "EphemeralStorage": {
+                "Size": 512
+            },
+            "SnapStart": {
+                "ApplyOn": "None",
+                "OptimizationStatus": "Off"
+            },
+            "LoggingConfig": {
+                "LogFormat": "Text",
+                "LogGroup": "/aws/lambda/get-projects"
+            }
+        },
+        {
+            "FunctionName": "delete-skill",
+            "FunctionArn": "arn:aws:lambda:us-east-1:969849535462:function:delete-skill",
+            "Runtime": "nodejs24.x",
+            "Role": "arn:aws:iam::969849535462:role/service-role/delete-skill-role-80hllf0x",
+            "Handler": "index.handler",
+            "CodeSize": 1135,
+            "Description": "",
+            "Timeout": 3,
+            "MemorySize": 128,
+            "LastModified": "2026-04-05T08:20:15.000+0000",
+            "CodeSha256": "hVSchGoBam5jBWK4I5mpXTrVlNR75xpyhcGtvweTh4o=",
+            "Version": "$LATEST",
+            "TracingConfig": {
+                "Mode": "PassThrough"
+            },
+            "RevisionId": "2a059bd4-4178-4a26-ad62-98cf017b6943",
+            "PackageType": "Zip",
+            "Architectures": [
+                "x86_64"
+            ],
+            "EphemeralStorage": {
+                "Size": 512
+            },
+            "SnapStart": {
+                "ApplyOn": "None",
+                "OptimizationStatus": "Off"
+            },
+            "LoggingConfig": {
+                "LogFormat": "Text",
+                "LogGroup": "/aws/lambda/delete-skill"
+            }
+        },
+        {
+            "FunctionName": "update-experience",
+            "FunctionArn": "arn:aws:lambda:us-east-1:969849535462:function:update-experience",
+            "Runtime": "nodejs24.x",
+            "Role": "arn:aws:iam::969849535462:role/service-role/update-experience-role-p5yvtbev",
+            "Handler": "index.handler",
+            "CodeSize": 987,
+            "Description": "",
+            "Timeout": 3,
+            "MemorySize": 128,
+            "LastModified": "2026-03-28T21:16:46.000+0000",
+            "CodeSha256": "j0QQkgPAX2Zk/DmJZAKWT6//LuGLnnW5taalIU3jLNQ=",
+            "Version": "$LATEST",
+            "TracingConfig": {
+                "Mode": "PassThrough"
+            },
+            "RevisionId": "06fec314-64f4-46a5-8d10-3eedfa7c362b",
+            "PackageType": "Zip",
+            "Architectures": [
+                "x86_64"
+            ],
+            "EphemeralStorage": {
+                "Size": 512
+            },
+            "SnapStart": {
+                "ApplyOn": "None",
+                "OptimizationStatus": "Off"
+            },
+            "LoggingConfig": {
+                "LogFormat": "Text",
+                "LogGroup": "/aws/lambda/update-experience"
+            }
+        },
+        {
+            "FunctionName": "upload-admin-image",
+            "FunctionArn": "arn:aws:lambda:us-east-1:969849535462:function:upload-admin-image",
+            "Runtime": "nodejs20.x",
+            "Role": "arn:aws:iam::969849535462:role/lambda-dynamodb-role",
+            "Handler": "index.handler",
+            "CodeSize": 3889048,
+            "Description": "",
+            "Timeout": 15,
+            "MemorySize": 256,
+            "LastModified": "2026-04-08T17:28:26.405+0000",
+            "CodeSha256": "dFL4qr1e2b18FKLbJNwaMkfyPaUJYE5WOVxGySnJ3X0=",
+            "Version": "$LATEST",
+            "Environment": {
+                "Variables": {
+                    "ALLOWED_ORIGINS": "http://localhost:5173,https://lucifernewstar-2006.xyz",
+                    "S3_BUCKET": "navin-portfolio",
+                    "COGNITO_USERINFO_URL": "https://us-east-1iwnapdbk8.auth.us-east-1.amazoncognito.com/oauth2/userInfo",
+                    "SITE_URL": "https://lucifernewstar-2006.xyz"
+                }
+            },
+            "TracingConfig": {
+                "Mode": "PassThrough"
+            },
+            "RevisionId": "75623dfd-a87c-4a14-bca2-84a49ad509ef",
+            "PackageType": "Zip",
+            "Architectures": [
+                "x86_64"
+            ],
+            "EphemeralStorage": {
+                "Size": 512
+            },
+            "SnapStart": {
+                "ApplyOn": "None",
+                "OptimizationStatus": "Off"
+            },
+            "LoggingConfig": {
+                "LogFormat": "Text",
+                "LogGroup": "/aws/lambda/upload-admin-image"
+            }
+        },
+        {
+            "FunctionName": "ops-insights",
+            "FunctionArn": "arn:aws:lambda:us-east-1:969849535462:function:ops-insights",
+            "Runtime": "nodejs20.x",
+            "Role": "arn:aws:iam::969849535462:role/lambda-dynamodb-role",
+            "Handler": "index.handler",
+            "CodeSize": 7372600,
+            "Description": "",
+            "Timeout": 12,
+            "MemorySize": 256,
+            "LastModified": "2026-04-08T17:22:12.000+0000",
+            "CodeSha256": "5bZ1o6kVL8WmWITav71jWdknzCn76f94NrwqYA7RfFM=",
+            "Version": "$LATEST",
+            "Environment": {
+                "Variables": {
+                    "API_BASE_URL": "https://6e2n1oy6k9.execute-api.us-east-1.amazonaws.com/prod",
+                    "S3_BUCKET": "navin-portfolio",
+                    "API_STAGE": "prod",
+                    "GITHUB_OWNER": "Lucifer-Newstar",
+                    "OBSERVED_LAMBDAS": "deploy-website,save-site-content,get-site-content,send-contact-email",
+                    "CLOUDFRONT_DISTRIBUTION_ID": "ECVS4UV0ZKGHO",
+                    "COGNITO_USERINFO_URL": "https://us-east-1iwnapdbk8.auth.us-east-1.amazoncognito.com/oauth2/userInfo",
+                    "LOG_GROUPS": "/aws/lambda/deploy-website,/aws/lambda/save-site-content,/aws/lambda/get-site-content,/aws/lambda/send-contact-email",
+                    "SITE_URL": "https://lucifernewstar-2006.xyz",
+                    "ALLOWED_ORIGINS": "http://localhost:5173,https://lucifernewstar-2006.xyz",
+                    "API_ID": "6e2n1oy6k9",
+                    "GITHUB_REPO": "portfolio",
+                    "GITHUB_TOKEN_PARAMETER": "/portfolio/github/token",
+                    "GITHUB_WORKFLOW_FILE": "deploy.yml",
+                    "API_NAME": "portfolio-rest-api"
+                }
+            },
+            "TracingConfig": {
+                "Mode": "PassThrough"
+            },
+            "RevisionId": "ef71e0b2-a0a3-4bcb-b5d2-094e2aac17d2",
+            "PackageType": "Zip",
+            "Architectures": [
+                "x86_64"
+            ],
+            "EphemeralStorage": {
+                "Size": 512
+            },
+            "SnapStart": {
+                "ApplyOn": "None",
+                "OptimizationStatus": "Off"
+            },
+            "LoggingConfig": {
+                "LogFormat": "Text",
+                "LogGroup": "/aws/lambda/ops-insights"
+            }
+        },
+        {
+            "FunctionName": "get-skills",
+            "FunctionArn": "arn:aws:lambda:us-east-1:969849535462:function:get-skills",
+            "Runtime": "nodejs24.x",
+            "Role": "arn:aws:iam::969849535462:role/lambda-dynamodb-role",
+            "Handler": "index.handler",
+            "CodeSize": 570,
+            "Description": "",
+            "Timeout": 3,
+            "MemorySize": 128,
+            "LastModified": "2026-03-28T19:03:49.000+0000",
+            "CodeSha256": "UeB/qXFlMJfNbOf6+9IZRDZcoWOt2aOnq1VuVZoFbVM=",
+            "Version": "$LATEST",
+            "TracingConfig": {
+                "Mode": "PassThrough"
+            },
+            "RevisionId": "85712cdb-8c19-40fd-8c6a-883c5f3e72dc",
+            "PackageType": "Zip",
+            "Architectures": [
+                "x86_64"
+            ],
+            "EphemeralStorage": {
+                "Size": 512
+            },
+            "SnapStart": {
+                "ApplyOn": "None",
+                "OptimizationStatus": "Off"
+            },
+            "LoggingConfig": {
+                "LogFormat": "Text",
+                "LogGroup": "/aws/lambda/get-skills"
+            }
+        }
+    ]
+}

@@ -1,0 +1,55 @@
+{
+    "Configuration": {
+        "FunctionName": "deploy-website",
+        "FunctionArn": "arn:aws:lambda:us-east-1:969849535462:function:deploy-website",
+        "Runtime": "nodejs20.x",
+        "Role": "arn:aws:iam::969849535462:role/lambda-dynamodb-role",
+        "Handler": "index.handler",
+        "CodeSize": 4470132,
+        "Description": "",
+        "Timeout": 15,
+        "MemorySize": 128,
+        "LastModified": "2026-04-08T17:22:12.000+0000",
+        "CodeSha256": "/CYKCrlthXw7Ym0gBCWfUii3jwkLcbcPY0l3hsN3tyE=",
+        "Version": "$LATEST",
+        "Environment": {
+            "Variables": {
+                "ALLOWED_ORIGINS": "http://localhost:5173,https://lucifernewstar-2006.xyz",
+                "GITHUB_REPO": "portfolio",
+                "GITHUB_TOKEN_PARAMETER": "/portfolio/github/token",
+                "GITHUB_OWNER": "Lucifer-Newstar",
+                "GITHUB_WORKFLOW_FILE": "deploy.yml",
+                "GITHUB_REF": "main",
+                "COGNITO_USERINFO_URL": "https://us-east-1iwnapdbk8.auth.us-east-1.amazoncognito.com/oauth2/userInfo"
+            }
+        },
+        "TracingConfig": {
+            "Mode": "PassThrough"
+        },
+        "RevisionId": "28094a8a-605a-4e52-a0ca-87d8b09e768b",
+        "State": "Active",
+        "LastUpdateStatus": "Successful",
+        "PackageType": "Zip",
+        "Architectures": [
+            "x86_64"
+        ],
+        "EphemeralStorage": {
+            "Size": 512
+        },
+        "SnapStart": {
+            "ApplyOn": "None",
+            "OptimizationStatus": "Off"
+        },
+        "RuntimeVersionConfig": {
+            "RuntimeVersionArn": "arn:aws:lambda:us-east-1::runtime:2d788b26ac416854c5eb831c9f46cb2e0a0ddcee84b1a9b114acbdfdb644c8c1"
+        },
+        "LoggingConfig": {
+            "LogFormat": "Text",
+            "LogGroup": "/aws/lambda/deploy-website"
+        }
+    },
+    "Code": {
+        "RepositoryType": "S3",
+        "Location": "https://prod-04-2014-tasks.s3.us-east-1.amazonaws.com/snapshots/969849535462/deploy-website-23facae9-bc25-42d8-a327-410c886a6461?versionId=ug6hLi0lS2CDSAOsm9Vio.eJtj7aYDrN&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEDgaCXVzLWVhc3QtMSJGMEQCIH6R9fsV5vj2zAOVo9W1yGb4riGfZPARF2DhbAjN2%2F8EAiBwAmYu4FctvVzEMW7aATU9yFJTi9s8OwdOJ3dnysEZ%2BSqLAggBEAAaDDc0OTY3ODkwMjgzOSIMXTPOm2m%2B9JosacPIKugB9Rqy%2FHRADpUmdLrJlDu%2Bxbo3krFWq3SQnmz7QmGLz%2FQ9VSHehqgYwzXiHPXjhFrKh9iUZpW33Pax%2B8arVQtdAirxtjOVBz3pDW2lNbLuujy4aEGi5ZvMFrgdLSfmvALBMyLnQIGbmYRqSq6EJOvaqoo2vx%2BORpmKPV5DqTNQSndOWYbkI7Dvyj%2BRMav5iFcFbioz8TYGmXWSLZsAwNyDfr3CGu10%2BAfJhYuOKhufX%2BakZp15MCz7Enb8a0%2F8jINg6AbMznJXEACsPcrMFlq9ZPR77JgNAgHOIXj1BxOG3trqxvs01ILCHTCy89nOBjqOAVz1geJ6tzn0eRL7HBlaZeuBBhoGLflgqJZrSn1rKU44e4TriyhzjHCa2pol4ANAsAkAyBVx1e59ciDxVURTEBlbA7hQjw3RM1PIXmatt1XUpcjfzja9tCCZABpfPawvgjY%2FaBfyxwyMXWHq8g%2FEIaAV50d3t7pBViidRS1Q0KRMmcQIwF%2B2EJV0pEa0Tk8%3D&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20260408T174534Z&X-Amz-SignedHeaders=host&X-Amz-Expires=600&X-Amz-Credential=ASIA25DCYHY3Q2RJE4ND%2F20260408%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=fc294bdfede84af506cb426df42324ac3c16bd7e7627c8b625e62953059bf544"
+    }
+}

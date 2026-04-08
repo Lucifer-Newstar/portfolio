@@ -1,0 +1,49 @@
+{
+    "RoleName": "lambda-dynamodb-role",
+    "PolicyName": "lambda-ops-read-inline",
+    "PolicyDocument": {
+        "Version": "2012-10-17",
+        "Statement": [
+            {
+                "Effect": "Allow",
+                "Action": [
+                    "cloudwatch:GetMetricStatistics"
+                ],
+                "Resource": "*"
+            },
+            {
+                "Effect": "Allow",
+                "Action": [
+                    "logs:FilterLogEvents"
+                ],
+                "Resource": [
+                    "arn:aws:logs:us-east-1:969849535462:log-group:/aws/lambda/deploy-website:*",
+                    "arn:aws:logs:us-east-1:969849535462:log-group:/aws/lambda/save-site-content:*",
+                    "arn:aws:logs:us-east-1:969849535462:log-group:/aws/lambda/get-site-content:*",
+                    "arn:aws:logs:us-east-1:969849535462:log-group:/aws/lambda/send-contact-email:*"
+                ]
+            },
+            {
+                "Effect": "Allow",
+                "Action": [
+                    "cloudfront:GetDistribution"
+                ],
+                "Resource": "arn:aws:cloudfront::969849535462:distribution/ECVS4UV0ZKGHO"
+            },
+            {
+                "Effect": "Allow",
+                "Action": [
+                    "s3:GetBucketLocation"
+                ],
+                "Resource": "arn:aws:s3:::navin-portfolio"
+            },
+            {
+                "Effect": "Allow",
+                "Action": [
+                    "apigateway:GET"
+                ],
+                "Resource": "arn:aws:apigateway:us-east-1::/restapis/6e2n1oy6k9"
+            }
+        ]
+    }
+}

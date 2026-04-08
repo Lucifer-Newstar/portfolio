@@ -1,0 +1,14 @@
+{
+    "HostedZones": [
+        {
+            "Id": "/hostedzone/Z02261853G6PLRJZNCNRP",
+            "Name": "lucifernewstar-2006.xyz.",
+            "CallerReference": "ccbe63d6-cc58-4023-8218-d2c0ce69cfd6",
+            "Config": {
+                "Comment": "Portfolio Website",
+                "PrivateZone": false
+            },
+            "ResourceRecordSetCount": 4
+        }
+    ]
+}

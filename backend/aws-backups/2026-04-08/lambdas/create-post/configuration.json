@@ -1,0 +1,38 @@
+{
+    "FunctionName": "create-post",
+    "FunctionArn": "arn:aws:lambda:us-east-1:969849535462:function:create-post",
+    "Runtime": "nodejs24.x",
+    "Role": "arn:aws:iam::969849535462:role/service-role/create-post-role-9gxd9fyy",
+    "Handler": "index.handler",
+    "CodeSize": 811,
+    "Description": "",
+    "Timeout": 3,
+    "MemorySize": 128,
+    "LastModified": "2026-03-29T07:43:07.000+0000",
+    "CodeSha256": "8LCBhKr3AQaaG/HfL1A+aM1MyS/7BblH8BOhSBhdsms=",
+    "Version": "$LATEST",
+    "TracingConfig": {
+        "Mode": "PassThrough"
+    },
+    "RevisionId": "7d71dd0d-fdce-4f3f-82cc-444621511832",
+    "State": "Active",
+    "LastUpdateStatus": "Successful",
+    "PackageType": "Zip",
+    "Architectures": [
+        "x86_64"
+    ],
+    "EphemeralStorage": {
+        "Size": 512
+    },
+    "SnapStart": {
+        "ApplyOn": "None",
+        "OptimizationStatus": "Off"
+    },
+    "RuntimeVersionConfig": {
+        "RuntimeVersionArn": "arn:aws:lambda:us-east-1::runtime:b0bb5dea1b12bb0e2c3b50ed434af2fd2d16d383f7324c7b455111008b6112ba"
+    },
+    "LoggingConfig": {
+        "LogFormat": "Text",
+        "LogGroup": "/aws/lambda/create-post"
+    }
+}
