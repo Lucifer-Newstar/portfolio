@@ -1,0 +1,29 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Save site content to DynamoDB
+
+Resources:
+  savesitecontent:
+    Type: AWS::Serverless::Function
+    Properties:
+      Architectures:
+        - x86_64
+      CodeUri: ./src
+      Handler: index.handler
+      Runtime: nodejs20.x
+      MemorySize: 128
+      Timeout: 10
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: site_content
+      Events:
+        SaveContent:
+          Type: Api
+          Properties:
+            Path: /admin/content
+            Method: POST
+        SaveContentOptions:
+          Type: Api
+          Properties:
+            Path: /admin/content
+            Method: OPTIONS
