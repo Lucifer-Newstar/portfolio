@@ -17,11 +17,19 @@ function PreviewManager() {
   const { hasUnsavedChanges } = useSiteContent()
   const [selectedPath, setSelectedPath] = useState('/')
   const [previewMode, setPreviewMode] = useState('draft')
+  const [previewLayout, setPreviewLayout] = useState('split')
 
-  const previewUrl = useMemo(() => {
-    const suffix = previewMode === 'draft' ? '?admin-preview=draft' : ''
-    return `${selectedPath}${suffix}`
-  }, [previewMode, selectedPath])
+  const buildPreviewUrl = (theme) => {
+    const params = new URLSearchParams()
+    if (previewMode === 'draft') params.set('admin-preview', 'draft')
+    if (theme) params.set('theme', theme)
+    const query = params.toString()
+    return `${selectedPath}${query ? `?${query}` : ''}`
+  }
+
+  const singlePreviewUrl = useMemo(() => buildPreviewUrl('light'), [previewMode, selectedPath])
+  const lightPreviewUrl = useMemo(() => buildPreviewUrl('light'), [previewMode, selectedPath])
+  const darkPreviewUrl = useMemo(() => buildPreviewUrl('dark'), [previewMode, selectedPath])
 
   return (
     <div className="admin-preview-page">
@@ -53,6 +61,23 @@ function PreviewManager() {
             </button>
           </div>
 
+          <div className="admin-preview-mode-switch" role="tablist" aria-label="Preview layout">
+            <button
+              type="button"
+              className={`picker-chip ${previewLayout === 'split' ? 'is-active' : ''}`}
+              onClick={() => setPreviewLayout('split')}
+            >
+              Light + dark
+            </button>
+            <button
+              type="button"
+              className={`picker-chip ${previewLayout === 'single' ? 'is-active' : ''}`}
+              onClick={() => setPreviewLayout('single')}
+            >
+              Single frame
+            </button>
+          </div>
+
           <div className="picker-row wrap">
             {PREVIEW_ROUTES.map((route) => (
               <button
@@ -69,10 +94,10 @@ function PreviewManager() {
           <div className="detail-list">
             <p>Draft preview reads the current unsaved editor state.</p>
             <p>Saved preview shows what the public site will load normally.</p>
-            <p>Use the open button if you want the selected page in a full tab.</p>
+            <p>Light + dark view lets you compare both themes side by side.</p>
           </div>
 
-          <a className="btn btn-secondary" href={previewUrl} target="_blank" rel="noreferrer">
+          <a className="btn btn-secondary" href={singlePreviewUrl} target="_blank" rel="noreferrer">
             Open selected page
           </a>
         </aside>
@@ -83,17 +108,49 @@ function PreviewManager() {
               <span className="eyebrow">Live frame</span>
               <h3>{PREVIEW_ROUTES.find((route) => route.path === selectedPath)?.label}</h3>
             </div>
-            <span className="metric-pill">{previewMode === 'draft' ? 'Draft mode' : 'Saved mode'}</span>
+            <div className="admin-ribbon-metrics">
+              <span className="metric-pill">{previewMode === 'draft' ? 'Draft mode' : 'Saved mode'}</span>
+              <span className="metric-pill">{previewLayout === 'split' ? 'Side-by-side themes' : 'Single frame'}</span>
+            </div>
           </div>
 
-          <div className="admin-preview-frame-shell">
-            <iframe
-              key={previewUrl}
-              title="Portfolio preview"
-              src={previewUrl}
-              className="admin-preview-frame"
-            />
-          </div>
+          {previewLayout === 'split' ? (
+            <div className="admin-preview-compare-grid">
+              <div className="admin-preview-frame-shell">
+                <div className="admin-preview-frame-meta">
+                  <span className="eyebrow">Theme</span>
+                  <strong>Light</strong>
+                </div>
+                <iframe
+                  key={lightPreviewUrl}
+                  title="Portfolio light preview"
+                  src={lightPreviewUrl}
+                  className="admin-preview-frame"
+                />
+              </div>
+              <div className="admin-preview-frame-shell">
+                <div className="admin-preview-frame-meta">
+                  <span className="eyebrow">Theme</span>
+                  <strong>Dark</strong>
+                </div>
+                <iframe
+                  key={darkPreviewUrl}
+                  title="Portfolio dark preview"
+                  src={darkPreviewUrl}
+                  className="admin-preview-frame"
+                />
+              </div>
+            </div>
+          ) : (
+            <div className="admin-preview-frame-shell">
+              <iframe
+                key={singlePreviewUrl}
+                title="Portfolio preview"
+                src={singlePreviewUrl}
+                className="admin-preview-frame"
+              />
+            </div>
+          )}
         </section>
       </div>
     </div>

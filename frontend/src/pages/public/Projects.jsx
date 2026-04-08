@@ -1,10 +1,12 @@
-import { useState, useEffect } from 'react'
+import { lazy, Suspense, useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { fetchProjects } from '../../utils/api'
 import { HorizontalGraph, MicroBarChart, PieChart } from '../../components/InsightCharts'
-import LinkedDataModal from '../../components/LinkedDataModal'
 import { useSiteContent } from '../../context/useSiteContent'
 import { deriveProjectInsights } from '../../utils/portfolioInsights'
+
+const LinkedDataModal = lazy(() => import('../../components/LinkedDataModal'))
+const ProjectCaseStudyModal = lazy(() => import('../../components/ProjectCaseStudyModal'))
 
 function Projects() {
   const { siteContent } = useSiteContent()
@@ -13,6 +15,7 @@ function Projects() {
   const [loading, setLoading] = useState(true)
   const [modalOpen, setModalOpen] = useState(false)
   const [selectedItem, setSelectedItem] = useState({ type: '', id: '', name: '' })
+  const [selectedProject, setSelectedProject] = useState(null)
   const [activeTech, setActiveTech] = useState('All')
 
   useEffect(() => {
@@ -31,6 +34,10 @@ function Projects() {
       name: techName
     })
     setModalOpen(true)
+  }
+
+  const handleProjectOpen = (project) => {
+    setSelectedProject(project)
   }
 
   if (loading) {
@@ -83,6 +90,9 @@ function Projects() {
                   </button>
                 ))}
               </div>
+              <button type="button" className="btn btn-secondary btn-sm" onClick={() => handleProjectOpen(project)}>
+                Open case study
+              </button>
             </article>
           ))}
         </div>
@@ -178,6 +188,13 @@ function Projects() {
                   ))}
                 </div>
                 <div className="project-links">
+                  <button
+                    type="button"
+                    className="btn btn-primary btn-sm"
+                    onClick={() => handleProjectOpen(project)}
+                  >
+                    Case study
+                  </button>
                   {project.github_link && (
                     <a href={project.github_link} target="_blank" rel="noopener noreferrer" className="btn btn-secondary btn-sm">
                       Open GitHub
@@ -198,13 +215,19 @@ function Projects() {
         ))}
       </section>
 
-      <LinkedDataModal
-        isOpen={modalOpen}
-        onClose={() => setModalOpen(false)}
-        itemType={selectedItem.type}
-        itemId={selectedItem.id}
-        itemName={selectedItem.name}
-      />
+      <Suspense fallback={null}>
+        <LinkedDataModal
+          isOpen={modalOpen}
+          onClose={() => setModalOpen(false)}
+          itemType={selectedItem.type}
+          itemId={selectedItem.id}
+          itemName={selectedItem.name}
+        />
+        <ProjectCaseStudyModal
+          project={selectedProject}
+          onClose={() => setSelectedProject(null)}
+        />
+      </Suspense>
     </div>
   )
 }

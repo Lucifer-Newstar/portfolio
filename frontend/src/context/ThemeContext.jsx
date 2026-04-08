@@ -2,11 +2,20 @@ import { useState, useEffect } from 'react'
 import { ThemeContext } from './theme-context'
 
 export const ThemeProvider = ({ children }) => {
+  const forcedTheme = new URLSearchParams(window.location.search).get('theme')
+  const resolvedForcedTheme = forcedTheme === 'dark' || forcedTheme === 'light' ? forcedTheme : null
   const [theme, setTheme] = useState(() => {
+    if (resolvedForcedTheme) return resolvedForcedTheme
     const saved = localStorage.getItem('theme')
     if (saved === 'dark' || saved === 'light') return saved
     return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
   })
+
+  useEffect(() => {
+    if (resolvedForcedTheme) {
+      setTheme(resolvedForcedTheme)
+    }
+  }, [resolvedForcedTheme])
 
   useEffect(() => {
     if (theme === 'dark') {
@@ -14,10 +23,13 @@ export const ThemeProvider = ({ children }) => {
     } else {
       document.documentElement.removeAttribute('data-theme')
     }
-    localStorage.setItem('theme', theme)
-  }, [theme])
+    if (!resolvedForcedTheme) {
+      localStorage.setItem('theme', theme)
+    }
+  }, [resolvedForcedTheme, theme])
 
   const toggleTheme = () => {
+    if (resolvedForcedTheme) return
     setTheme(prev => prev === 'dark' ? 'light' : 'dark')
   }
 
