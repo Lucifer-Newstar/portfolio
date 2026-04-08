@@ -68,12 +68,12 @@ export function SiteContentProvider({ children }) {
     const remotePayload = createContentOverrides(snapshot)
     const savedAt = new Date().toISOString()
 
+    await saveSiteContentRemote(remotePayload)
     setSavedContent(snapshot)
     setLastSavedAt(savedAt)
     localStorage.setItem(STORAGE_KEY, JSON.stringify(snapshot))
     localStorage.setItem(DRAFT_STORAGE_KEY, JSON.stringify(snapshot))
     localStorage.setItem(SAVED_AT_STORAGE_KEY, savedAt)
-    await saveSiteContentRemote(remotePayload)
   }, [draftContent])
 
   const discardDraftChanges = useCallback(() => {
