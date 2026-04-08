@@ -21,7 +21,7 @@ This log captures major functional and visual updates currently present in the w
 - Admin route protected with `ProtectedRoute`.
 - Cognito Hosted UI login link generation through `adminAuth`.
 - Callback now exchanges authorization code with Cognito `/oauth2/token`.
-- PKCE-like verifier flow (plain challenge) added and validated with `state`.
+- PKCE S256 verifier flow added and validated with `state`.
 - Access token is stored in session storage with expiry checks.
 - Admin logout clears session.
 - Removed insecure local fallback admin session.
@@ -138,3 +138,26 @@ git log --oneline
 ```
 
 for exact sequencing and SHA-level traceability.
+
+## 12. 2026-04-08 Verification + Deploy Notes
+
+- Full local frontend health checks passed:
+- `npm run lint`
+- `npm run build`
+- API smoke checks reconfirmed:
+- `GET /skills` 200
+- `GET /projects` 200
+- `GET /posts` 200
+- `GET /admin/content` 200
+- `OPTIONS /admin/content` 200
+- unauthenticated `POST /admin/content` and `POST /admin/deploy` correctly return 401
+- Forced a clean deploy workflow trigger via empty commit on `main` to ensure GitHub Actions executes a fresh production deployment run.
+- Cognito hosted UI reliability hardening applied at app-client level:
+- callback URLs normalized to:
+- `http://localhost:5173/callback`
+- `https://lucifernewstar-2006.xyz/callback`
+- `https://d84l1y8p4kdic.cloudfront.net/callback`
+- logout URLs normalized to:
+- `http://localhost:5173`
+- `https://lucifernewstar-2006.xyz`
+- `https://d84l1y8p4kdic.cloudfront.net`
