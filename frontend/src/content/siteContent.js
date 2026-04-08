@@ -522,3 +522,62 @@ function mergeValue(defaultValue, savedValue) {
 
 export const deepCloneContent = () => JSON.parse(JSON.stringify(defaultSiteContent))
 export const mergeWithDefaultContent = (savedContent) => mergeValue(defaultSiteContent, savedContent)
+
+function isPlainObject(value) {
+  return Boolean(value) && typeof value === 'object' && !Array.isArray(value)
+}
+
+function deepEqualContentValue(left, right) {
+  if (Array.isArray(left) || Array.isArray(right)) {
+    return JSON.stringify(left) === JSON.stringify(right)
+  }
+
+  if (isPlainObject(left) && isPlainObject(right)) {
+    const leftKeys = Object.keys(left)
+    const rightKeys = Object.keys(right)
+    if (leftKeys.length !== rightKeys.length) return false
+
+    return leftKeys.every((key) => deepEqualContentValue(left[key], right[key]))
+  }
+
+  return left === right
+}
+
+function buildContentOverrides(currentValue, defaultValue) {
+  if (Array.isArray(defaultValue)) {
+    return deepEqualContentValue(currentValue, defaultValue) ? undefined : currentValue
+  }
+
+  if (isPlainObject(defaultValue) && isPlainObject(currentValue)) {
+    const keys = new Set([
+      ...Object.keys(defaultValue),
+      ...Object.keys(currentValue),
+    ])
+    const overrides = {}
+
+    keys.forEach((key) => {
+      const currentChild = currentValue[key]
+      const defaultChild = defaultValue[key]
+
+      if (!(key in currentValue)) return
+      if (!(key in defaultValue)) {
+        overrides[key] = currentChild
+        return
+      }
+
+      const childOverride = buildContentOverrides(currentChild, defaultChild)
+      if (childOverride !== undefined) {
+        overrides[key] = childOverride
+      }
+    })
+
+    return Object.keys(overrides).length ? overrides : undefined
+  }
+
+  return deepEqualContentValue(currentValue, defaultValue) ? undefined : currentValue
+}
+
+export const createContentOverrides = (content) => {
+  const overrides = buildContentOverrides(content, defaultSiteContent)
+  return overrides && isPlainObject(overrides) ? overrides : {}
+}

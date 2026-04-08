@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { getCurrentUser } from 'aws-amplify/auth'
 import LoginButton from './LoginButton'
 import { hasAdminSession } from '../utils/adminAuth'
 
@@ -9,15 +8,9 @@ function ProtectedRoute({ children }) {
   useEffect(() => {
     let mounted = true
 
-    const checkAuth = async () => {
-      try {
-        await getCurrentUser()
-        if (mounted) setStatus('authenticated')
-      } catch {
-        if (mounted) {
-          setStatus(hasAdminSession() ? 'authenticated' : 'unauthenticated')
-        }
-      }
+    const checkAuth = () => {
+      if (!mounted) return
+      setStatus(hasAdminSession() ? 'authenticated' : 'unauthenticated')
     }
 
     checkAuth()

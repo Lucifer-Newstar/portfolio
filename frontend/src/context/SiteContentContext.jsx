@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { deepCloneContent, mergeWithDefaultContent } from '../content/siteContent'
+import { createContentOverrides, deepCloneContent, mergeWithDefaultContent } from '../content/siteContent'
 import { SiteContentContext } from './site-content-context'
 import { fetchSiteContentRemote, saveSiteContentRemote } from '../utils/api'
 
@@ -65,6 +65,7 @@ export function SiteContentProvider({ children }) {
 
   const saveSiteContent = useCallback(async () => {
     const snapshot = JSON.parse(JSON.stringify(draftContent))
+    const remotePayload = createContentOverrides(snapshot)
     const savedAt = new Date().toISOString()
 
     setSavedContent(snapshot)
@@ -72,7 +73,7 @@ export function SiteContentProvider({ children }) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(snapshot))
     localStorage.setItem(DRAFT_STORAGE_KEY, JSON.stringify(snapshot))
     localStorage.setItem(SAVED_AT_STORAGE_KEY, savedAt)
-    await saveSiteContentRemote(snapshot)
+    await saveSiteContentRemote(remotePayload)
   }, [draftContent])
 
   const discardDraftChanges = useCallback(() => {
