@@ -24,7 +24,10 @@ This is the current documentation entry point for the project as it exists now.
 6. `docs/contact-email-setup.md`
 - Contact form AWS SES setup and route wiring.
 
-## Note on legacy docs
+7. `docs/admin-content-and-deploy-api-setup.md`
+- Setup for `/admin/content` and `/admin/deploy` API lambdas and frontend integration.
 
-`docs/MASTER-DOC.md` is an early-phase document kept for historical reference.  
-Use this index and the four docs above as the source of truth.
+## Note on master doc
+
+`docs/MASTER-DOC.md` is now maintained as the top-level operational summary (API map, IAM snapshot, and deployment notes).  
+Use this index for deeper implementation and rebuild details.

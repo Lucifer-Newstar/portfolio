@@ -10,16 +10,22 @@ const CONTENT_ID = "global";
 function corsHeaders() {
   return {
     "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Headers": "Content-Type",
-    "Access-Control-Allow-Methods": "GET,OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token",
+    "Access-Control-Allow-Methods": "GET,POST,OPTIONS",
     "Content-Type": "application/json",
   };
 }
 
 export const handler = async (event) => {
   try {
+    const method =
+      event?.httpMethod ||
+      event?.requestContext?.http?.method ||
+      event?.requestContext?.httpMethod ||
+      "";
+
     // Handle OPTIONS preflight
-    if (event?.requestContext?.http?.method === "OPTIONS" || event?.httpMethod === "OPTIONS") {
+    if (method === "OPTIONS") {
       return { statusCode: 200, headers: corsHeaders(), body: JSON.stringify({ ok: true }) };
     }
 

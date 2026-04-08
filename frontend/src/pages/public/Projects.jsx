@@ -11,6 +11,7 @@ const ProjectCaseStudyModal = lazy(() => import('../../components/ProjectCaseStu
 function Projects() {
   const { siteContent } = useSiteContent()
   const content = siteContent.projectsPage
+  const bentoIntro = content.bentoIntro || {}
   const [projects, setProjects] = useState([])
   const [loading, setLoading] = useState(true)
   const [modalOpen, setModalOpen] = useState(false)
@@ -125,17 +126,14 @@ function Projects() {
       <section className="container page-section">
         <div className="projects-bento-intro" data-reveal="up">
           <article className="bento-card bento-card-large liquid-stage-card">
-            <span className="eyebrow">Bento lab</span>
-            <h2>Each project becomes a modular micro-experience.</h2>
-            <p>
-              Tiles scale, shift, and layer like a living case-study wall instead of a flat gallery. Hover and scroll
-              are part of the storytelling now.
-            </p>
+            <span className="eyebrow">{bentoIntro.eyebrow || 'Bento lab'}</span>
+            <h2>{bentoIntro.title || 'Each project becomes a modular micro-experience.'}</h2>
+            <p>{bentoIntro.description || 'Tiles scale, shift, and layer like a living case-study wall instead of a flat gallery. Hover and scroll are part of the storytelling now.'}</p>
           </article>
           <article className="bento-card liquid-stage-card">
             <span className="eyebrow">Motion</span>
-            <strong>Physics-inspired momentum</strong>
-            <p>Cards lean into spatial depth, stronger contrast, and smoother directional movement.</p>
+            <strong>{bentoIntro.motionTitle || 'Physics-inspired momentum'}</strong>
+            <p>{bentoIntro.motionText || 'Cards lean into spatial depth, stronger contrast, and smoother directional movement.'}</p>
           </article>
         </div>
       </section>

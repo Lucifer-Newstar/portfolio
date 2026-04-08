@@ -1,4 +1,4 @@
-# Portfolio Project — Master Documentation (Updated)
+# Portfolio Project — Master Documentation
 
 Last updated: 2026-04-08
 
@@ -37,10 +37,20 @@ Use these docs for full detail:
 ## Backend
 - API Gateway + Lambda CRUD for `skills/projects/experience/certifications/posts`
 - additional lambdas:
+- `get-site-content` (`GET/OPTIONS /admin/content`)
+- `save-site-content` (`POST /admin/content`)
+- `deploy-website` (`POST/OPTIONS /admin/deploy`)
 - `fetch-github-activity`
 - `send-contact-email`
 - DynamoDB as primary content store
 - posts table doubles as hidden system-content store for admin content snapshot sync
+
+## API -> Lambda route map (prod)
+- `GET /admin/content` -> `get-site-content`
+- `POST /admin/content` -> `save-site-content`
+- `OPTIONS /admin/content` -> `get-site-content` (proxy integration for stable CORS headers)
+- `POST /admin/deploy` -> `deploy-website`
+- `OPTIONS /admin/deploy` -> `deploy-website`
 
 ## Delivery
 - CI workflow on PR (`ci.yml`)
@@ -60,13 +70,16 @@ Use these docs for full detail:
 
 - Admin area uses hidden route + Cognito login flow entry.
 - Session handling currently uses fallback session strategy post callback.
-- Sensitive values should remain in environment variables and GitHub secrets.
+- Sensitive values should remain in environment variables, AWS Systems Manager/Secrets Manager, and GitHub secrets.
 - Contact email sender requires SES identity verification and least-privilege IAM.
+- Do not store GitHub Personal Access Tokens in repository docs or committed code.
+- Rotate any token that was previously written in plaintext.
 
 ## 6. Operational Notes
 
 - For contact email to work in production, deploy the contact Lambda and configure SES identities.
-- For admin deploy button to work, set `VITE_DEPLOY_WEBHOOK_URL` in frontend env.
+- For admin deploy button to work through API: `deploy.yml` on GitHub default branch must include `workflow_dispatch`.
+- If API deploy trigger is unavailable, optional fallback uses `VITE_DEPLOY_WEBHOOK_URL`.
 - Build status currently passes (`npm run build`).
 
 ## 7. Change Control
@@ -77,3 +90,9 @@ Detailed and evolving technical truth should be maintained in:
 - `TECH-STACK-AND-ARCHITECTURE.md`
 - `INFRASTRUCTURE-REBUILD-PLAYBOOK.md`
 - `UPDATES-LOG.md`
+
+## 8. Current IAM snapshot
+
+- Shared API role: `lambda-dynamodb-role`
+- Contact role: `send-contact-email-role` (inline SES send policy)
+- Deploy trigger lambda currently runs on shared role and calls GitHub REST Actions API.

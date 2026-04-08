@@ -10,8 +10,8 @@ const CONTENT_ID = "global";
 function corsHeaders() {
   return {
     "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Headers": "Content-Type",
-    "Access-Control-Allow-Methods": "POST,OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token",
+    "Access-Control-Allow-Methods": "GET,POST,OPTIONS",
     "Content-Type": "application/json",
   };
 }
@@ -23,12 +23,27 @@ function parseBody(event) {
 
 export const handler = async (event) => {
   try {
+    const method =
+      event?.httpMethod ||
+      event?.requestContext?.http?.method ||
+      event?.requestContext?.httpMethod ||
+      "";
+
     // Handle OPTIONS preflight
-    if (event?.requestContext?.http?.method === "OPTIONS" || event?.httpMethod === "OPTIONS") {
+    if (method === "OPTIONS") {
       return { statusCode: 200, headers: corsHeaders(), body: JSON.stringify({ ok: true }) };
     }
 
-    const body = parseBody(event);
+    let body;
+    try {
+      body = parseBody(event);
+    } catch {
+      return {
+        statusCode: 400,
+        headers: corsHeaders(),
+        body: JSON.stringify({ error: "Invalid JSON payload." })
+      };
+    }
     const content = body;
 
     const command = new PutCommand({

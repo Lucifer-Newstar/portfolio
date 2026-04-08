@@ -1,0 +1,32 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Trigger website deploy workflow in GitHub Actions
+
+Resources:
+  deploywebsite:
+    Type: AWS::Serverless::Function
+    Properties:
+      Architectures:
+        - x86_64
+      CodeUri: ./src
+      Handler: index.handler
+      Runtime: nodejs20.x
+      MemorySize: 128
+      Timeout: 15
+      Environment:
+        Variables:
+          GITHUB_OWNER: Lucifer-Newstar
+          GITHUB_REPO: portfolio
+          GITHUB_WORKFLOW_FILE: deploy.yml
+          GITHUB_REF: main
+      Events:
+        DeployPost:
+          Type: Api
+          Properties:
+            Path: /admin/deploy
+            Method: POST
+        DeployOptions:
+          Type: Api
+          Properties:
+            Path: /admin/deploy
+            Method: OPTIONS

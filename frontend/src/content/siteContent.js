@@ -6,6 +6,10 @@ export const defaultSiteContent = {
       brandSubtitle: 'Cloud systems portfolio',
       statusText: 'Building resilient platforms',
       ctaLabel: 'Book a conversation',
+      exploreLabel: 'Explore',
+      exploreEyebrow: 'Explore',
+      exploreTitle: 'Choose a route',
+      homeLabel: 'Home',
       links: [
         { to: '/about', label: 'About' },
         { to: '/experience', label: 'Experience' },
@@ -178,6 +182,25 @@ export const defaultSiteContent = {
       { label: 'Delivery', value: '91' },
       { label: 'Ops', value: '84' }
     ],
+    stickyStory: {
+      phases: [
+        {
+          eyebrow: 'Phase 01',
+          title: 'See the signal',
+          text: 'Typography, particles, and telemetry introduce the portfolio like a live operating surface.'
+        },
+        {
+          eyebrow: 'Phase 02',
+          title: 'Read the systems',
+          text: 'Charts, cards, and bento modules show how projects, cloud skills, and reliability thinking connect.'
+        },
+        {
+          eyebrow: 'Phase 03',
+          title: 'Choose the path',
+          text: 'Navigation and action blocks turn the visual story into a practical way to explore work and capabilities.'
+        }
+      ]
+    },
     ctaBand: {
       eyebrow: 'Next layer',
       title: 'Want the full story?',
@@ -228,6 +251,33 @@ export const defaultSiteContent = {
         }
       ]
     },
+    notesBoard: [
+      {
+        eyebrow: 'Working note',
+        text: 'Complex systems are easier to trust when the interface feels calm, tactile, and legible.'
+      },
+      {
+        eyebrow: 'Portfolio intent',
+        text: 'This page leans more like an annotated studio board than a standard about page.'
+      }
+    ],
+    principles: [
+      {
+        eyebrow: 'Principle 01',
+        title: 'Readable systems',
+        text: 'Interfaces should explain the platform instead of hiding it behind noise.'
+      },
+      {
+        eyebrow: 'Principle 02',
+        title: 'Deliberate motion',
+        text: 'Animation should guide attention, not distract from meaning.'
+      },
+      {
+        eyebrow: 'Principle 03',
+        title: 'Operational empathy',
+        text: 'Good cloud and DevOps work reduces stress for the people running it every day.'
+      }
+    ],
     actions: [
       { label: 'See experience', href: '/experience' },
       { label: 'Open skills map', href: '/skills' },
@@ -263,6 +313,14 @@ export const defaultSiteContent = {
     eyebrow: 'Projects',
     title: 'Scrollable project cards with tech filters, status widgets, and stronger visual hierarchy.',
     lead: 'Tap a tech badge to open the linked skills map.',
+    bentoIntro: {
+      eyebrow: 'Bento lab',
+      title: 'Each project becomes a modular micro-experience.',
+      description:
+        'Tiles scale, shift, and layer like a living case-study wall instead of a flat gallery. Hover and scroll are part of the storytelling now.',
+      motionTitle: 'Physics-inspired momentum',
+      motionText: 'Cards lean into spatial depth, stronger contrast, and smoother directional movement.'
+    },
     heroImage:
       'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80',
     actions: [
@@ -276,6 +334,12 @@ export const defaultSiteContent = {
     eyebrow: 'DevOps / SRE / Cloud',
     title: 'A cloud operations lab for AWS delivery, observability, reliability, and platform tooling.',
     lead: 'A dedicated page for DevOps applications, SRE thinking, AWS architecture, Prometheus, Grafana, and the operational systems behind the portfolio voice.',
+    heroCard: {
+      eyebrow: 'Stack focus',
+      title: 'AWS, Prometheus, Grafana, CI/CD, and reliability patterns woven into one visual system.',
+      text:
+        'This page is designed like a cloud operations wall, with more telemetry, richer cards, and a clearer relationship between delivery, monitoring, and platform engineering.'
+    },
     heroStats: [
       { label: 'AWS', value: 'Compute + network + automation' },
       { label: 'Prometheus', value: 'Metrics and alert pipelines' },

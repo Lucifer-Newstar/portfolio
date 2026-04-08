@@ -4,6 +4,19 @@ import { useSiteContent } from '../../context/useSiteContent'
 function About() {
   const { siteContent } = useSiteContent()
   const about = siteContent.about
+  const notes = about.notesBoard?.length
+    ? about.notesBoard
+    : [
+        { eyebrow: 'Working note', text: 'Complex systems are easier to trust when the interface feels calm, tactile, and legible.' },
+        { eyebrow: 'Portfolio intent', text: 'This page leans more like an annotated studio board than a standard about page.' }
+      ]
+  const principles = about.principles?.length
+    ? about.principles
+    : [
+        { eyebrow: 'Principle 01', title: 'Readable systems', text: 'Interfaces should explain the platform instead of hiding it behind noise.' },
+        { eyebrow: 'Principle 02', title: 'Deliberate motion', text: 'Animation should guide attention, not distract from meaning.' },
+        { eyebrow: 'Principle 03', title: 'Operational empathy', text: 'Good cloud and DevOps work reduces stress for the people running it every day.' }
+      ]
 
   return (
     <div className="page-shell about-shell">
@@ -72,34 +85,24 @@ function About() {
 
       <section className="container page-section" data-reveal="scale">
         <div className="about-notes-board">
-          <article className="widget-card sketch-note-card">
-            <span className="eyebrow">Working note</span>
-            <p>Complex systems are easier to trust when the interface feels calm, tactile, and legible.</p>
-          </article>
-          <article className="widget-card sketch-note-card">
-            <span className="eyebrow">Portfolio intent</span>
-            <p>This page leans more like an annotated studio board than a standard about page.</p>
-          </article>
+          {notes.map((note, index) => (
+            <article key={`${note.eyebrow}-${index}`} className="widget-card sketch-note-card">
+              <span className="eyebrow">{note.eyebrow}</span>
+              <p>{note.text}</p>
+            </article>
+          ))}
         </div>
       </section>
 
       <section className="container page-section" data-reveal="up">
         <div className="principle-grid">
-          <article className="principle-card">
-            <span className="eyebrow">Principle 01</span>
-            <h3>Readable systems</h3>
-            <p>Interfaces should explain the platform instead of hiding it behind noise.</p>
-          </article>
-          <article className="principle-card">
-            <span className="eyebrow">Principle 02</span>
-            <h3>Deliberate motion</h3>
-            <p>Animation should guide attention, not distract from meaning.</p>
-          </article>
-          <article className="principle-card">
-            <span className="eyebrow">Principle 03</span>
-            <h3>Operational empathy</h3>
-            <p>Good cloud and DevOps work reduces stress for the people running it every day.</p>
-          </article>
+          {principles.map((principle, index) => (
+            <article key={`${principle.title}-${index}`} className="principle-card">
+              <span className="eyebrow">{principle.eyebrow}</span>
+              <h3>{principle.title}</h3>
+              <p>{principle.text}</p>
+            </article>
+          ))}
         </div>
       </section>
 

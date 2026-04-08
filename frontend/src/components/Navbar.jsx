@@ -78,7 +78,7 @@ function Navbar() {
                 setMenuOpen(false)
               }}
             >
-              Explore
+              {navContent.exploreLabel || 'Explore'}
             </button>
             <Link to="/contact" className="btn btn-primary btn-sm magnetic-surface" onClick={() => setMenuOpen(false)}>
               {navContent.ctaLabel}
@@ -104,13 +104,13 @@ function Navbar() {
               setMenuOpen(false)
             }}
           >
-            Home
+            {navContent.homeLabel || 'Home'}
           </Link>
           <div className="nav-radial-core">
             <span className="nav-radial-pulse nav-radial-pulse-1" />
             <span className="nav-radial-pulse nav-radial-pulse-2" />
-            <span className="eyebrow">Explore</span>
-            <strong>Choose a route</strong>
+            <span className="eyebrow">{navContent.exploreEyebrow || 'Explore'}</span>
+            <strong>{navContent.exploreTitle || 'Choose a route'}</strong>
           </div>
           {links.map((link, index) => (
             <NavLink

@@ -4,6 +4,16 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
+    inputs:
+      source:
+        description: Trigger source (for observability only)
+        required: false
+        type: string
+      requestedAt:
+        description: Requested timestamp (ISO)
+        required: false
+        type: string
 
 concurrency:
   group: deploy-production

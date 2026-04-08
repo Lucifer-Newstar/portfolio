@@ -2,6 +2,7 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://6e2n1oy6k9.ex
 const REQUEST_TIMEOUT_MS = 12000
 const SITE_CONTENT_POST_ID = '__site-content__'
 const DEPLOY_WEBHOOK_URL = import.meta.env.VITE_DEPLOY_WEBHOOK_URL || ''
+const DEPLOY_API_PATH = import.meta.env.VITE_DEPLOY_API_PATH || '/admin/deploy'
 
 function parseApiPayload(result) {
   if (result?.body) {
@@ -76,27 +77,40 @@ function parseSiteContentRecord(record) {
 
 export const fetchSiteContentRemote = async () => {
   try {
-    const posts = await request('/posts', { method: 'GET' })
-    if (!Array.isArray(posts)) return null
-    const record = posts.find((post) => post.id === SITE_CONTENT_POST_ID)
-    return parseSiteContentRecord(record)
-  } catch {
+    const content = await request('/admin/content', { method: 'GET' })
+    if (content && typeof content === 'object') return content
     return null
+  } catch {
+    try {
+      const posts = await request('/posts', { method: 'GET' })
+      if (!Array.isArray(posts)) return null
+      const record = posts.find((post) => post.id === SITE_CONTENT_POST_ID)
+      return parseSiteContentRecord(record)
+    } catch {
+      return null
+    }
   }
 }
 
 export const saveSiteContentRemote = async (content) => {
-  const payload = {
-    id: SITE_CONTENT_POST_ID,
-    type: 'system',
-    title: 'Site Content Snapshot',
-    content: JSON.stringify(content),
-    link: '',
-    date: new Date().toISOString(),
-    visible: false,
-    order: 999999,
+  try {
+    return await request('/admin/content', {
+      method: 'POST',
+      body: JSON.stringify(content),
+    })
+  } catch {
+    const payload = {
+      id: SITE_CONTENT_POST_ID,
+      type: 'system',
+      title: 'Site Content Snapshot',
+      content: JSON.stringify(content),
+      link: '',
+      date: new Date().toISOString(),
+      visible: false,
+      order: 999999,
+    }
+    return request('/posts', { method: 'POST', body: JSON.stringify(payload) })
   }
-  return request('/posts', { method: 'POST', body: JSON.stringify(payload) })
 }
 
 export const fetchSkills = async () => fetchCollection('/skills')
@@ -145,8 +159,18 @@ export const submitContactForm = async (payload) =>
   })
 
 export const triggerWebsiteDeploy = async () => {
-  if (!DEPLOY_WEBHOOK_URL) {
-    throw new Error('Deploy webhook is not configured. Set VITE_DEPLOY_WEBHOOK_URL.')
+  try {
+    return await request(DEPLOY_API_PATH, {
+      method: 'POST',
+      body: JSON.stringify({
+        source: 'admin-dashboard',
+        requestedAt: new Date().toISOString(),
+      }),
+    })
+  } catch (apiError) {
+    if (!DEPLOY_WEBHOOK_URL) {
+      throw new Error(`Deploy API failed: ${apiError.message}. Also no webhook configured (VITE_DEPLOY_WEBHOOK_URL).`)
+    }
   }
 
   let response

@@ -33,6 +33,13 @@ function Home() {
   const [projects, setProjects] = useState([])
   const activeSignal = signalModes.find((mode) => mode.name === activeSignalName) ?? signalModes[0]
   const activeRoleLabel = roles[currentRole] || roles[0]
+  const stickyPhases = home.stickyStory?.phases?.length
+    ? home.stickyStory.phases
+    : [
+        { eyebrow: 'Phase 01', title: 'See the signal', text: 'Typography, particles, and telemetry introduce the portfolio like a live operating surface.' },
+        { eyebrow: 'Phase 02', title: 'Read the systems', text: 'Charts, cards, and bento modules show how projects, cloud skills, and reliability thinking connect.' },
+        { eyebrow: 'Phase 03', title: 'Choose the path', text: 'Navigation and action blocks turn the visual story into a practical way to explore work and capabilities.' }
+      ]
   const skillInsights = useMemo(() => deriveSkillInsights(skills), [skills])
   const projectInsights = useMemo(() => deriveProjectInsights(projects), [projects])
   const homepageSignals = useMemo(() => buildHomepageSignals(skills, projects), [skills, projects])
@@ -337,21 +344,17 @@ function Home() {
 
       <section className="container page-section sticky-story-shell" data-reveal="up">
         <div className="sticky-story-stage">
-          <article className="sticky-story-card zoom-blur-panel" data-parallax="-14">
-            <span className="eyebrow">Phase 01</span>
-            <h3>See the signal</h3>
-            <p>Typography, particles, and telemetry introduce the portfolio like a live operating surface.</p>
-          </article>
-          <article className="sticky-story-card zoom-blur-panel" data-parallax="8">
-            <span className="eyebrow">Phase 02</span>
-            <h3>Read the systems</h3>
-            <p>Charts, cards, and bento modules show how projects, cloud skills, and reliability thinking connect.</p>
-          </article>
-          <article className="sticky-story-card zoom-blur-panel" data-parallax="18">
-            <span className="eyebrow">Phase 03</span>
-            <h3>Choose the path</h3>
-            <p>Navigation and action blocks turn the visual story into a practical way to explore work and capabilities.</p>
-          </article>
+          {stickyPhases.map((phase, index) => (
+            <article
+              key={`${phase.eyebrow}-${index}`}
+              className="sticky-story-card zoom-blur-panel"
+              data-parallax={index === 0 ? '-14' : index === 1 ? '8' : '18'}
+            >
+              <span className="eyebrow">{phase.eyebrow}</span>
+              <h3>{phase.title}</h3>
+              <p>{phase.text}</p>
+            </article>
+          ))}
         </div>
       </section>
 

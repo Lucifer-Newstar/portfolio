@@ -5,6 +5,7 @@ import { useSiteContent } from '../../context/useSiteContent'
 function DevOpsLab() {
   const { siteContent } = useSiteContent()
   const content = siteContent.devopsLabPage
+  const heroCard = content.heroCard || {}
 
   const chartData = content.tools.map((tool) => ({
     title: tool.name,
@@ -37,12 +38,9 @@ function DevOpsLab() {
 
       <section className="container page-section devops-grid-zone">
         <article className="bento-card bento-card-large devops-hero-card" data-reveal="left">
-          <span className="eyebrow">Stack focus</span>
-          <h2>AWS, Prometheus, Grafana, CI/CD, and reliability patterns woven into one visual system.</h2>
-          <p>
-            This page is designed like a cloud operations wall, with more telemetry, richer cards, and a clearer
-            relationship between delivery, monitoring, and platform engineering.
-          </p>
+          <span className="eyebrow">{heroCard.eyebrow || 'Stack focus'}</span>
+          <h2>{heroCard.title || 'AWS, Prometheus, Grafana, CI/CD, and reliability patterns woven into one visual system.'}</h2>
+          <p>{heroCard.text || 'This page is designed like a cloud operations wall, with more telemetry, richer cards, and a clearer relationship between delivery, monitoring, and platform engineering.'}</p>
         </article>
 
         <HorizontalGraph
