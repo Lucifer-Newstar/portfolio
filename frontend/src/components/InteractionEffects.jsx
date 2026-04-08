@@ -6,10 +6,8 @@ const interactiveSelector = [
   '.picker-chip',
   '.nav-pill',
   '.theme-toggle-shell',
-  '.magnetic-surface',
   '.skill-tag',
-  '.tech-badge',
-  '.project-rail-card'
+  '.tech-badge'
 ].join(', ')
 
 function InteractionEffects() {
@@ -94,12 +92,10 @@ function InteractionEffects() {
 
       const handleEnter = () => {
         document.documentElement.classList.add('cursor-hovering')
-        node.classList.add('is-tilting')
       }
 
       const handleLeave = () => {
         document.documentElement.classList.remove('cursor-hovering')
-        node.classList.remove('is-tilting')
         node.style.removeProperty('--pointer-x')
         node.style.removeProperty('--pointer-y')
       }

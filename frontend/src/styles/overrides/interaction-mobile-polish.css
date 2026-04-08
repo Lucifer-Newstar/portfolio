@@ -1,0 +1,132 @@
+/* Stability: remove flinching transforms on hover-heavy elements */
+.picker-chip,
+.skill-tag,
+.tech-badge,
+.command-tile,
+.nav-radial-link,
+.project-rail-card,
+.contact-detail,
+.btn {
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease,
+    color 180ms ease,
+    box-shadow 180ms ease,
+    opacity 180ms ease;
+}
+
+.picker-chip:hover,
+.skill-tag:hover,
+.tech-badge:hover,
+.command-tile:hover,
+.nav-radial-link:hover,
+.project-rail-card:hover,
+.contact-detail:hover,
+.btn:hover {
+  transform: none;
+}
+
+.is-tilting {
+  transform: none !important;
+}
+
+/* Mobile fluent spacing + overflow guards */
+@media (max-width: 900px) {
+  .page-shell {
+    overflow-x: hidden;
+  }
+
+  .container {
+    width: min(100% - 1.25rem, 72rem);
+  }
+
+  .hero-panel,
+  .page-hero,
+  .page-section {
+    padding-inline: 0.1rem;
+  }
+
+  .hero-buttons,
+  .inline-actions,
+  .picker-row.wrap {
+    gap: 0.55rem;
+  }
+
+  .hero-buttons .btn,
+  .inline-actions .btn {
+    min-height: 2.7rem;
+    padding-inline: 0.85rem;
+  }
+
+  .projects-bento-grid,
+  .feature-grid,
+  .skills-grid,
+  .certs-grid,
+  .posts-grid,
+  .contact-layout,
+  .admin-preview-compare-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .timeline,
+  .horizontal-rail {
+    overflow-x: auto;
+    scrollbar-width: thin;
+  }
+
+  .hero-title,
+  .page-hero h1 {
+    font-size: clamp(1.8rem, 7vw, 2.5rem);
+    line-height: 1.15;
+  }
+
+  .page-lead,
+  .hero-description {
+    font-size: 0.98rem;
+    line-height: 1.6;
+  }
+}
+
+@media (max-width: 620px) {
+  .metric-pill,
+  .tech-badge,
+  .skill-tag,
+  .picker-chip {
+    font-size: 0.68rem;
+  }
+
+  .admin-topbar-nav {
+    overflow-x: auto;
+  }
+
+  .admin-tab {
+    min-width: 14rem;
+  }
+
+  .admin-preview-frame {
+    min-height: 28rem;
+  }
+}
+
+.contact-submit-success,
+.contact-submit-error {
+  margin-top: 0.55rem;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.contact-submit-success {
+  color: #2f9a5d;
+}
+
+[data-theme="dark"] .contact-submit-success {
+  color: #69e8b4;
+}
+
+.contact-submit-error {
+  color: #c23e4a;
+}
+
+[data-theme="dark"] .contact-submit-error {
+  color: #ff7d90;
+}

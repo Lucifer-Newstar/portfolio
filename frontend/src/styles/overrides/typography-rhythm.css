@@ -1,0 +1,149 @@
+:root {
+  --font-display-light: "DM Serif Display", "Playfair Display", "Times New Roman", serif;
+  --font-body-light: "Manrope", "Segoe UI", Tahoma, sans-serif;
+  --font-display-dark: "Orbitron", "Eurostile", "Trebuchet MS", sans-serif;
+  --font-body-dark: "Space Grotesk", "Segoe UI", Tahoma, sans-serif;
+  --font-code: "JetBrains Mono", "Consolas", monospace;
+  --text-reading-width: 72ch;
+}
+
+body {
+  line-height: 1.62;
+}
+
+[data-theme="light"] body {
+  font-family: var(--font-body-light);
+}
+
+[data-theme="dark"] body {
+  font-family: var(--font-body-dark);
+}
+
+[data-theme="light"] h1,
+[data-theme="light"] h2,
+[data-theme="light"] h3,
+[data-theme="light"] .hero-title {
+  font-family: var(--font-display-light);
+  letter-spacing: 0.01em;
+}
+
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+[data-theme="dark"] .hero-title {
+  font-family: var(--font-display-dark);
+  letter-spacing: 0.03em;
+}
+
+.page-lead,
+.hero-description,
+.project-card p,
+.feature-card p,
+.post-card p,
+.cert-card p,
+.timeline-card p,
+.contact-form textarea,
+.contact-form input {
+  max-width: var(--text-reading-width);
+}
+
+.section-header h2,
+.page-hero h1,
+.hero-title {
+  position: relative;
+  margin-bottom: 0.85rem;
+}
+
+/* Signature animated heading effect (restores Navin Jairam color shift) */
+.home-shell .hero-title {
+  background-size: 240% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: heroTitleChromaticShift 8.5s linear infinite;
+}
+
+[data-theme="light"] .home-shell .hero-title {
+  background-image: linear-gradient(
+    120deg,
+    #7a3b18 0%,
+    #cf7331 20%,
+    #f2bb4d 40%,
+    #9c4d8a 62%,
+    #3758ca 82%,
+    #7a3b18 100%
+  );
+}
+
+[data-theme="dark"] .home-shell .hero-title {
+  background-image: linear-gradient(
+    120deg,
+    #eff9ff 0%,
+    #75e6ff 24%,
+    #9f7fff 50%,
+    #67e7d5 74%,
+    #eff9ff 100%
+  );
+  text-shadow: 0 0 18px rgba(108, 223, 255, 0.22);
+}
+
+.section-header h2::after,
+.page-hero h1::after,
+.hero-title::after {
+  content: '';
+  display: block;
+  width: min(9rem, 42vw);
+  height: 2px;
+  margin-top: 0.45rem;
+  border-radius: 999px;
+}
+
+[data-theme="light"] .section-header h2::after,
+[data-theme="light"] .page-hero h1::after,
+[data-theme="light"] .hero-title::after {
+  background: linear-gradient(90deg, rgba(220, 120, 62, 0.9), rgba(246, 198, 93, 0.75), transparent);
+}
+
+[data-theme="dark"] .section-header h2::after,
+[data-theme="dark"] .page-hero h1::after,
+[data-theme="dark"] .hero-title::after {
+  background: linear-gradient(90deg, rgba(104, 228, 255, 0.92), rgba(156, 118, 255, 0.78), transparent);
+}
+
+.eyebrow {
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+[data-theme="dark"] .eyebrow {
+  letter-spacing: 0.28em;
+}
+
+.metric-pill,
+.tech-badge,
+.skill-tag,
+.picker-chip {
+  font-family: var(--font-code);
+  font-size: 0.74rem;
+}
+
+@media (max-width: 900px) {
+  .page-lead,
+  .hero-description,
+  .project-card p,
+  .feature-card p,
+  .post-card p,
+  .cert-card p,
+  .timeline-card p {
+    max-width: 100%;
+  }
+}
+
+@keyframes heroTitleChromaticShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 240% 50%;
+  }
+}

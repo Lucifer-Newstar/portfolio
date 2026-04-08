@@ -1,0 +1,146 @@
+/* Unique page-level UX signatures */
+.home-shell .hero-panel,
+.about-shell .bento-layout,
+.experience-shell .timeline,
+.skills-shell .skills-grid,
+.projects-shell .projects-bento-grid,
+.devops-shell .services-cloud-grid,
+.certifications-shell .certs-grid,
+.posts-shell .posts-grid,
+.contact-shell .contact-layout {
+  position: relative;
+}
+
+/* Home */
+[data-theme="light"] .home-shell .hero-panel::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: -0.7rem;
+  width: min(22rem, 52vw);
+  height: 2px;
+  background: linear-gradient(90deg, rgba(230, 126, 61, 0.86), rgba(246, 201, 97, 0.72), transparent);
+}
+
+[data-theme="dark"] .home-shell .hero-panel::before {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: -0.7rem;
+  width: min(24rem, 56vw);
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(112, 228, 255, 0.82), rgba(156, 118, 255, 0.7));
+}
+
+/* About */
+.about-shell .sketch-note-card {
+  transform: none;
+}
+
+[data-theme="light"] .about-shell .sketch-note-card {
+  background: linear-gradient(155deg, rgba(255, 248, 233, 0.94), rgba(255, 236, 211, 0.78));
+}
+
+[data-theme="dark"] .about-shell .sketch-note-card {
+  background: linear-gradient(155deg, rgba(16, 28, 52, 0.86), rgba(29, 20, 56, 0.78));
+}
+
+/* Experience */
+.experience-shell .timeline-card {
+  transition: border-color 180ms ease, box-shadow 180ms ease;
+}
+
+[data-theme="light"] .experience-shell .timeline-card:hover {
+  border-color: rgba(219, 130, 71, 0.4);
+  box-shadow: 0 10px 24px rgba(189, 122, 73, 0.12);
+}
+
+[data-theme="dark"] .experience-shell .timeline-card:hover {
+  border-color: rgba(108, 223, 255, 0.42);
+  box-shadow: 0 10px 24px rgba(29, 87, 129, 0.35);
+}
+
+/* Skills */
+[data-theme="light"] .skills-shell .skill-tile {
+  background:
+    linear-gradient(160deg, rgba(255, 247, 228, 0.9), rgba(255, 234, 205, 0.76)),
+    #fff;
+}
+
+[data-theme="dark"] .skills-shell .skill-tile {
+  background:
+    linear-gradient(160deg, rgba(15, 34, 60, 0.9), rgba(30, 24, 56, 0.72)),
+    rgba(12, 18, 34, 0.8);
+}
+
+/* Projects */
+.projects-shell .project-bento-tile {
+  overflow: hidden;
+}
+
+[data-theme="light"] .projects-shell .project-bento-tile::before,
+[data-theme="dark"] .projects-shell .project-bento-tile::before {
+  content: '';
+  position: absolute;
+  inset: auto 0 0;
+  height: 2px;
+}
+
+[data-theme="light"] .projects-shell .project-bento-tile::before {
+  background: linear-gradient(90deg, rgba(220, 118, 61, 0.82), rgba(244, 201, 96, 0.86), transparent);
+}
+
+[data-theme="dark"] .projects-shell .project-bento-tile::before {
+  background: linear-gradient(90deg, rgba(96, 223, 255, 0.84), rgba(146, 119, 255, 0.84), transparent);
+}
+
+/* DevOps */
+.devops-shell .service-cloud-card {
+  border-style: dashed;
+}
+
+[data-theme="light"] .devops-shell .service-cloud-card {
+  border-color: rgba(70, 120, 201, 0.35);
+}
+
+[data-theme="dark"] .devops-shell .service-cloud-card {
+  border-color: rgba(99, 227, 255, 0.36);
+}
+
+/* Certifications */
+[data-theme="light"] .certifications-shell .cert-card {
+  background: linear-gradient(160deg, rgba(255, 250, 236, 0.96), rgba(255, 236, 205, 0.75));
+}
+
+[data-theme="dark"] .certifications-shell .cert-card {
+  background: linear-gradient(160deg, rgba(14, 31, 58, 0.92), rgba(28, 20, 53, 0.78));
+}
+
+/* Posts */
+.posts-shell .featured-post {
+  position: relative;
+}
+
+.posts-shell .featured-post::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  height: 2px;
+}
+
+[data-theme="light"] .posts-shell .featured-post::before {
+  background: linear-gradient(90deg, rgba(220, 118, 61, 0.84), rgba(245, 198, 92, 0.8), transparent);
+}
+
+[data-theme="dark"] .posts-shell .featured-post::before {
+  background: linear-gradient(90deg, rgba(105, 226, 255, 0.88), rgba(151, 120, 255, 0.78), transparent);
+}
+
+/* Contact */
+[data-theme="light"] .contact-shell .contact-form {
+  background: linear-gradient(170deg, rgba(255, 249, 236, 0.95), rgba(255, 236, 206, 0.75));
+}
+
+[data-theme="dark"] .contact-shell .contact-form {
+  background: linear-gradient(170deg, rgba(15, 33, 62, 0.92), rgba(29, 20, 57, 0.76));
+}

@@ -1,0 +1,102 @@
+.posts-shell .post-card,
+.posts-shell .featured-post {
+  position: relative;
+  overflow: hidden;
+}
+
+.posts-shell .post-card::before,
+.posts-shell .featured-post::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  height: 3px;
+  pointer-events: none;
+}
+
+.posts-shell .post-card::after,
+.posts-shell .featured-post::after {
+  content: '';
+  position: absolute;
+  top: 0.85rem;
+  right: 0.85rem;
+  width: 0.58rem;
+  height: 0.58rem;
+  border-radius: 999px;
+  opacity: 0.92;
+  pointer-events: none;
+}
+
+/* GitHub */
+.posts-shell .source-github::before {
+  background: linear-gradient(90deg, #7f5af0, #4cc9f0, transparent);
+}
+
+.posts-shell .source-github::after {
+  background: radial-gradient(circle at 35% 35%, #d8d2ff, #7f5af0);
+}
+
+/* LinkedIn */
+.posts-shell .source-linkedin::before {
+  background: linear-gradient(90deg, #0a66c2, #4eb6ff, transparent);
+}
+
+.posts-shell .source-linkedin::after {
+  background: radial-gradient(circle at 35% 35%, #d8efff, #0a66c2);
+}
+
+/* LeetCode */
+.posts-shell .source-leetcode::before {
+  background: linear-gradient(90deg, #ffa116, #ffc75a, transparent);
+}
+
+.posts-shell .source-leetcode::after {
+  background: radial-gradient(circle at 35% 35%, #ffe8c2, #ffa116);
+}
+
+/* Notion */
+.posts-shell .source-notion::before {
+  background: linear-gradient(90deg, #121212, #6a6a6a, transparent);
+}
+
+.posts-shell .source-notion::after {
+  background: radial-gradient(circle at 35% 35%, #f2f2f2, #1b1b1b);
+}
+
+/* Manual */
+.posts-shell .source-manual::before {
+  background: linear-gradient(90deg, #cf6b3d, #f3bf63, transparent);
+}
+
+.posts-shell .source-manual::after {
+  background: radial-gradient(circle at 35% 35%, #fff1d8, #cf6b3d);
+}
+
+/* Other */
+.posts-shell .source-other::before {
+  background: linear-gradient(90deg, #6de8d7, #7aa7ff, transparent);
+}
+
+.posts-shell .source-other::after {
+  background: radial-gradient(circle at 35% 35%, #d8fffb, #66c8d8);
+}
+
+[data-theme="dark"] .posts-shell .source-linkedin {
+  box-shadow: inset 0 0 0 1px rgba(78, 182, 255, 0.2);
+}
+
+[data-theme="dark"] .posts-shell .source-github {
+  box-shadow: inset 0 0 0 1px rgba(127, 90, 240, 0.22);
+}
+
+[data-theme="dark"] .posts-shell .source-leetcode {
+  box-shadow: inset 0 0 0 1px rgba(255, 161, 22, 0.2);
+}
+
+[data-theme="dark"] .posts-shell .source-notion {
+  box-shadow: inset 0 0 0 1px rgba(200, 200, 200, 0.16);
+}
+
+[data-theme="dark"] .posts-shell .source-other,
+[data-theme="dark"] .posts-shell .source-manual {
+  box-shadow: inset 0 0 0 1px rgba(109, 232, 215, 0.16);
+}

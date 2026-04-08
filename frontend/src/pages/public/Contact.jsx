@@ -1,11 +1,40 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useSiteContent } from '../../context/useSiteContent'
+import { submitContactForm } from '../../utils/api'
 
 function Contact() {
   const { siteContent } = useSiteContent()
   const content = siteContent.contact
   const [activeReason, setActiveReason] = useState(content.reasons[0])
+  const [form, setForm] = useState({
+    name: '',
+    email: '',
+    message: '',
+  })
+  const [submitState, setSubmitState] = useState('idle')
+  const [submitMessage, setSubmitMessage] = useState('')
+
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+    setSubmitState('submitting')
+    setSubmitMessage('')
+
+    try {
+      await submitContactForm({
+        name: form.name,
+        email: form.email,
+        reason: activeReason,
+        message: form.message,
+      })
+      setSubmitState('success')
+      setSubmitMessage('Message sent successfully. I will get this in my inbox.')
+      setForm({ name: '', email: '', message: '' })
+    } catch (error) {
+      setSubmitState('error')
+      setSubmitMessage(error.message || 'Unable to send message right now.')
+    }
+  }
 
   return (
     <div className="page-shell contact-shell">
@@ -46,14 +75,26 @@ function Contact() {
           ))}
         </div>
         
-        <form className="contact-form" data-reveal="right">
+        <form className="contact-form" data-reveal="right" onSubmit={handleSubmit}>
           <div className="form-group">
             <label>{content.form.nameLabel}</label>
-            <input type="text" placeholder={content.form.namePlaceholder} />
+            <input
+              type="text"
+              placeholder={content.form.namePlaceholder}
+              value={form.name}
+              onChange={(event) => setForm((current) => ({ ...current, name: event.target.value }))}
+              required
+            />
           </div>
           <div className="form-group">
             <label>{content.form.emailLabel}</label>
-            <input type="email" placeholder={content.form.emailPlaceholder} />
+            <input
+              type="email"
+              placeholder={content.form.emailPlaceholder}
+              value={form.email}
+              onChange={(event) => setForm((current) => ({ ...current, email: event.target.value }))}
+              required
+            />
           </div>
           <div className="form-group">
             <label>{content.form.reasonLabel}</label>
@@ -61,9 +102,22 @@ function Contact() {
           </div>
           <div className="form-group">
             <label>{content.form.messageLabel}</label>
-            <textarea rows="5" placeholder={content.form.messagePlaceholder} />
+            <textarea
+              rows="5"
+              placeholder={content.form.messagePlaceholder}
+              value={form.message}
+              onChange={(event) => setForm((current) => ({ ...current, message: event.target.value }))}
+              required
+            />
           </div>
-          <button type="submit" className="btn btn-primary">{content.form.submitLabel}</button>
+          <button type="submit" className="btn btn-primary" disabled={submitState === 'submitting'}>
+            {submitState === 'submitting' ? 'Sending...' : content.form.submitLabel}
+          </button>
+          {submitMessage ? (
+            <p className={submitState === 'error' ? 'contact-submit-error' : 'contact-submit-success'}>
+              {submitMessage}
+            </p>
+          ) : null}
         </form>
       </section>
 

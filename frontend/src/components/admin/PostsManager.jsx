@@ -83,7 +83,17 @@ function PostsManager() {
       <hr />
       <form onSubmit={handleAdd}>
         <div><label>ID:</label><input type="text" value={newPost.id} onChange={(e) => setNewPost({...newPost, id: e.target.value})} required /></div>
-        <div><label>Type:</label><select value={newPost.type} onChange={(e) => setNewPost({...newPost, type: e.target.value})}><option>manual</option><option>github</option></select></div>
+        <div>
+          <label>Type:</label>
+          <select value={newPost.type} onChange={(e) => setNewPost({...newPost, type: e.target.value})}>
+            <option>manual</option>
+            <option>github</option>
+            <option>linkedin</option>
+            <option>leetcode</option>
+            <option>notion</option>
+            <option>other</option>
+          </select>
+        </div>
         <div><label>Title:</label><input type="text" value={newPost.title} onChange={(e) => setNewPost({...newPost, title: e.target.value})} required /></div>
         <div><label>Content:</label><textarea value={newPost.content} onChange={(e) => setNewPost({...newPost, content: e.target.value})} rows="3" /></div>
         <div><label>Link:</label><input type="url" value={newPost.link} onChange={(e) => setNewPost({...newPost, link: e.target.value})} /></div>

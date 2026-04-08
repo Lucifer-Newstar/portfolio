@@ -1,6 +1,7 @@
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://6e2n1oy6k9.execute-api.us-east-1.amazonaws.com/prod'
 const REQUEST_TIMEOUT_MS = 12000
 const SITE_CONTENT_POST_ID = '__site-content__'
+const DEPLOY_WEBHOOK_URL = import.meta.env.VITE_DEPLOY_WEBHOOK_URL || ''
 
 function parseApiPayload(result) {
   if (result?.body) {
@@ -136,3 +137,46 @@ export const syncGitHubActivity = async () => request('/posts/sync-github', { me
 export const createPost = async (post) => request('/posts', { method: 'POST', body: JSON.stringify(post) })
 export const updatePost = async (id, updates) => request(`/posts/${id}`, { method: 'PUT', body: JSON.stringify(updates) })
 export const deletePost = async (id) => request(`/posts/${id}`, { method: 'DELETE' })
+
+export const submitContactForm = async (payload) =>
+  request('/contact', {
+    method: 'POST',
+    body: JSON.stringify(payload),
+  })
+
+export const triggerWebsiteDeploy = async () => {
+  if (!DEPLOY_WEBHOOK_URL) {
+    throw new Error('Deploy webhook is not configured. Set VITE_DEPLOY_WEBHOOK_URL.')
+  }
+
+  let response
+  try {
+    response = await fetch(DEPLOY_WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        source: 'admin-dashboard',
+        requestedAt: new Date().toISOString(),
+      }),
+    })
+  } catch (error) {
+    throw new Error(`Deploy request failed: ${error.message}`)
+  }
+
+  const raw = await response.text()
+  let parsed = {}
+  if (raw) {
+    try {
+      parsed = JSON.parse(raw)
+    } catch {
+      parsed = { message: raw }
+    }
+  }
+
+  if (!response.ok) {
+    const reason = parsed?.error || parsed?.message || `HTTP ${response.status}`
+    throw new Error(`Deploy failed: ${reason}`)
+  }
+
+  return parsed
+}

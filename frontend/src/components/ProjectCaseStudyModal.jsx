@@ -9,8 +9,28 @@ function deriveNarrative(project) {
   ]
 }
 
+function deriveCaseStudyBlocks(project) {
+  const primaryStream = project.workstreams?.[0]?.name || 'Platform delivery'
+  const secondaryStream = project.workstreams?.[1]?.name || 'Observability'
+  return [
+    {
+      title: 'Problem',
+      text: `Needed a clear, scalable implementation path with stronger reliability than a basic showcase build.`,
+    },
+    {
+      title: 'Approach',
+      text: `Structured execution around ${primaryStream.toLowerCase()} and ${secondaryStream.toLowerCase()} with measurable progress.`,
+    },
+    {
+      title: 'Result',
+      text: `Reached ${project.completion}% completion with reusable patterns that can be extended quickly.`,
+    },
+  ]
+}
+
 function ProjectCaseStudyModal({ project, onClose }) {
   const narrative = useMemo(() => (project ? deriveNarrative(project) : []), [project])
+  const blocks = useMemo(() => (project ? deriveCaseStudyBlocks(project) : []), [project])
 
   if (!project) return null
 
@@ -79,6 +99,15 @@ function ProjectCaseStudyModal({ project, onClose }) {
                 ))}
               </div>
             </article>
+          </section>
+
+          <section className="project-case-study-grid">
+            {blocks.map((block) => (
+              <article key={block.title} className="project-case-study-panel">
+                <span className="eyebrow">{block.title}</span>
+                <p>{block.text}</p>
+              </article>
+            ))}
           </section>
 
           <section className="project-case-study-actions">

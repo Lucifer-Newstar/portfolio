@@ -3,6 +3,40 @@ import { Link } from 'react-router-dom'
 import { fetchPosts } from '../../utils/api'
 import { useSiteContent } from '../../context/useSiteContent'
 
+function detectPostSource(post) {
+  const type = String(post?.type || '').toLowerCase().trim()
+  const link = String(post?.link || '').toLowerCase()
+  const title = String(post?.title || '').toLowerCase()
+
+  if (type.includes('github') || link.includes('github.com')) return 'github'
+  if (type.includes('linkedin') || link.includes('linkedin.com')) return 'linkedin'
+  if (type.includes('leetcode') || link.includes('leetcode.com')) return 'leetcode'
+  if (type.includes('notion') || link.includes('notion.so') || link.includes('notion.site')) return 'notion'
+  if (type === 'manual' || type === 'update') return 'manual'
+  if (title.includes('github')) return 'github'
+  if (title.includes('linkedin')) return 'linkedin'
+  if (title.includes('leetcode')) return 'leetcode'
+  if (title.includes('notion')) return 'notion'
+  return 'other'
+}
+
+function sourceLabel(source) {
+  if (source === 'github') return 'GitHub'
+  if (source === 'linkedin') return 'LinkedIn'
+  if (source === 'leetcode') return 'LeetCode'
+  if (source === 'notion') return 'Notion'
+  if (source === 'manual') return 'Update'
+  return 'Signal'
+}
+
+function sourceActionLabel(source) {
+  if (source === 'github') return 'View on GitHub'
+  if (source === 'linkedin') return 'View on LinkedIn'
+  if (source === 'leetcode') return 'View on LeetCode'
+  if (source === 'notion') return 'Open in Notion'
+  return 'Read more'
+}
+
 function Posts() {
   const { siteContent } = useSiteContent()
   const content = siteContent.postsPage
@@ -23,8 +57,12 @@ function Posts() {
 
   const manualPosts = posts.filter(p => p.type === 'manual')
   const githubPosts = posts.filter(p => p.type === 'github')
+  const linkedinPosts = posts.filter((post) => detectPostSource(post) === 'linkedin')
+  const leetcodePosts = posts.filter((post) => detectPostSource(post) === 'leetcode')
+  const notionPosts = posts.filter((post) => detectPostSource(post) === 'notion')
   const visiblePosts = activeFeed === 'github' ? githubPosts : activeFeed === 'manual' ? manualPosts : posts
   const featuredPost = visiblePosts[0]
+  const featuredSource = featuredPost ? detectPostSource(featuredPost) : 'other'
 
   return (
     <div className="page-shell posts-shell">
@@ -56,6 +94,18 @@ function Posts() {
             <span className="eyebrow">GitHub</span>
             <strong>{githubPosts.length}</strong>
           </article>
+          <article className="widget-card">
+            <span className="eyebrow">LinkedIn</span>
+            <strong>{linkedinPosts.length}</strong>
+          </article>
+          <article className="widget-card">
+            <span className="eyebrow">LeetCode</span>
+            <strong>{leetcodePosts.length}</strong>
+          </article>
+          <article className="widget-card">
+            <span className="eyebrow">Notion</span>
+            <strong>{notionPosts.length}</strong>
+          </article>
         </div>
       </section>
 
@@ -81,17 +131,17 @@ function Posts() {
 
       {featuredPost && (
         <section className="container page-section" data-reveal="up">
-          <article className="featured-post">
+          <article className={`featured-post source-${featuredSource}`}>
             <span className="eyebrow">{content.featuredLabel}</span>
             <h2>{featuredPost.title}</h2>
             <p>{featuredPost.content}</p>
             <div className="feed-meta">
               <span>{new Date(featuredPost.date).toLocaleDateString()}</span>
-              <span>{featuredPost.type === 'github' ? 'GitHub activity' : 'Manual note'}</span>
+              <span>{sourceLabel(featuredSource)}</span>
             </div>
             {featuredPost.link && (
               <a href={featuredPost.link} target="_blank" rel="noopener noreferrer" className="btn btn-primary btn-sm">
-                Open source
+                {sourceActionLabel(featuredSource)}
               </a>
             )}
           </article>
@@ -108,16 +158,20 @@ function Posts() {
         <section className="container page-section">
           <div className="posts-grid">
             {visiblePosts.map((post, index) => (
-              <article key={post.id} className="post-card" data-reveal={index % 2 === 0 ? 'up' : 'scale'}>
+              <article
+                key={post.id}
+                className={`post-card source-${detectPostSource(post)}`}
+                data-reveal={index % 2 === 0 ? 'up' : 'scale'}
+              >
                 <div className="project-card-top">
-                  <span className="eyebrow">{post.type === 'github' ? 'GitHub' : 'Update'}</span>
+                  <span className="eyebrow">{sourceLabel(detectPostSource(post))}</span>
                   <span className="metric-pill">{new Date(post.date).toLocaleDateString()}</span>
                 </div>
                 <h3>{post.title}</h3>
                 <p>{post.content}</p>
                 {post.link && (
                   <a href={post.link} target="_blank" rel="noopener noreferrer" className="post-link">
-                    {post.type === 'github' ? 'View on GitHub' : 'Read more'} →
+                    {sourceActionLabel(detectPostSource(post))} →
                   </a>
                 )}
               </article>

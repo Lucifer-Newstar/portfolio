@@ -10,12 +10,16 @@ import PreviewManager from '../../components/admin/PreviewManager'
 import { useSiteContent } from '../../context/useSiteContent'
 import { useTheme } from '../../context/useTheme'
 import { clearAdminSession } from '../../utils/adminAuth'
+import { triggerWebsiteDeploy } from '../../utils/api'
 
 function AdminDashboard() {
   const { draftContent, saveSiteContent, discardDraftChanges, hasUnsavedChanges, lastSavedAt } = useSiteContent()
   const { theme } = useTheme()
   const adminContent = draftContent.admin
   const [activeTab, setActiveTab] = useState('overview')
+  const [saveState, setSaveState] = useState('idle')
+  const [deployState, setDeployState] = useState('idle')
+  const [deployError, setDeployError] = useState('')
 
   const handleLogout = () => {
     clearAdminSession()
@@ -69,6 +73,12 @@ function AdminDashboard() {
             <span className="metric-pill">
               {lastSavedAt ? `Last save ${new Date(lastSavedAt).toLocaleString()}` : 'No manual save yet'}
             </span>
+            <span className="metric-pill">
+              {saveState === 'saving' ? 'Saving to cloud...' : saveState === 'saved' ? 'Cloud sync complete' : saveState === 'error' ? 'Cloud sync failed' : 'Ready'}
+            </span>
+            <span className="metric-pill">
+              {deployState === 'deploying' ? 'Deploying website...' : deployState === 'success' ? 'Deploy trigger sent' : deployState === 'error' ? 'Deploy failed' : 'Deploy idle'}
+            </span>
           </div>
           <div className="admin-topbar-stats">
             {adminContent.stats.map((stat) => (
@@ -80,6 +90,27 @@ function AdminDashboard() {
           </div>
           <div className="admin-hero-actions">
             <Link to="/" className="btn btn-secondary">{adminContent.openSiteLabel}</Link>
+            <button type="button" className="btn btn-secondary" onClick={() => setActiveTab('preview')}>
+              Open preview
+            </button>
+            <button
+              type="button"
+              className="btn btn-secondary"
+              onClick={async () => {
+                setDeployState('deploying')
+                setDeployError('')
+                try {
+                  await triggerWebsiteDeploy()
+                  setDeployState('success')
+                } catch (error) {
+                  setDeployState('error')
+                  setDeployError(error.message || 'Deploy failed.')
+                }
+              }}
+              disabled={deployState === 'deploying'}
+            >
+              {deployState === 'deploying' ? 'Deploying...' : 'Deploy to Website'}
+            </button>
             <button
               type="button"
               onClick={discardDraftChanges}
@@ -92,9 +123,12 @@ function AdminDashboard() {
               type="button"
               onClick={async () => {
                 try {
+                  setSaveState('saving')
                   await saveSiteContent()
+                  setSaveState('saved')
                   alert('Dashboard content saved successfully.')
                 } catch (error) {
+                  setSaveState('error')
                   alert(`Save failed: ${error.message}`)
                 }
               }}
@@ -128,6 +162,11 @@ function AdminDashboard() {
                 </p>
             </article>
           </div>
+          {deployError ? (
+            <p className="contact-submit-error" role="alert">
+              Deploy error: {deployError}
+            </p>
+          ) : null}
         </div>
 
         {activeTab === 'overview' ? (

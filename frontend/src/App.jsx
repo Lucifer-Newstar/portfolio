@@ -10,6 +10,7 @@ import Breadcrumbs from './components/Breadcrumbs'
 import ScrollProgress from './components/ScrollProgress'
 import InteractionEffects from './components/InteractionEffects'
 import AdvancedVisualOverlays from './components/AdvancedVisualOverlays'
+import RouteMeta from './components/RouteMeta'
 
 // Public pages
 import Home from './pages/public/Home'
@@ -33,6 +34,7 @@ function AppFrame() {
   return (
     <>
       <PageThemeHandler />
+      <RouteMeta />
       <ParticleBackground />
       <ThemeAtmosphere />
       <AdvancedVisualOverlays />
