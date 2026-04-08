@@ -7,6 +7,10 @@ const docClient = DynamoDBDocumentClient.from(client);
 const TABLE_NAME = "site_content";
 const CONTENT_ID = "global";
 
+function getChunkId(index) {
+  return `${CONTENT_ID}#${String(index + 1).padStart(4, "0")}`;
+}
+
 function corsHeaders() {
   return {
     "Access-Control-Allow-Origin": "*",
@@ -35,7 +39,24 @@ export const handler = async (event) => {
     });
 
     const response = await docClient.send(command);
-    const content = response.Item?.content || {};
+    const item = response.Item;
+
+    let content = item?.content || {};
+    if (item?.storage === "chunked" && Number(item.chunkCount) > 0) {
+      const parts = [];
+      for (let index = 0; index < Number(item.chunkCount); index += 1) {
+        const chunkResponse = await docClient.send(new GetCommand({
+          TableName: TABLE_NAME,
+          Key: { id: getChunkId(index) },
+        }));
+        const chunk = chunkResponse.Item?.chunk;
+        if (typeof chunk !== "string") {
+          throw new Error(`Missing content chunk ${index + 1}`);
+        }
+        parts.push(chunk);
+      }
+      content = JSON.parse(parts.join(""));
+    }
 
     return {
       statusCode: 200,

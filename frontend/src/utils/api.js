@@ -154,6 +154,17 @@ export const submitContactForm = async (payload) =>
     body: JSON.stringify(payload),
   })
 
+export const fetchOpsSummary = async () =>
+  request('/ops/summary', {
+    method: 'GET',
+  })
+
+export const fetchAdminOpsInsights = async () =>
+  request('/admin/ops-insights', {
+    method: 'GET',
+    includeAdminAuth: true,
+  })
+
 export const triggerWebsiteDeploy = async () => {
   try {
     return await request(DEPLOY_API_PATH, {

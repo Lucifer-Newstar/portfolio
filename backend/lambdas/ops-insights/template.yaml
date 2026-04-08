@@ -1,0 +1,14 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Ops insights lambda for public DevOps telemetry and admin observability feeds
+
+Resources:
+  OpsInsightsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: ops-insights
+      Runtime: nodejs20.x
+      Handler: index.handler
+      CodeUri: dist/
+      Timeout: 12
+      MemorySize: 256

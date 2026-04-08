@@ -1,0 +1,19 @@
+{
+  "Variables": {
+    "ALLOWED_ORIGINS": "http://localhost:5173,https://lucifernewstar-2006.xyz",
+    "COGNITO_USERINFO_URL": "https://us-east-1iwnapdbk8.auth.us-east-1.amazoncognito.com/oauth2/userInfo",
+    "GITHUB_OWNER": "Lucifer-Newstar",
+    "GITHUB_REPO": "portfolio",
+    "GITHUB_WORKFLOW_FILE": "deploy.yml",
+    "GITHUB_TOKEN": "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",
+    "SITE_URL": "https://lucifernewstar-2006.xyz",
+    "API_BASE_URL": "https://6e2n1oy6k9.execute-api.us-east-1.amazonaws.com/prod",
+    "S3_BUCKET": "navin-portfolio",
+    "CLOUDFRONT_DISTRIBUTION_ID": "ECVS4UV0ZKGHO",
+    "API_ID": "6e2n1oy6k9",
+    "API_NAME": "portfolio-rest-api",
+    "API_STAGE": "prod",
+    "LOG_GROUPS": "/aws/lambda/deploy-website,/aws/lambda/save-site-content,/aws/lambda/get-site-content,/aws/lambda/send-contact-email",
+    "OBSERVED_LAMBDAS": "deploy-website,save-site-content,get-site-content,send-contact-email"
+  }
+}

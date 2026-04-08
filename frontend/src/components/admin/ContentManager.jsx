@@ -118,14 +118,7 @@ function ContentNodeEditor({ label, value, path, onChange }) {
               onChange={(event) => {
                 const file = event.target.files?.[0]
                 if (!file) return
-
-                const reader = new FileReader()
-                reader.onload = () => {
-                  if (typeof reader.result === 'string') {
-                    onChange(path, reader.result)
-                  }
-                }
-                reader.readAsDataURL(file)
+                alert('Direct image file embedding is disabled because it breaks admin saves. Upload the file to a public URL first, then paste that URL here.')
                 event.target.value = ''
               }}
             />

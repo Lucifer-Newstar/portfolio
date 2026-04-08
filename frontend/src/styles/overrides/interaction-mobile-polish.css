@@ -58,6 +58,12 @@
     padding-inline: 0.85rem;
   }
 
+  .hero-panel,
+  .page-hero,
+  .page-section {
+    scroll-margin-top: 5.5rem;
+  }
+
   .projects-bento-grid,
   .feature-grid,
   .skills-grid,
@@ -85,6 +91,30 @@
     font-size: 0.98rem;
     line-height: 1.6;
   }
+
+  .hero-bento .bento-card,
+  .feature-card,
+  .project-card,
+  .skill-category,
+  .post-card,
+  .cert-card,
+  .timeline-card,
+  .contact-detail,
+  .contact-form {
+    backdrop-filter: blur(8px) saturate(1.02);
+    box-shadow:
+      0 10px 24px rgba(20, 28, 45, 0.08),
+      0 0 0 1px rgba(255, 255, 255, 0.04);
+  }
+
+  .hero-bento .bento-card:active,
+  .feature-card:active,
+  .project-card:active,
+  .command-tile:active,
+  .btn:active,
+  .theme-toggle-shell:active {
+    transform: scale(0.985);
+  }
 }
 
 @media (max-width: 620px) {
@@ -105,6 +135,31 @@
 
   .admin-preview-frame {
     min-height: 28rem;
+  }
+
+  .hero-buttons,
+  .inline-actions {
+    width: 100%;
+  }
+
+  .hero-buttons .btn,
+  .inline-actions .btn,
+  .command-tile,
+  .nav-radial-link {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .bento-card,
+  .feature-card,
+  .project-card,
+  .skill-category,
+  .post-card,
+  .cert-card,
+  .timeline-card,
+  .contact-detail,
+  .contact-form {
+    border-radius: 1.2rem;
   }
 }
 

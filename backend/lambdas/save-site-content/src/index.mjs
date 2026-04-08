@@ -1,5 +1,5 @@
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
-import { DynamoDBDocumentClient, PutCommand } from "@aws-sdk/lib-dynamodb";
+import { DynamoDBDocumentClient, DeleteCommand, GetCommand, PutCommand } from "@aws-sdk/lib-dynamodb";
 
 const client = new DynamoDBClient({ region: "us-east-1" });
 const docClient = DynamoDBDocumentClient.from(client);
@@ -7,6 +7,8 @@ const docClient = DynamoDBDocumentClient.from(client);
 const TABLE_NAME = "site_content";
 const CONTENT_ID = "global";
 const DEFAULT_ALLOWED_ORIGINS = "http://localhost:5173,https://lucifernewstar-2006.xyz";
+const MAX_REQUEST_BYTES = 5 * 1024 * 1024;
+const CHUNK_SIZE_BYTES = 320 * 1024;
 
 function corsHeaders(event) {
   const allowedOrigins = String(process.env.ALLOWED_ORIGINS || DEFAULT_ALLOWED_ORIGINS)
@@ -29,6 +31,18 @@ function corsHeaders(event) {
 function parseBody(event) {
   if (!event?.body) return event || {};
   return typeof event.body === "string" ? JSON.parse(event.body) : event.body;
+}
+
+function chunkContent(serialized) {
+  const chunks = [];
+  for (let start = 0; start < serialized.length; start += CHUNK_SIZE_BYTES) {
+    chunks.push(serialized.slice(start, start + CHUNK_SIZE_BYTES));
+  }
+  return chunks;
+}
+
+function getChunkId(index) {
+  return `${CONTENT_ID}#${String(index + 1).padStart(4, "0")}`;
 }
 
 async function validateAdminToken(event) {
@@ -101,32 +115,59 @@ export const handler = async (event) => {
       };
     }
 
-    const bodyBytes = Buffer.byteLength(JSON.stringify(body));
-    if (bodyBytes > 1024 * 1024) {
+    const serializedContent = JSON.stringify(body);
+    const bodyBytes = Buffer.byteLength(serializedContent);
+    if (bodyBytes > MAX_REQUEST_BYTES) {
       return {
         statusCode: 413,
         headers: corsHeaders(event),
-        body: JSON.stringify({ error: "Payload too large. Limit is 1MB." })
+        body: JSON.stringify({ error: "Payload too large. Limit is 5MB." })
       };
     }
 
-    const content = body;
+    const existing = await docClient.send(new GetCommand({
+      TableName: TABLE_NAME,
+      Key: { id: CONTENT_ID },
+    }));
+
+    const previousChunkCount = Number(existing.Item?.chunkCount || 0);
+    const chunks = chunkContent(serializedContent);
+    const updatedAt = new Date().toISOString();
 
     const command = new PutCommand({
       TableName: TABLE_NAME,
       Item: {
         id: CONTENT_ID,
-        content: content,
-        updatedAt: new Date().toISOString()
+        storage: "chunked",
+        chunkCount: chunks.length,
+        updatedAt
       }
     });
 
     await docClient.send(command);
+    for (let index = 0; index < chunks.length; index += 1) {
+      await docClient.send(new PutCommand({
+        TableName: TABLE_NAME,
+        Item: {
+          id: getChunkId(index),
+          chunk: chunks[index],
+          part: index + 1,
+          updatedAt,
+        },
+      }));
+    }
+
+    for (let index = chunks.length; index < previousChunkCount; index += 1) {
+      await docClient.send(new DeleteCommand({
+        TableName: TABLE_NAME,
+        Key: { id: getChunkId(index) },
+      }));
+    }
 
     return {
       statusCode: 200,
       headers: corsHeaders(event),
-      body: JSON.stringify({ message: "Content saved successfully." })
+      body: JSON.stringify({ message: "Content saved successfully.", chunkCount: chunks.length })
     };
   } catch (error) {
     console.error("save-site-content failed:", error);

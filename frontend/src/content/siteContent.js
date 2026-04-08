@@ -455,6 +455,7 @@ export const defaultSiteContent = {
     ],
     tabs: [
       { id: 'overview', name: 'Overview', description: 'Quick actions, preview links, and workspace guidance.' },
+      { id: 'operations', name: 'Operations', description: 'Track deploy status, logs, and infrastructure health in one searchable view.' },
       { id: 'content', name: 'Content', description: 'Edit all hardcoded page text, labels, links, and image URLs.' },
       { id: 'preview', name: 'Preview', description: 'Check saved pages and draft pages inside the admin workspace.' },
       { id: 'skills', name: 'Skills', description: 'Curate taxonomy, levels, and order.' },
@@ -473,7 +474,7 @@ export const defaultSiteContent = {
       sectionLabel: 'Content sections'
     },
     stats: [
-      { value: '7', label: 'Workspace tabs' },
+      { value: '8', label: 'Workspace tabs' },
       { value: 'Live', label: 'Portfolio mode' },
       { value: 'Theme aware', label: 'Public experience' }
     ],
@@ -486,6 +487,7 @@ export const defaultSiteContent = {
         { title: 'Fast workflow', text: 'Update content, then verify both light and dark mode before publishing decisions.' }
       ],
       actions: [
+        { label: 'Open operations', tab: 'operations' },
         { label: 'Go to content', tab: 'content' },
         { label: 'Open preview', tab: 'preview' },
         { label: 'Go to projects', tab: 'projects' },
@@ -525,6 +527,10 @@ export const mergeWithDefaultContent = (savedContent) => mergeValue(defaultSiteC
 
 function isPlainObject(value) {
   return Boolean(value) && typeof value === 'object' && !Array.isArray(value)
+}
+
+function isEmbeddedImageData(value) {
+  return typeof value === 'string' && value.startsWith('data:image/')
 }
 
 function deepEqualContentValue(left, right) {
@@ -581,3 +587,23 @@ export const createContentOverrides = (content) => {
   const overrides = buildContentOverrides(content, defaultSiteContent)
   return overrides && isPlainObject(overrides) ? overrides : {}
 }
+
+function sanitizeContentValue(value) {
+  if (Array.isArray(value)) {
+    return value.map((item) => sanitizeContentValue(item))
+  }
+
+  if (isPlainObject(value)) {
+    return Object.fromEntries(
+      Object.entries(value).map(([key, childValue]) => [key, sanitizeContentValue(childValue)]),
+    )
+  }
+
+  if (isEmbeddedImageData(value)) {
+    return ''
+  }
+
+  return value
+}
+
+export const stripEmbeddedImageData = (content) => sanitizeContentValue(content)

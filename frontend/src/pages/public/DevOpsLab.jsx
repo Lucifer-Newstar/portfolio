@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { HorizontalGraph, InsightChartStrip, MicroBarChart } from '../../components/InsightCharts'
+import { DevOpsTelemetryWall } from '../../components/OperationsInsights'
 import { useSiteContent } from '../../context/useSiteContent'
 
 function DevOpsLab() {
@@ -63,6 +64,10 @@ function DevOpsLab() {
             </article>
           ))}
         </div>
+      </section>
+
+      <section className="container page-section devops-telemetry-zone">
+        <DevOpsTelemetryWall />
       </section>
 
       <section className="container page-section" data-reveal="scale">

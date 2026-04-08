@@ -125,7 +125,11 @@
     box-shadow 220ms ease,
     background 220ms ease,
     width 220ms ease,
-    height 220ms ease;
+    height 220ms ease,
+    opacity 220ms ease,
+    filter 220ms ease;
+  opacity: 0.86;
+  filter: saturate(1.08);
 }
 
 .advanced-pointer-aura::before {
@@ -139,21 +143,25 @@
 .advanced-pointer-neutral {
   width: 0.85rem;
   height: 0.85rem;
+  opacity: 0.72;
 }
 
 .advanced-pointer-navigate {
   width: 1.2rem;
   height: 1.2rem;
+  opacity: 0.94;
 }
 
 .advanced-pointer-action {
   width: 1.35rem;
   height: 1.35rem;
+  opacity: 1;
 }
 
 .advanced-pointer-inspect {
   width: 1.1rem;
   height: 1.1rem;
+  opacity: 0.9;
 }
 
 /* Signature motion choreography */
@@ -171,6 +179,63 @@ body[data-scene-seed="skills"] .skills-grid .skill-category {
 
 body[data-scene-seed="posts"] .posts-grid .post-card {
   animation: sceneRise 680ms both;
+}
+
+.page-section,
+.page-hero,
+.hero-panel {
+  transition:
+    transform 420ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 320ms ease,
+    filter 320ms ease;
+}
+
+.page-section.is-story-active,
+.page-hero.is-story-active,
+.hero-panel.is-story-active {
+  transform: translate3d(0, -2px, 0);
+}
+
+.hero-bento .bento-card,
+.feature-card,
+.project-card,
+.skill-category,
+.post-card,
+.cert-card,
+.timeline-card,
+.contact-form,
+.contact-detail,
+.command-tile,
+.nav-radial-link,
+.theme-toggle-shell,
+.btn {
+  transition:
+    transform 320ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 320ms ease,
+    border-color 260ms ease,
+    background 260ms ease,
+    filter 260ms ease;
+}
+
+.hero-bento .bento-card:hover,
+.feature-card:hover,
+.project-card:hover,
+.skill-category:hover,
+.post-card:hover,
+.cert-card:hover,
+.timeline-card:hover,
+.contact-form:hover,
+.contact-detail:hover {
+  filter: saturate(1.04);
+}
+
+.btn::before,
+.command-tile::before,
+.nav-radial-link::before,
+.theme-toggle-shell::before {
+  transition:
+    opacity 260ms ease,
+    transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 /* Adaptive heading kinetics */
@@ -221,7 +286,9 @@ body[data-scene-seed="posts"] .posts-grid .post-card {
 
 [data-theme="light"] .advanced-pointer-aura {
   background: radial-gradient(circle at 35% 35%, rgba(255, 243, 215, 0.95), rgba(226, 116, 63, 0.74));
-  box-shadow: 0 0 18px rgba(226, 116, 63, 0.22);
+  box-shadow:
+    0 0 18px rgba(226, 116, 63, 0.22),
+    0 0 40px rgba(243, 195, 87, 0.14);
 }
 
 [data-theme="light"] .advanced-pointer-aura::before {
@@ -265,7 +332,9 @@ body[data-scene-seed="posts"] .posts-grid .post-card {
 
 [data-theme="dark"] .advanced-pointer-aura {
   background: radial-gradient(circle at 35% 35%, rgba(222, 247, 255, 0.96), rgba(105, 226, 255, 0.74));
-  box-shadow: 0 0 20px rgba(105, 226, 255, 0.24);
+  box-shadow:
+    0 0 20px rgba(105, 226, 255, 0.24),
+    0 0 46px rgba(146, 119, 255, 0.16);
 }
 
 [data-theme="dark"] .advanced-pointer-aura::before {
@@ -299,6 +368,12 @@ body[data-scene-seed="posts"] .posts-grid .post-card {
   .advanced-telemetry-layer {
     opacity: 0.72;
   }
+
+  .page-section.is-story-active,
+  .page-hero.is-story-active,
+  .hero-panel.is-story-active {
+    transform: none;
+  }
 }
 
 @media (pointer: coarse), (prefers-reduced-motion: reduce) {
@@ -312,6 +387,25 @@ body[data-scene-seed="posts"] .posts-grid .post-card {
   .hero-title,
   .section-header h2 {
     text-shadow: none;
+  }
+
+  .page-section,
+  .page-hero,
+  .hero-panel,
+  .hero-bento .bento-card,
+  .feature-card,
+  .project-card,
+  .skill-category,
+  .post-card,
+  .cert-card,
+  .timeline-card,
+  .contact-form,
+  .contact-detail,
+  .command-tile,
+  .nav-radial-link,
+  .theme-toggle-shell,
+  .btn {
+    transition: none;
   }
 }
 

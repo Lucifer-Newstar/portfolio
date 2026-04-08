@@ -21,10 +21,13 @@ This is the current documentation entry point for the project as it exists now.
 5. `docs/UPDATES-LOG.md`
 - Detailed changelog of major upgrades, including UI/UX layers, admin features, security, contact email, and deploy trigger.
 
-6. `docs/contact-email-setup.md`
+6. `docs/PROJECT-PROGRESS-LOG-2026-03-28_to_2026-04-08.md`
+- Historical phase-by-phase build log from setup to live delivery.
+
+7. `docs/contact-email-setup.md`
 - Contact form AWS SES setup and route wiring.
 
-7. `docs/admin-content-and-deploy-api-setup.md`
+8. `docs/admin-content-and-deploy-api-setup.md`
 - Setup for `/admin/content` and `/admin/deploy` API lambdas and frontend integration.
 
 ## Note on master doc

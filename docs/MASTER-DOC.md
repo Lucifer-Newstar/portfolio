@@ -24,7 +24,8 @@ Use these docs for full detail:
 3. [TECH-STACK-AND-ARCHITECTURE.md](/D:/navin/Resume%20and%20Portfolio/portfolio/docs/TECH-STACK-AND-ARCHITECTURE.md)
 4. [INFRASTRUCTURE-REBUILD-PLAYBOOK.md](/D:/navin/Resume%20and%20Portfolio/portfolio/docs/INFRASTRUCTURE-REBUILD-PLAYBOOK.md)
 5. [UPDATES-LOG.md](/D:/navin/Resume%20and%20Portfolio/portfolio/docs/UPDATES-LOG.md)
-6. [contact-email-setup.md](/D:/navin/Resume%20and%20Portfolio/portfolio/docs/contact-email-setup.md)
+6. [PROJECT-PROGRESS-LOG-2026-03-28_to_2026-04-08.md](/D:/navin/Resume%20and%20Portfolio/portfolio/docs/PROJECT-PROGRESS-LOG-2026-03-28_to_2026-04-08.md)
+7. [contact-email-setup.md](/D:/navin/Resume%20and%20Portfolio/portfolio/docs/contact-email-setup.md)
 
 ## 3. Current Architecture Snapshot
 
@@ -91,6 +92,7 @@ Detailed and evolving technical truth should be maintained in:
 - `TECH-STACK-AND-ARCHITECTURE.md`
 - `INFRASTRUCTURE-REBUILD-PLAYBOOK.md`
 - `UPDATES-LOG.md`
+- `PROJECT-PROGRESS-LOG-2026-03-28_to_2026-04-08.md`
 
 ## 8. Current IAM snapshot
 

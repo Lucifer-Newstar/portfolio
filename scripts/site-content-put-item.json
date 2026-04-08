@@ -1,0 +1,18 @@
+{
+  "id": { "S": "global" },
+  "updatedAt": { "S": "2026-04-08T16:18:30.000Z" },
+  "content": {
+    "M": {
+      "test": { "S": "Admin dashboard cloud save check" },
+      "siteTitle": { "S": "Navin Portfolio" },
+      "home": {
+        "M": {
+          "titleEcho": { "S": "Navin Jairam M" },
+          "portraitImage": { "S": "https://lucifernewstar-2006.xyz/images/newprofile.png" },
+          "portraitImageLight": { "S": "https://lucifernewstar-2006.xyz/images/newprofile.png" },
+          "portraitImageDark": { "S": "https://lucifernewstar-2006.xyz/images/newprofile.png" }
+        }
+      }
+    }
+  }
+}

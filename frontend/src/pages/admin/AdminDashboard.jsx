@@ -7,6 +7,7 @@ import CertificationsManager from '../../components/admin/CertificationsManager'
 import PostsManager from '../../components/admin/PostsManager'
 import ContentManager from '../../components/admin/ContentManager'
 import PreviewManager from '../../components/admin/PreviewManager'
+import OperationsManager from '../../components/admin/OperationsManager'
 import { useSiteContent } from '../../context/useSiteContent'
 import { useTheme } from '../../context/useTheme'
 import { clearAdminSession } from '../../utils/adminAuth'
@@ -36,6 +37,7 @@ function AdminDashboard() {
       : tab.id === 'experience' ? ExperienceManager
       : tab.id === 'certifications' ? CertificationsManager
       : tab.id === 'posts' ? PostsManager
+      : tab.id === 'operations' ? OperationsManager
       : undefined
   })), [adminContent.tabs])
 

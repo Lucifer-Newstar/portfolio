@@ -21,6 +21,10 @@ function ThemeToggle() {
       aria-label="Toggle theme"
     >
       <span className="theme-toggle-orb" aria-hidden="true" />
+      <span className="theme-toggle-glow theme-toggle-glow-a" aria-hidden="true" />
+      <span className="theme-toggle-glow theme-toggle-glow-b" aria-hidden="true" />
+      <span className="theme-toggle-ring theme-toggle-ring-a" aria-hidden="true" />
+      <span className="theme-toggle-ring theme-toggle-ring-b" aria-hidden="true" />
       <span className="theme-toggle-copy">
         <small>Mode</small>
         <strong>{isDark ? 'Future' : 'Royal'}</strong>

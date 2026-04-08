@@ -4,6 +4,9 @@ Last updated: 2026-04-08
 
 This log captures major functional and visual updates currently present in the working project state, plus recent implemented upgrades in this session.
 
+Related historical record:
+- `docs/PROJECT-PROGRESS-LOG-2026-03-28_to_2026-04-08.md` preserves the phase-by-phase build journey from project setup through live launch.
+
 ## 1. CI/CD and Deploy Pipeline
 
 - Added/maintained PR CI workflow:

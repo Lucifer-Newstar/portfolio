@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { createContentOverrides, deepCloneContent, mergeWithDefaultContent } from '../content/siteContent'
+import { createContentOverrides, deepCloneContent, mergeWithDefaultContent, stripEmbeddedImageData } from '../content/siteContent'
 import { SiteContentContext } from './site-content-context'
 import { fetchSiteContentRemote, saveSiteContentRemote } from '../utils/api'
 
@@ -10,7 +10,7 @@ const SAVED_AT_STORAGE_KEY = 'portfolio-site-content-saved-at-v1'
 function readStoredContent(key) {
   try {
     const saved = localStorage.getItem(key)
-    return saved ? mergeWithDefaultContent(JSON.parse(saved)) : null
+    return saved ? mergeWithDefaultContent(stripEmbeddedImageData(JSON.parse(saved))) : null
   } catch {
     return null
   }
@@ -41,7 +41,7 @@ export function SiteContentProvider({ children }) {
       const remote = await fetchSiteContentRemote()
       if (!remote || !mounted) return
 
-      const merged = mergeWithDefaultContent(remote)
+      const merged = mergeWithDefaultContent(stripEmbeddedImageData(remote))
       setSavedContent(merged)
       setDraftContent(merged)
       localStorage.setItem(STORAGE_KEY, JSON.stringify(merged))

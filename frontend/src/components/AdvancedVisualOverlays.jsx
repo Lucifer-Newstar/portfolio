@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 import { useLocation } from 'react-router-dom'
 
 function getSceneSeed(pathname) {
@@ -27,7 +27,7 @@ function AdvancedVisualOverlays() {
   const reducedMotion = useMemo(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches, [])
   const coarsePointer = useMemo(() => window.matchMedia('(pointer: coarse)').matches, [])
   const canUsePointerFx = !reducedMotion && !coarsePointer
-  const [pointer, setPointer] = useState({ x: -120, y: -120, mode: 'neutral' })
+  const pointerAuraRef = useRef(null)
   const sceneSeed = useMemo(() => getSceneSeed(location.pathname), [location.pathname])
 
   useEffect(() => {
@@ -68,16 +68,43 @@ function AdvancedVisualOverlays() {
   useEffect(() => {
     if (!canUsePointerFx) return undefined
 
+    const auraNode = pointerAuraRef.current
+    if (!auraNode) return undefined
+
+    let currentX = -120
+    let currentY = -120
+    let targetX = -120
+    let targetY = -120
+    let rafId = 0
+
+    const syncAura = () => {
+      currentX += (targetX - currentX) * 0.18
+      currentY += (targetY - currentY) * 0.18
+      auraNode.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`
+      rafId = window.requestAnimationFrame(syncAura)
+    }
+
     const handleMove = (event) => {
-      setPointer({
-        x: event.clientX,
-        y: event.clientY,
-        mode: classifyTarget(event.target),
-      })
+      targetX = event.clientX
+      targetY = event.clientY
+      auraNode.className = `advanced-pointer-aura advanced-pointer-${classifyTarget(event.target)}`
+    }
+
+    const handleLeave = () => {
+      targetX = -120
+      targetY = -120
+      auraNode.className = 'advanced-pointer-aura advanced-pointer-neutral'
     }
 
     window.addEventListener('pointermove', handleMove, { passive: true })
-    return () => window.removeEventListener('pointermove', handleMove)
+    document.addEventListener('pointerleave', handleLeave)
+    rafId = window.requestAnimationFrame(syncAura)
+
+    return () => {
+      window.removeEventListener('pointermove', handleMove)
+      document.removeEventListener('pointerleave', handleLeave)
+      window.cancelAnimationFrame(rafId)
+    }
   }, [canUsePointerFx])
 
   return (
@@ -99,11 +126,9 @@ function AdvancedVisualOverlays() {
 
       {canUsePointerFx ? (
         <div
+          ref={pointerAuraRef}
           aria-hidden="true"
-          className={`advanced-pointer-aura advanced-pointer-${pointer.mode}`}
-          style={{
-            transform: `translate3d(${pointer.x}px, ${pointer.y}px, 0)`,
-          }}
+          className="advanced-pointer-aura advanced-pointer-neutral"
         />
       ) : null}
     </>
