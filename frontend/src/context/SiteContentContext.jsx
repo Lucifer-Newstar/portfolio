@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { deepCloneContent, mergeWithDefaultContent } from '../content/siteContent'
 import { SiteContentContext } from './site-content-context'
 
@@ -42,7 +42,7 @@ export function SiteContentProvider({ children }) {
     [draftContent, savedContent],
   )
 
-  const saveSiteContent = () => {
+  const saveSiteContent = useCallback(() => {
     const snapshot = JSON.parse(JSON.stringify(draftContent))
     const savedAt = new Date().toISOString()
 
@@ -51,19 +51,19 @@ export function SiteContentProvider({ children }) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(snapshot))
     localStorage.setItem(DRAFT_STORAGE_KEY, JSON.stringify(snapshot))
     localStorage.setItem(SAVED_AT_STORAGE_KEY, savedAt)
-  }
+  }, [draftContent])
 
-  const discardDraftChanges = () => {
+  const discardDraftChanges = useCallback(() => {
     const snapshot = JSON.parse(JSON.stringify(savedContent))
     setDraftContent(snapshot)
     localStorage.setItem(DRAFT_STORAGE_KEY, JSON.stringify(snapshot))
-  }
+  }, [savedContent])
 
-  const resetSiteContent = () => {
+  const resetSiteContent = useCallback(() => {
     const defaults = deepCloneContent()
     setDraftContent(defaults)
     localStorage.setItem(DRAFT_STORAGE_KEY, JSON.stringify(defaults))
-  }
+  }, [])
 
   const value = useMemo(() => ({
     siteContent: previewDraft ? draftContent : savedContent,
@@ -74,7 +74,16 @@ export function SiteContentProvider({ children }) {
     resetSiteContent,
     hasUnsavedChanges,
     lastSavedAt,
-  }), [draftContent, hasUnsavedChanges, lastSavedAt, previewDraft, savedContent])
+  }), [
+    discardDraftChanges,
+    draftContent,
+    hasUnsavedChanges,
+    lastSavedAt,
+    previewDraft,
+    resetSiteContent,
+    saveSiteContent,
+    savedContent,
+  ])
 
   return (
     <SiteContentContext.Provider value={value}>

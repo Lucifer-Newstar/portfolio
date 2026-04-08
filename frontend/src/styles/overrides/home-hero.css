@@ -414,10 +414,19 @@
 .home-shell .hero-portrait-badge strong,
 .home-shell .hero-portrait-badge span {
   display: block;
+  line-height: 1.2;
+}
+
+.home-shell .hero-portrait-badge strong {
+  margin-bottom: 0.18rem;
+  font-size: 1rem;
+  letter-spacing: -0.02em;
 }
 
 .home-shell .hero-portrait-badge span {
   font-size: 0.86rem;
+  min-height: 1.15rem;
+  letter-spacing: 0.01em;
   color: rgba(253, 247, 240, 0.82);
 }
 
@@ -716,6 +725,46 @@
   }
 }
 
+@media (max-width: 768px) {
+  .home-shell .hero-heading-grid {
+    gap: 0.95rem;
+  }
+
+  .home-shell .hero-portrait-shell {
+    width: min(100%, 22rem);
+    margin-inline: auto;
+    padding: 0.65rem;
+  }
+
+  .home-shell .hero-visual-card {
+    margin-top: 0.65rem;
+    border-radius: 1.25rem;
+  }
+
+  .home-shell .hero-portrait-card {
+    min-height: 280px;
+    border-radius: 1.35rem;
+  }
+
+  .home-shell .hero-portrait-image {
+    min-height: 280px;
+  }
+
+  .home-shell .hero-portrait-badge {
+    left: 0.75rem;
+    right: 0.75rem;
+    bottom: 0.75rem;
+    padding: 0.7rem 0.8rem;
+  }
+
+  .home-shell .hero-royal-star-1,
+  .home-shell .hero-royal-gem-1,
+  .home-shell .hero-signal-chip-2,
+  .home-shell .hero-signal-ring-3 {
+    display: none;
+  }
+}
+
 @media (max-width: 640px) {
   .home-shell .hero-royal-crown {
     width: 2.55rem;
@@ -736,6 +785,32 @@
 
   .home-shell .hero-visual-image {
     max-height: 15rem;
+  }
+
+  .home-shell .hero-portrait-shell {
+    width: 100%;
+    max-width: 19rem;
+    padding: 0.45rem;
+  }
+
+  .home-shell .hero-portrait-decor {
+    inset: -0.15rem;
+  }
+
+  .home-shell .hero-portrait-badge strong {
+    font-size: 0.94rem;
+  }
+
+  .home-shell .hero-portrait-badge span {
+    font-size: 0.76rem;
+  }
+
+  .home-shell .hero-royal-orbit-1,
+  .home-shell .hero-royal-orbit-2,
+  .home-shell .hero-signal-chip-1,
+  .home-shell .hero-signal-node-3,
+  .home-shell .hero-signal-beam-2 {
+    display: none;
   }
 }
 

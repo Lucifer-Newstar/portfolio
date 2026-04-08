@@ -274,6 +274,15 @@ body {
     width: min(1320px, calc(100% - 1rem));
   }
 
+  .app-main {
+    padding-bottom: 2rem;
+  }
+
+  .page-shell {
+    gap: 0.95rem;
+    padding-bottom: 2.5rem;
+  }
+
   .page-hero,
   .hero-panel {
     padding-top: 1.4rem;
@@ -283,8 +292,25 @@ body {
     padding-bottom: 1.2rem;
   }
 
+  .hero-title,
+  .page-hero h1 {
+    line-height: 0.98;
+  }
+
+  .page-lead,
+  .hero-description,
+  .hero-subtitle,
+  .page-section p,
+  .feature-card p,
+  .project-card p,
+  .bento-card p {
+    line-height: 1.65;
+    max-width: 100%;
+  }
+
   .navbar-container {
     align-items: stretch;
+    grid-template-columns: 1fr;
   }
 
   .navbar-brand-cluster {
@@ -295,6 +321,60 @@ body {
   .inline-actions {
     flex-wrap: wrap;
   }
+
+  .hero-buttons,
+  .inline-actions,
+  .project-links,
+  .content-upload-actions {
+    width: 100%;
+  }
+
+  .hero-buttons > *,
+  .inline-actions > *,
+  .project-links > *,
+  .content-upload-actions > * {
+    flex: 1 1 100%;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .horizontal-rail,
+  .projects-rail,
+  .ticker-rail,
+  .picker-row,
+  .inline-actions {
+    margin-inline: -0.15rem;
+    padding-inline: 0.15rem 0.35rem;
+    scroll-padding-inline: 0.25rem;
+    gap: 0.65rem;
+  }
+
+  .horizontal-rail > *,
+  .projects-rail > *,
+  .ticker-rail > * {
+    width: min(100%, 19rem);
+  }
+
+  .modal-overlay {
+    align-items: end;
+    padding: 0.75rem 0.5rem calc(0.75rem + env(safe-area-inset-bottom, 0px));
+  }
+
+  .modal-content {
+    width: 100%;
+    max-width: none;
+    max-height: min(88vh, 48rem);
+    border-radius: 1.4rem;
+  }
+
+  .modal-header,
+  .modal-body {
+    padding-inline: 1rem;
+  }
+
+  .modal-body {
+    max-height: calc(88vh - 5rem);
+  }
 }
 
 @media (max-width: 540px) {
@@ -302,9 +382,65 @@ body {
     width: min(1320px, calc(100% - 0.8rem));
   }
 
+  .page-hero,
+  .hero-panel {
+    padding-top: 1.05rem;
+  }
+
+  .page-section {
+    gap: 0.8rem;
+    padding-bottom: 1rem;
+  }
+
+  .hero-copy,
+  .hero-bento,
+  .feature-grid,
+  .dashboard-strip,
+  .projects-bento-grid,
+  .skills-grid,
+  .posts-grid,
+  .certs-grid,
+  .contact-layout,
+  .homepage-graph-zone,
+  .projects-bento-intro,
+  .admin-window-grid,
+  .content-grid {
+    gap: 0.8rem;
+  }
+
   .brand-mark {
     min-width: 2.7rem;
     height: 2.7rem;
     font-size: 0.92rem;
+  }
+
+  .hero-title,
+  .page-hero h1 {
+    letter-spacing: -0.04em;
+  }
+
+  .picker-chip,
+  .metric-pill,
+  .tech-badge,
+  .btn.btn-sm {
+    min-height: 2.6rem;
+  }
+
+  .bento-card,
+  .card,
+  .feature-card,
+  .widget-card,
+  .rail-card,
+  .step-card,
+  .project-card,
+  .skill-category,
+  .post-card,
+  .cert-card,
+  .footer-panel,
+  .timeline-card,
+  .contact-form,
+  .contact-detail,
+  .modal-content {
+    border-radius: 1.2rem;
   }
 }

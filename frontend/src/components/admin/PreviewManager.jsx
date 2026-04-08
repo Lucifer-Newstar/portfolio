@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { useSiteContent } from '../../context/useSiteContent'
 
 const PREVIEW_ROUTES = [
@@ -19,17 +19,17 @@ function PreviewManager() {
   const [previewMode, setPreviewMode] = useState('draft')
   const [previewLayout, setPreviewLayout] = useState('split')
 
-  const buildPreviewUrl = (theme) => {
+  const buildPreviewUrl = useCallback((theme) => {
     const params = new URLSearchParams()
     if (previewMode === 'draft') params.set('admin-preview', 'draft')
     if (theme) params.set('theme', theme)
     const query = params.toString()
     return `${selectedPath}${query ? `?${query}` : ''}`
-  }
+  }, [previewMode, selectedPath])
 
-  const singlePreviewUrl = useMemo(() => buildPreviewUrl('light'), [previewMode, selectedPath])
-  const lightPreviewUrl = useMemo(() => buildPreviewUrl('light'), [previewMode, selectedPath])
-  const darkPreviewUrl = useMemo(() => buildPreviewUrl('dark'), [previewMode, selectedPath])
+  const singlePreviewUrl = useMemo(() => buildPreviewUrl('light'), [buildPreviewUrl])
+  const lightPreviewUrl = useMemo(() => buildPreviewUrl('light'), [buildPreviewUrl])
+  const darkPreviewUrl = useMemo(() => buildPreviewUrl('dark'), [buildPreviewUrl])
 
   return (
     <div className="admin-preview-page">

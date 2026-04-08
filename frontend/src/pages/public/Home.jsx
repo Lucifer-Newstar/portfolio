@@ -32,6 +32,7 @@ function Home() {
   const [skills, setSkills] = useState([])
   const [projects, setProjects] = useState([])
   const activeSignal = signalModes.find((mode) => mode.name === activeSignalName) ?? signalModes[0]
+  const activeRoleLabel = roles[currentRole] || roles[0]
   const skillInsights = useMemo(() => deriveSkillInsights(skills), [skills])
   const projectInsights = useMemo(() => deriveProjectInsights(projects), [projects])
   const homepageSignals = useMemo(() => buildHomepageSignals(skills, projects), [skills, projects])
@@ -131,7 +132,7 @@ function Home() {
                 />
                 <div className="hero-portrait-badge">
                   <strong>{home.title}</strong>
-                  <span>{displayText || roles[0]}</span>
+                  <span>{activeRoleLabel}</span>
                 </div>
               </div>
             </div>

@@ -17,6 +17,29 @@ function Navbar() {
     }
   }, [exploreOpen])
 
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 768) {
+        setMenuOpen(false)
+      }
+    }
+
+    const handleEscape = (event) => {
+      if (event.key === 'Escape') {
+        setMenuOpen(false)
+        setExploreOpen(false)
+      }
+    }
+
+    window.addEventListener('resize', handleResize)
+    window.addEventListener('keydown', handleEscape)
+
+    return () => {
+      window.removeEventListener('resize', handleResize)
+      window.removeEventListener('keydown', handleEscape)
+    }
+  }, [])
+
   return (
     <nav className="navbar">
       <div className="container navbar-container">
@@ -38,17 +61,22 @@ function Navbar() {
           type="button"
           className="navbar-toggle"
           aria-label="Toggle navigation"
+          aria-expanded={menuOpen}
+          aria-controls="navbar-controls"
           onClick={() => setMenuOpen((value) => !value)}
         >
           {menuOpen ? 'Close' : 'Menu'}
         </button>
 
-        <div className={`navbar-controls ${menuOpen ? 'is-open' : ''}`}>
+        <div id="navbar-controls" className={`navbar-controls ${menuOpen ? 'is-open' : ''}`}>
           <div className="navbar-actions">
             <button
               type="button"
               className={`nav-explore-toggle magnetic-surface ${exploreOpen ? 'is-open' : ''}`}
-              onClick={() => setExploreOpen((value) => !value)}
+              onClick={() => {
+                setExploreOpen((value) => !value)
+                setMenuOpen(false)
+              }}
             >
               Explore
             </button>

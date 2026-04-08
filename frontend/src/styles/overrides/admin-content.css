@@ -79,6 +79,31 @@
   }
 }
 
+@media (max-width: 768px) {
+  .admin-preview-sidebar,
+  .admin-preview-stage {
+    padding: 0.9rem;
+    border-radius: 20px;
+  }
+
+  .admin-preview-stage-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .admin-preview-frame-shell,
+  .admin-preview-frame {
+    min-height: 58vh;
+  }
+
+  .admin-preview-mode-switch .picker-chip,
+  .admin-preview-sidebar .picker-row .picker-chip {
+    flex: 1 1 100%;
+    width: 100%;
+    justify-content: center;
+  }
+}
+
 [data-theme="dark"] .bento-card,
 [data-theme="dark"] .feature-card,
 [data-theme="dark"] .widget-card,

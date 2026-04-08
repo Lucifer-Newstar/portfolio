@@ -26,6 +26,10 @@
   flex-shrink: 0;
 }
 
+.navbar-toggle {
+  display: none;
+}
+
 .nav-explore-layer {
   position: fixed !important;
   inset: 0 !important;
@@ -301,6 +305,95 @@ body.nav-explore-active .theme-atmosphere {
   }
 }
 
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0.65rem 0 0.8rem;
+  }
+
+  .navbar-container {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: start;
+  }
+
+  .navbar-brand-cluster {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .navbar-brand {
+    width: 100%;
+  }
+
+  .navbar-status {
+    margin-left: 0;
+    max-width: 100%;
+    font-size: 0.76rem;
+  }
+
+  .navbar-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 5.1rem;
+    min-height: 2.9rem;
+    padding: 0.7rem 1rem;
+    border-radius: 999px;
+    border: 1px solid var(--border-strong);
+    background: linear-gradient(180deg, var(--bg-card-strong), var(--bg-card));
+    box-shadow: var(--shadow-sm);
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .navbar-controls {
+    grid-column: 1 / -1;
+    display: grid;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    pointer-events: none;
+    transition:
+      max-height var(--transition-normal),
+      opacity var(--transition-normal),
+      margin-top var(--transition-normal);
+  }
+
+  .navbar-controls.is-open {
+    max-height: 24rem;
+    margin-top: 0.9rem;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .navbar-actions {
+    width: 100%;
+    justify-content: stretch;
+    gap: 0.75rem;
+  }
+
+  .navbar-actions > * {
+    width: 100%;
+  }
+
+  .nav-explore-toggle,
+  .navbar-actions .btn,
+  .theme-toggle-shell {
+    min-height: 3.15rem;
+  }
+
+  .theme-toggle-shell {
+    transform: none;
+  }
+
+  .theme-toggle-shell:hover,
+  .theme-toggle-shell:focus-visible {
+    transform: none;
+  }
+}
+
 @media (max-width: 640px) {
   .nav-explore-layer {
     padding: 4.9rem 0.55rem 0.75rem;
@@ -327,5 +420,14 @@ body.nav-explore-active .theme-atmosphere {
     min-height: 4rem;
     padding: 0.8rem;
     font-size: 0.92rem;
+  }
+
+  .nav-radial-core strong {
+    font-size: 1.2rem;
+  }
+
+  .nav-radial-link,
+  .nav-home-corner {
+    min-height: 3.6rem;
   }
 }
