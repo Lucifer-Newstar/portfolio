@@ -1,4 +1,4 @@
-import { getAdminAccessToken } from './adminAuth'
+import { clearAdminSession, getAdminAccessToken, hasAdminSession } from './adminAuth'
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://6e2n1oy6k9.execute-api.us-east-1.amazonaws.com/prod'
 const REQUEST_TIMEOUT_MS = 12000
@@ -42,9 +42,10 @@ async function request(path, options = {}) {
   const controller = new AbortController()
   const timeoutId = window.setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS)
   const includeAdminAuth = options.includeAdminAuth === true
-  const accessToken = includeAdminAuth ? getAdminAccessToken() : ''
+  const accessToken = includeAdminAuth && hasAdminSession() ? getAdminAccessToken() : ''
 
   if (includeAdminAuth && !accessToken) {
+    clearAdminSession()
     throw new Error('Admin session missing or expired. Please login again.')
   }
 
@@ -60,6 +61,12 @@ async function request(path, options = {}) {
     })
 
     return await handleResponse(response)
+  } catch (error) {
+    if (includeAdminAuth && /unauthorized|expired/i.test(String(error?.message || ''))) {
+      clearAdminSession()
+      throw new Error('Admin session expired. Please login again and retry the deploy.')
+    }
+    throw error
   } finally {
     window.clearTimeout(timeoutId)
   }
