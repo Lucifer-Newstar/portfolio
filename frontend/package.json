@@ -14,7 +14,7 @@
     "@react-three/fiber": "^9.5.0",
     "@theme-toggles/react": "^4.1.0",
     "aws-amplify": "^6.16.3",
-    "axios": "^1.14.0",
+    "axios": "^1.15.0",
     "gsap": "^3.14.2",
     "r3f-particle-field": "^0.1.8",
     "react": "^19.2.4",
