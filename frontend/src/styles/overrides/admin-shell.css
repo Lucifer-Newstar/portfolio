@@ -1,0 +1,238 @@
+body[data-ui-surface="admin"] {
+  background:
+    radial-gradient(circle at 12% 16%, rgba(76, 132, 255, 0.16), transparent 24%),
+    radial-gradient(circle at 88% 18%, rgba(98, 238, 210, 0.14), transparent 22%),
+    linear-gradient(135deg, #04101f 0%, #091729 48%, #030913 100%);
+}
+
+body[data-ui-surface="admin"]::before {
+  background:
+    linear-gradient(90deg, transparent 0, rgba(110, 196, 255, 0.05) 50%, transparent 100%),
+    linear-gradient(transparent 0, rgba(110, 196, 255, 0.035) 50%, transparent 100%);
+  background-size: 150px 150px;
+  opacity: 0.34;
+}
+
+body[data-ui-surface="admin"]::after {
+  background: radial-gradient(circle at center, rgba(109, 225, 255, 0.08) 0, transparent 58%);
+  opacity: 0.8;
+}
+
+.admin-shell {
+  position: relative;
+  min-height: 100vh;
+  padding: 1rem;
+  overflow: hidden;
+}
+
+.admin-shell-backdrop {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.admin-shell-orb,
+.admin-shell-gridline {
+  position: absolute;
+  pointer-events: none;
+}
+
+.admin-shell-orb {
+  border-radius: 50%;
+  filter: blur(18px);
+  opacity: 0.7;
+}
+
+.admin-shell-orb-1 {
+  top: 8%;
+  left: -4rem;
+  width: 20rem;
+  height: 20rem;
+  background: radial-gradient(circle, rgba(78, 150, 255, 0.26), transparent 68%);
+}
+
+.admin-shell-orb-2 {
+  right: -6rem;
+  bottom: 6%;
+  width: 24rem;
+  height: 24rem;
+  background: radial-gradient(circle, rgba(88, 242, 214, 0.18), transparent 70%);
+}
+
+.admin-shell-gridline {
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(126, 186, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(126, 186, 255, 0.06) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(circle at center, rgba(0, 0, 0, 0.8), transparent 80%);
+  opacity: 0.35;
+}
+
+.admin-shell-grid {
+  position: relative;
+  z-index: 1;
+  width: min(1740px, 100%);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(280px, 340px) minmax(0, 1fr);
+  gap: 1rem;
+  align-items: start;
+}
+
+.admin-shell-panel {
+  border: 1px solid rgba(121, 177, 225, 0.18);
+  background:
+    linear-gradient(180deg, rgba(7, 18, 32, 0.92), rgba(4, 10, 21, 0.94)),
+    linear-gradient(180deg, var(--bg-card-strong), var(--bg-card));
+  border-radius: 1.6rem;
+  box-shadow:
+    0 0 0 1px rgba(109, 225, 255, 0.05),
+    0 22px 56px rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(20px);
+}
+
+.admin-shell-sidebar {
+  position: sticky;
+  top: 1rem;
+  display: grid;
+  gap: 1.5rem;
+  padding: 1.4rem;
+}
+
+.admin-shell-sidebar-top {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.admin-shell-sidebar-top h1 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3vw, 2.6rem);
+  line-height: 0.98;
+  color: #f3fbff;
+}
+
+.admin-shell-sidebar-top p,
+.admin-shell-sidebar-section li {
+  color: #bfd3e8;
+}
+
+.admin-shell-sidebar-section {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.admin-shell-sidebar-section strong {
+  color: #f4fbff;
+  font-size: 1rem;
+}
+
+.admin-shell-list {
+  margin: 0;
+  padding-left: 1.15rem;
+  display: grid;
+  gap: 0.55rem;
+}
+
+.admin-shell-actions {
+  display: grid;
+  gap: 0.75rem;
+  justify-items: start;
+}
+
+.admin-shell-main {
+  min-height: calc(100vh - 2rem);
+  padding: 1rem;
+}
+
+.admin-shell .admin-workspace-shell {
+  width: 100%;
+  margin: 0;
+}
+
+.admin-shell .admin-topbar,
+.admin-shell .admin-main-content {
+  background:
+    linear-gradient(180deg, rgba(9, 21, 39, 0.9), rgba(6, 12, 24, 0.92)),
+    linear-gradient(180deg, var(--bg-card-strong), var(--bg-card));
+  box-shadow:
+    0 0 0 1px rgba(109, 225, 255, 0.06),
+    0 18px 42px rgba(0, 0, 0, 0.24);
+}
+
+.admin-shell .admin-topbar {
+  padding: 1.35rem;
+}
+
+.admin-shell .admin-main-content {
+  min-height: 70vh;
+}
+
+.admin-access-gate {
+  min-height: calc(100vh - 4rem);
+  display: grid;
+  place-items: center;
+}
+
+.admin-access-gate-card {
+  width: min(720px, 100%);
+  display: grid;
+  gap: 1rem;
+  padding: clamp(1.5rem, 4vw, 2.25rem);
+}
+
+.admin-access-gate-card h2 {
+  margin: 0;
+  color: #f4fbff;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3vw, 2.8rem);
+  line-height: 0.98;
+}
+
+.admin-access-gate-card p {
+  color: #c0d7ea;
+  max-width: 60ch;
+}
+
+.admin-access-gate-actions,
+.admin-access-gate-meta {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.admin-access-gate-status {
+  color: #7ee9d1;
+}
+
+@media (max-width: 1080px) {
+  .admin-shell-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-shell-sidebar {
+    position: static;
+  }
+
+  .admin-shell-main {
+    min-height: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-shell {
+    padding: 0.75rem;
+  }
+
+  .admin-shell-sidebar,
+  .admin-shell-main {
+    padding: 0.9rem;
+  }
+
+  .admin-access-gate {
+    min-height: auto;
+  }
+}

@@ -1,19 +1,93 @@
-import { useState, useEffect } from 'react'
+﻿import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { fetchSkills } from '../../utils/api'
 import { HorizontalGraph, MicroBarChart, PieChart } from '../../components/InsightCharts'
-import LinkedDataModal from '../../components/LinkedDataModal'
 import { useSiteContent } from '../../context/useSiteContent'
 import { deriveSkillInsights } from '../../utils/portfolioInsights'
+
+function getSkillTileVariant(skill, index, compactMode) {
+  if (compactMode) {
+    return skill.children.length >= 8 || skill.name.length > 34
+      ? 'skill-tile is-overview-card'
+      : 'skill-tile is-overview-card'
+  }
+
+  const childCount = skill.children.length
+  const nameLength = skill.name.length
+
+  if (childCount >= 9 || nameLength > 34) return 'skill-tile is-featured is-wide'
+  if (childCount >= 7) return 'skill-tile is-wide'
+  if (childCount >= 5 || index % 4 === 0) return 'skill-tile is-tall'
+  return 'skill-tile'
+}
+
+function SkillSection({ title, items, expandedSkillId, onSkillClick, emptyLabel, compactMode = false }) {
+  const visibleItems = compactMode ? items.slice(0, 3) : items
+  const hiddenCount = Math.max(items.length - visibleItems.length, 0)
+
+  return (
+    <section className={`skill-section-block ${compactMode ? 'is-overview' : ''}`}>
+      <div className="skill-section-header">
+        <div>
+          <span className="eyebrow">Lane</span>
+          <h3>{title}</h3>
+        </div>
+        <span className="section-count">{items.length}</span>
+      </div>
+
+      {items.length > 0 ? (
+        <>
+          <div className={`skill-card-grid ${compactMode ? 'is-overview' : ''}`}>
+            {visibleItems.map((skill, index) => {
+              const isExpanded = expandedSkillId === skill.id
+
+              return (
+                <button
+                  key={skill.id}
+                  type="button"
+                  className={`${getSkillTileVariant(skill, index, compactMode)} ${isExpanded ? 'is-expanded' : ''}`}
+                  onClick={() => onSkillClick(skill)}
+                  aria-expanded={isExpanded}
+                >
+                  <div className="skill-tile-header">
+                    <div className="skill-tile-heading">
+                      <strong>{skill.name}</strong>
+                      <p className="skill-tile-hint">{isExpanded ? 'Click to collapse' : 'Click to view sub-items'}</p>
+                    </div>
+                    <span className="skill-tile-count">{skill.children.length} sub-items</span>
+                  </div>
+
+                  {isExpanded ? (
+                    <div className="skill-detail-list">
+                      {skill.children.map((subskill) => (
+                        <span key={`${skill.id}-${subskill.name}`} className="skill-detail-item">
+                          {subskill.name}
+                        </span>
+                      ))}
+                    </div>
+                  ) : null}
+                </button>
+              )
+            })}
+          </div>
+          {compactMode && hiddenCount > 0 ? (
+            <p className="skill-section-note">+{hiddenCount} more {title.toLowerCase()} in this group. Open the filter above for the full lane.</p>
+          ) : null}
+        </>
+      ) : (
+        <p className="skill-section-empty">{emptyLabel}</p>
+      )}
+    </section>
+  )
+}
 
 function Skills() {
   const { siteContent } = useSiteContent()
   const content = siteContent.skillsPage
   const [skills, setSkills] = useState([])
   const [loading, setLoading] = useState(true)
-  const [modalOpen, setModalOpen] = useState(false)
-  const [selectedItem, setSelectedItem] = useState({ type: '', id: '', name: '' })
   const [activeCategory, setActiveCategory] = useState('All')
+  const [expandedSkillId, setExpandedSkillId] = useState('')
 
   useEffect(() => {
     const loadSkills = async () => {
@@ -25,12 +99,7 @@ function Skills() {
   }, [])
 
   const handleSkillClick = (skill) => {
-    setSelectedItem({
-      type: 'skill',
-      id: skill.id,
-      name: skill.name
-    })
-    setModalOpen(true)
+    setExpandedSkillId((currentId) => (currentId === skill.id ? '' : skill.id))
   }
 
   if (loading) {
@@ -42,6 +111,7 @@ function Skills() {
   const filteredGroups = activeCategory === 'All'
     ? insights.categories
     : insights.categories.filter((item) => item.category === activeCategory)
+  const isOverview = activeCategory === 'All'
 
   return (
     <div className="page-shell skills-shell">
@@ -53,11 +123,11 @@ function Skills() {
 
       <section className="container page-section" data-reveal="scale">
         <div className="skills-signal-board">
-          {insights.categories.slice(0, 3).map(({ category, skills: categorySkills, completion, subskillCount }) => (
+          {insights.categories.slice(0, 3).map(({ category, itemCount, completion, subskillCount }) => (
             <article key={category} className="widget-card skill-signal-card">
               <span className="eyebrow">{category}</span>
               <strong>{completion}%</strong>
-              <p>{categorySkills.length} skills · {subskillCount} sub-skills.</p>
+              <p>{itemCount} focus areas • {subskillCount} sub-items.</p>
             </article>
           ))}
         </div>
@@ -82,7 +152,7 @@ function Skills() {
           items={insights.categories.slice(0, 5).map((item, index) => ({
             label: item.category,
             value: item.completion,
-            color: ['#ff8e5f', '#3456d1', '#d94d78', '#f3c357', '#69e2ff'][index % 5]
+            color: ['#ff8e5f', '#3456d1', '#d94d78', '#f3c357', '#69e2ff'][index % 5],
           }))}
         />
       </section>
@@ -94,7 +164,10 @@ function Skills() {
               key={category}
               type="button"
               className={`picker-chip ${activeCategory === category ? 'is-active' : ''}`}
-              onClick={() => setActiveCategory(category)}
+              onClick={() => {
+                setActiveCategory(category)
+                setExpandedSkillId('')
+              }}
             >
               {category}
             </button>
@@ -103,35 +176,38 @@ function Skills() {
       </section>
 
       <section className="container page-section">
-        <div className="skills-grid">
-          {filteredGroups.map(({ category, skills: categorySkills, completion }, index) => (
-            <article key={category} className="skill-category" data-reveal={index % 2 === 0 ? 'up' : 'scale'}>
+        <div className={`skills-grid ${isOverview ? 'is-overview' : ''}`}>
+          {filteredGroups.map(({ category, concepts, tools, itemCount, completion }, index) => (
+            <article key={category} className={`skill-category ${isOverview ? 'is-overview' : ''}`} data-reveal={index % 2 === 0 ? 'up' : 'scale'}>
               <div className="skill-category-header">
-                <h2>{category}</h2>
-                <span className="metric-pill">{categorySkills.length} items · {completion}%</span>
+                <div className="skill-category-copy">
+                  <h2>{category}</h2>
+                  <p>
+                    {isOverview
+                      ? `${concepts.length} concepts and ${tools.length} tools in this group.`
+                      : `${concepts.length} concepts and ${tools.length} tools arranged in adaptive bento lanes.`}
+                  </p>
+                </div>
+                <span className="metric-pill">{itemCount} items • {completion}%</span>
               </div>
-              <div className="skill-card-grid">
-                {categorySkills.map((skill) => (
-                  <button
-                    key={skill.id}
-                    type="button"
-                    className="skill-tile"
-                    onClick={() => handleSkillClick(skill)}
-                  >
-                    <strong>{skill.name}</strong>
-                    <span>{skill.level} · {skill.completion}%</span>
-                    <div className="level-meter">
-                      <span style={{ width: `${skill.completion}%` }} />
-                    </div>
-                    <div className="subskill-cloud">
-                      {skill.subskills.map((subskill) => (
-                        <span key={`${skill.id}-${subskill.name}`} className="skill-tag subskill-tag">
-                          {subskill.name} {subskill.completion}%
-                        </span>
-                      ))}
-                    </div>
-                  </button>
-                ))}
+
+              <div className={`skill-lane-grid ${isOverview ? 'is-overview' : ''}`}>
+                <SkillSection
+                  title="Concepts"
+                  items={concepts}
+                  expandedSkillId={expandedSkillId}
+                  onSkillClick={handleSkillClick}
+                  emptyLabel="No concepts added in this group yet."
+                  compactMode={isOverview}
+                />
+                <SkillSection
+                  title="Tools & Technologies"
+                  items={tools}
+                  expandedSkillId={expandedSkillId}
+                  onSkillClick={handleSkillClick}
+                  emptyLabel="No tools added in this group yet."
+                  compactMode={isOverview}
+                />
               </div>
             </article>
           ))}
@@ -145,14 +221,6 @@ function Skills() {
           </Link>
         ))}
       </section>
-
-      <LinkedDataModal
-        isOpen={modalOpen}
-        onClose={() => setModalOpen(false)}
-        itemType={selectedItem.type}
-        itemId={selectedItem.id}
-        itemName={selectedItem.name}
-      />
     </div>
   )
 }

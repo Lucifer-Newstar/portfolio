@@ -1,19 +1,12 @@
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
-import Navbar from './components/Navbar'
-import Footer from './components/Footer'
-import ScrollAnimations from './components/ScrollAnimations'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import ProtectedRoute from './components/ProtectedRoute'
 import PageThemeHandler from './components/PageThemeHandler'
-import ParticleBackground from './components/ParticleBackground'
-import ThemeAtmosphere from './components/ThemeAtmosphere'
-import Breadcrumbs from './components/Breadcrumbs'
-import ScrollProgress from './components/ScrollProgress'
-import InteractionEffects from './components/InteractionEffects'
-import AdvancedVisualOverlays from './components/AdvancedVisualOverlays'
 import RouteMeta from './components/RouteMeta'
+import PublicLayout from './components/layout/PublicLayout'
+import AdminShell from './components/admin/AdminShell'
 
 // Public pages
-import Home from './pages/public/Home'
+import HomeProfessional from './pages/public/HomeProfessional'
 import About from './pages/public/About'
 import Experience from './pages/public/Experience'
 import Skills from './pages/public/Skills'
@@ -28,49 +21,35 @@ import Callback from './pages/public/Callback'
 import AdminDashboard from './pages/admin/AdminDashboard'
 
 function AppFrame() {
-  const location = useLocation()
-  const isAdminRoute = location.pathname === '/lucifer-newstar_dashboard'
-
   return (
     <>
       <PageThemeHandler />
       <RouteMeta />
-      <ParticleBackground />
-      <ThemeAtmosphere />
-      <AdvancedVisualOverlays />
-      <InteractionEffects />
-      <ScrollAnimations />
-      {!isAdminRoute && <ScrollProgress />}
-      <div className={`app-shell ${isAdminRoute ? 'app-shell-admin' : ''}`}>
-        {!isAdminRoute && <Navbar />}
-        <main className={`app-main ${isAdminRoute ? 'app-main-admin' : ''}`}>
-          {!isAdminRoute && <Breadcrumbs />}
-          <Routes>
-            {/* Public Routes */}
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/experience" element={<Experience />} />
-            <Route path="/skills" element={<Skills />} />
-            <Route path="/projects" element={<Projects />} />
-            <Route path="/devops-lab" element={<DevOpsLab />} />
-            <Route path="/certifications" element={<Certifications />} />
-            <Route path="/posts" element={<Posts />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/callback" element={<Callback />} />
+      <Routes>
+        <Route element={<PublicLayout />}>
+          <Route path="/" element={<HomeProfessional />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/experience" element={<Experience />} />
+          <Route path="/skills" element={<Skills />} />
+          <Route path="/projects" element={<Projects />} />
+          <Route path="/devops-lab" element={<DevOpsLab />} />
+          <Route path="/certifications" element={<Certifications />} />
+          <Route path="/posts" element={<Posts />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/callback" element={<Callback />} />
+        </Route>
 
-            {/* Protected Admin Route - Hidden */}
-            <Route
-              path="/lucifer-newstar_dashboard"
-              element={
-                <ProtectedRoute>
-                  <AdminDashboard />
-                </ProtectedRoute>
-              }
-            />
-          </Routes>
-        </main>
-        {!isAdminRoute && <Footer />}
-      </div>
+        <Route
+          path="/lucifer-newstar_dashboard"
+          element={
+            <AdminShell>
+              <ProtectedRoute>
+                <AdminDashboard />
+              </ProtectedRoute>
+            </AdminShell>
+          }
+        />
+      </Routes>
     </>
   )
 }

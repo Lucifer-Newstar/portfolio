@@ -20,7 +20,18 @@ function ProtectedRoute({ children }) {
   }, [])
 
   if (status === 'checking') {
-    return <div className="container text-center mt-4">Checking admin access...</div>
+    return (
+      <div className="admin-access-gate">
+        <div className="admin-access-gate-card admin-shell-panel">
+          <span className="eyebrow">Secure entry</span>
+          <h2>Checking admin access</h2>
+          <p>Verifying the active session before opening the dedicated dashboard workspace.</p>
+          <div className="admin-access-gate-meta">
+            <span className="metric-pill">Session check in progress</span>
+          </div>
+        </div>
+      </div>
+    )
   }
 
   if (status !== 'authenticated') {

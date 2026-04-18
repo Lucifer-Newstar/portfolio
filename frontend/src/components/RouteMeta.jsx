@@ -63,6 +63,16 @@ function buildRouteDetails(pathname, siteContent) {
       description: siteContent.contact?.lead,
       image: fallbackImage,
     },
+    '/callback': {
+      title: `Admin Callback | ${siteContent.global?.nav?.brandName || 'Navin Jairam'}`,
+      description: 'Completing secure administrator authentication.',
+      image: fallbackImage,
+    },
+    '/lucifer-newstar_dashboard': {
+      title: `Admin Dashboard | ${siteContent.global?.nav?.brandName || 'Navin Jairam'}`,
+      description: siteContent.admin?.lead || 'Dedicated admin workspace for managing portfolio content and operations.',
+      image: fallbackImage,
+    },
   }
 
   const selected = routes[pathname] || routes['/']

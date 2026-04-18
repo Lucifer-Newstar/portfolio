@@ -19,7 +19,7 @@ function Navbar() {
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth > 768) {
+      if (window.innerWidth > 960) {
         setMenuOpen(false)
       }
     }
@@ -80,7 +80,7 @@ function Navbar() {
             >
               {navContent.exploreLabel || 'Explore'}
             </button>
-            <Link to="/contact" className="btn btn-primary btn-sm magnetic-surface" onClick={() => setMenuOpen(false)}>
+            <Link to="/contact" className="btn btn-primary btn-sm" onClick={() => setMenuOpen(false)}>
               {navContent.ctaLabel}
             </Link>
             <ThemeToggle />

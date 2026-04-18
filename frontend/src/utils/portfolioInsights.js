@@ -1,10 +1,19 @@
-const CATEGORY_SUBSKILLS = {
-  devops: ['CI/CD', 'IaC', 'Containers', 'Release Safety'],
-  cloud: ['AWS Compute', 'Networking', 'Security', 'Automation'],
+const CATEGORY_CONCEPTS = {
+  devops: ['CI/CD', 'Release Strategy', 'Automation', 'Platform Thinking'],
+  cloud: ['Architecture', 'Security', 'Reliability', 'Cost Awareness'],
   sre: ['SLIs/SLOs', 'Incident Response', 'Runbooks', 'Observability'],
-  monitoring: ['Prometheus', 'Grafana', 'Alerting', 'Dashboards'],
-  kubernetes: ['Cluster Ops', 'Helm', 'Scaling', 'Ingress'],
+  monitoring: ['Signals', 'Alerting', 'Dashboards', 'Telemetry Hygiene'],
+  kubernetes: ['Cluster Ops', 'Scheduling', 'Scaling', 'Ingress'],
   default: ['Architecture', 'Delivery', 'Automation', 'Reliability'],
+}
+
+const CATEGORY_TOOLS = {
+  devops: ['Docker', 'GitHub Actions', 'Terraform', 'Release Pipelines'],
+  cloud: ['AWS', 'Networking', 'IAM', 'Serverless'],
+  sre: ['Prometheus', 'Grafana', 'Runbooks', 'Incident Tooling'],
+  monitoring: ['Prometheus', 'Grafana', 'Alerting', 'Dashboards'],
+  kubernetes: ['kubectl', 'Helm', 'Ingress', 'Autoscaling'],
+  default: ['Tooling', 'Automation', 'Quality', 'Operations'],
 }
 
 function clamp(value, min = 0, max = 100) {
@@ -15,6 +24,15 @@ function categoryKey(label = '') {
   return label.toLowerCase()
 }
 
+function titleCaseLabel(label = '') {
+  return label
+    .replace(/([a-z])([A-Z])/g, '$1 $2')
+    .replace(/[_-]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .replace(/\b\w/g, (char) => char.toUpperCase())
+}
+
 export function completionFromLevel(level = '') {
   const normalized = level.toLowerCase()
   if (normalized.includes('advanced')) return 91
@@ -23,41 +41,163 @@ export function completionFromLevel(level = '') {
   return 64
 }
 
-export function deriveSkillInsights(skills = []) {
-  const normalizedSkills = skills.map((skill, index) => {
-    const completion = skill.completion ?? completionFromLevel(skill.level)
-    const subskills = Array.isArray(skill.subskills) && skill.subskills.length
-      ? skill.subskills
-      : (CATEGORY_SUBSKILLS[categoryKey(skill.category)] || CATEGORY_SUBSKILLS.default).map((item, subIndex) => ({
-          name: item,
-          completion: clamp(completion - 8 + subIndex * 4),
-        }))
+function childCompletionFromValue(value, index, baseCompletion) {
+  if (typeof value === 'number') return clamp(value)
+  if (typeof value === 'string') return completionFromLevel(value)
+  if (value && typeof value === 'object') {
+    if (typeof value.completion === 'number') return clamp(value.completion)
+    if (typeof value.level === 'string') return completionFromLevel(value.level)
+  }
 
-    return {
-      ...skill,
-      completion,
-      subskills,
-      visualIndex: index % 5,
+  return clamp(baseCompletion - 8 + index * 4)
+}
+
+function normalizeChildEntries(source, fallbackNames, baseCompletion) {
+  if (Array.isArray(source) && source.length > 0) {
+    return source.map((entry, index) => {
+      if (typeof entry === 'string') {
+        return {
+          name: entry,
+          completion: clamp(baseCompletion - 8 + index * 4),
+        }
+      }
+
+      return {
+        name: entry?.name || entry?.label || `Item ${index + 1}`,
+        completion: childCompletionFromValue(entry, index, baseCompletion),
+      }
+    })
+  }
+
+  if (source && typeof source === 'object') {
+    const entries = Object.entries(source)
+    if (entries.length > 0) {
+      return entries.map(([name, value], index) => ({
+        name: titleCaseLabel(name),
+        completion: childCompletionFromValue(value, index, baseCompletion),
+      }))
     }
-  })
+  }
 
-  const grouped = normalizedSkills.reduce((acc, skill) => {
-    const category = skill.category || 'General'
-    if (!acc[category]) acc[category] = []
-    acc[category].push(skill)
+  return fallbackNames.map((name, index) => ({
+    name,
+    completion: clamp(baseCompletion - 8 + index * 4),
+  }))
+}
+
+function normalizePrimaryItem(rawItem, bucket, category) {
+  const completion = rawItem?.completion ?? completionFromLevel(rawItem?.level)
+  const fallbackChildren = bucket === 'concepts'
+    ? (CATEGORY_CONCEPTS[categoryKey(category)] || CATEGORY_CONCEPTS.default)
+    : (CATEGORY_TOOLS[categoryKey(category)] || CATEGORY_TOOLS.default)
+
+  const childSource = bucket === 'concepts'
+    ? rawItem?.subConcepts ?? rawItem?.subconcepts ?? rawItem?.concepts
+    : rawItem?.subskills ?? rawItem?.subSkills ?? rawItem?.skills ?? rawItem?.tools ?? rawItem?.technologies
+
+  return {
+    id: rawItem?.id || `${category}-${bucket}-${rawItem?.name || rawItem?.title || 'item'}`,
+    name: rawItem?.name || rawItem?.title || 'Untitled',
+    level: rawItem?.level || 'Intermediate',
+    completion,
+    children: normalizeChildEntries(childSource, fallbackChildren, completion),
+  }
+}
+
+function inferBucket(rawSkill) {
+  const marker = `${rawSkill?.bucket || rawSkill?.section || rawSkill?.type || rawSkill?.kind || ''}`.toLowerCase()
+
+  if (marker.includes('concept')) return 'concepts'
+  if (marker.includes('tool') || marker.includes('tech')) return 'tools'
+  if (rawSkill?.subConcepts || rawSkill?.subconcepts) return 'concepts'
+  if (rawSkill?.toolsAndTechnologies || rawSkill?.tools || rawSkill?.technologies) return 'tools'
+  if (rawSkill?.concepts && !rawSkill?.name) return 'concepts'
+  if (rawSkill?.concepts && !rawSkill?.subskills && !rawSkill?.subSkills) return 'concepts'
+
+  return 'tools'
+}
+
+function normalizeGroupRecord(rawSkill) {
+  const category = rawSkill?.group || rawSkill?.category || 'General'
+  const conceptSource = rawSkill?.concepts
+  const toolSource = rawSkill?.toolsAndTechnologies ?? rawSkill?.tools ?? rawSkill?.technologies
+
+  const concepts = Array.isArray(conceptSource)
+    ? conceptSource.map((item) => normalizePrimaryItem(item, 'concepts', category))
+    : []
+  const tools = Array.isArray(toolSource)
+    ? toolSource.map((item) => normalizePrimaryItem(item, 'tools', category))
+    : []
+
+  return { category, concepts, tools }
+}
+
+export function deriveSkillInsights(skills = []) {
+  const grouped = skills.reduce((acc, rawSkill) => {
+    const isGroupRecord =
+      !rawSkill?.name &&
+      (
+        Array.isArray(rawSkill?.concepts) ||
+        Array.isArray(rawSkill?.toolsAndTechnologies) ||
+        Array.isArray(rawSkill?.tools) ||
+        Array.isArray(rawSkill?.technologies)
+      )
+
+    const normalized = isGroupRecord
+      ? normalizeGroupRecord(rawSkill)
+      : (() => {
+          const category = rawSkill?.group || rawSkill?.category || 'General'
+          const bucket = inferBucket(rawSkill)
+          const primaryItem = normalizePrimaryItem(rawSkill, bucket, category)
+
+          return {
+            category,
+            concepts: bucket === 'concepts' ? [primaryItem] : [],
+            tools: bucket === 'tools' ? [primaryItem] : [],
+          }
+        })()
+
+    if (!acc[normalized.category]) {
+      acc[normalized.category] = { category: normalized.category, concepts: [], tools: [] }
+    }
+
+    acc[normalized.category].concepts.push(...normalized.concepts)
+    acc[normalized.category].tools.push(...normalized.tools)
     return acc
   }, {})
 
-  const categories = Object.entries(grouped).map(([category, categorySkills]) => {
-    const completion = Math.round(categorySkills.reduce((sum, skill) => sum + skill.completion, 0) / categorySkills.length)
+  const categories = Object.values(grouped).map((group, index) => {
+    const concepts = group.concepts.map((item, itemIndex) => ({
+      ...item,
+      category: group.category,
+      bucket: 'Concepts',
+      visualIndex: (index + itemIndex) % 5,
+    }))
+
+    const tools = group.tools.map((item, itemIndex) => ({
+      ...item,
+      category: group.category,
+      bucket: 'Tools & Technologies',
+      visualIndex: (index + concepts.length + itemIndex) % 5,
+    }))
+
+    const items = [...concepts, ...tools]
+    const completion = items.length
+      ? Math.round(items.reduce((sum, item) => sum + item.completion, 0) / items.length)
+      : 0
+
     return {
-      category,
-      skills: categorySkills,
+      category: group.category,
+      concepts,
+      tools,
+      items,
       completion,
-      subskillCount: categorySkills.reduce((sum, skill) => sum + skill.subskills.length, 0),
+      itemCount: items.length,
+      subskillCount: items.reduce((sum, item) => sum + item.children.length, 0),
     }
   })
 
+  const normalizedSkills = categories.flatMap((group) => group.items)
   const topSkills = [...normalizedSkills].sort((left, right) => right.completion - left.completion).slice(0, 6)
 
   return {

@@ -4,11 +4,9 @@ import { useTheme } from '../context/useTheme'
 
 function ThemeToggle() {
   const { theme, toggleTheme } = useTheme()
-  const isDark = theme === 'dark'
-
   return (
     <div
-      className={`theme-toggle-shell ${isDark ? 'is-dark' : 'is-light'}`}
+      className={`theme-toggle-shell ${theme === 'dark' ? 'is-dark' : 'is-light'}`}
       onClick={toggleTheme}
       onKeyDown={(event) => {
         if (event.key === 'Enter' || event.key === ' ') {
@@ -25,11 +23,7 @@ function ThemeToggle() {
       <span className="theme-toggle-glow theme-toggle-glow-b" aria-hidden="true" />
       <span className="theme-toggle-ring theme-toggle-ring-a" aria-hidden="true" />
       <span className="theme-toggle-ring theme-toggle-ring-b" aria-hidden="true" />
-      <span className="theme-toggle-copy">
-        <small>Mode</small>
-        <strong>{isDark ? 'Future' : 'Royal'}</strong>
-      </span>
-      <Within duration={750} toggled={isDark} onToggle={() => {}} className="theme-toggle-button" />
+      <Within duration={750} toggled={theme === 'dark'} onToggle={() => {}} className="theme-toggle-button" />
     </div>
   )
 }

@@ -4,6 +4,67 @@ import { DynamoDBDocumentClient, PutCommand } from "@aws-sdk/lib-dynamodb";
 const client = new DynamoDBClient({ region: "us-east-1" });
 const docClient = DynamoDBDocumentClient.from(client);
 
+function sanitizeStringArray(value) {
+  if (Array.isArray(value)) {
+    return value
+      .map((item) => (typeof item === "string" ? item.trim() : item?.name || item?.label || ""))
+      .filter(Boolean);
+  }
+
+  if (typeof value === "string") {
+    return value
+      .split(",")
+      .map((item) => item.trim())
+      .filter(Boolean);
+  }
+
+  return [];
+}
+
+function buildSkillItem(input = {}) {
+  const id = input.id?.trim();
+  if (!id) {
+    throw new Error("Skill id is required");
+  }
+
+  const category = (input.category || input.group || "").trim();
+  const name = typeof input.name === "string" ? input.name.trim() : "";
+  const item = {
+    id,
+    category,
+    order: Number.isFinite(Number(input.order)) ? Number(input.order) : 999,
+  };
+
+  if (name) item.name = name;
+  if (input.level) item.level = input.level;
+  if (typeof input.completion === "number") item.completion = input.completion;
+
+  const bucket = typeof input.bucket === "string" ? input.bucket.trim().toLowerCase() : "";
+  if (bucket === "concepts" || bucket === "tools") {
+    item.bucket = bucket;
+  }
+
+  const subConcepts = sanitizeStringArray(input.subConcepts ?? input.subconcepts);
+  const subSkills = sanitizeStringArray(input.subSkills ?? input.subskills);
+
+  if (item.bucket === "concepts") {
+    item.subConcepts = subConcepts;
+  } else if (item.bucket === "tools") {
+    item.subSkills = subSkills;
+  }
+
+  if (Array.isArray(input.concepts) && !name) {
+    item.concepts = input.concepts;
+  }
+
+  const toolsAndTechnologies = input.toolsAndTechnologies ?? input.tools ?? input.technologies;
+  if (Array.isArray(toolsAndTechnologies) && !name) {
+    item.toolsAndTechnologies = toolsAndTechnologies;
+  }
+
+  return item;
+}
+
 export const handler = async (event) => {
   console.log("Event received:", JSON.stringify(event))
   
@@ -18,16 +79,11 @@ export const handler = async (event) => {
     
     console.log("Parsed body:", body)
     
-    // Try to write to DynamoDB
+    const item = buildSkillItem(body)
+
     const command = new PutCommand({
       TableName: "skills",
-      Item: {
-        id: body.id,
-        name: body.name,
-        category: body.category,
-        level: body.level || "Learning",
-        order: body.order || 999
-      }
+      Item: item
     })
     
     const result = await docClient.send(command)
@@ -41,7 +97,7 @@ export const handler = async (event) => {
       },
       body: JSON.stringify({ 
         message: "Skill created successfully", 
-        data: body 
+        data: item 
       })
     }
   } catch (error) {
