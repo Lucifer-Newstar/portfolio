@@ -12,11 +12,7 @@ export const ThemeProvider = ({ children }) => {
   const theme = resolvedForcedTheme ?? storedTheme
 
   useEffect(() => {
-    if (theme === 'dark') {
-      document.documentElement.setAttribute('data-theme', 'dark')
-    } else {
-      document.documentElement.removeAttribute('data-theme')
-    }
+    document.documentElement.setAttribute('data-theme', theme)
     if (!resolvedForcedTheme) {
       localStorage.setItem('theme', theme)
     }

@@ -1,0 +1,24 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Summary aggregator for Lucifer Mode private dashboard.
+
+Resources:
+  LuciferSummaryFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/index.handler
+      Runtime: nodejs22.x
+      Timeout: 10
+      Policies:
+        - DynamoDBReadPolicy:
+            TableName: learning_log
+        - DynamoDBReadPolicy:
+            TableName: workout_log
+        - DynamoDBReadPolicy:
+            TableName: daily_status
+        - DynamoDBReadPolicy:
+            TableName: hobby_items
+        - DynamoDBReadPolicy:
+            TableName: goals
+        - DynamoDBReadPolicy:
+            TableName: cert_progress

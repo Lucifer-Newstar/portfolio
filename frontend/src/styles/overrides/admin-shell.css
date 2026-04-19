@@ -1,21 +1,40 @@
 body[data-ui-surface="admin"] {
   background:
-    radial-gradient(circle at 12% 16%, rgba(76, 132, 255, 0.16), transparent 24%),
-    radial-gradient(circle at 88% 18%, rgba(98, 238, 210, 0.14), transparent 22%),
-    linear-gradient(135deg, #04101f 0%, #091729 48%, #030913 100%);
+    radial-gradient(circle at 12% 16%, color-mix(in srgb, var(--primary) 22%, transparent), transparent 24%),
+    radial-gradient(circle at 88% 18%, color-mix(in srgb, var(--secondary) 18%, transparent), transparent 22%),
+    linear-gradient(180deg, var(--bg-primary) 0%, color-mix(in srgb, var(--bg-primary) 88%, black 12%) 100%);
+}
+
+body[data-ui-surface="admin"][data-theme="light"] {
+  background:
+    radial-gradient(circle at 14% 14%, color-mix(in srgb, var(--primary) 20%, transparent), transparent 24%),
+    radial-gradient(circle at 88% 18%, color-mix(in srgb, var(--secondary) 14%, transparent), transparent 22%),
+    linear-gradient(180deg, var(--bg-primary) 0%, color-mix(in srgb, var(--bg-primary) 86%, white 14%) 100%);
 }
 
 body[data-ui-surface="admin"]::before {
   background:
-    linear-gradient(90deg, transparent 0, rgba(110, 196, 255, 0.05) 50%, transparent 100%),
-    linear-gradient(transparent 0, rgba(110, 196, 255, 0.035) 50%, transparent 100%);
+    linear-gradient(90deg, transparent 0, color-mix(in srgb, var(--primary) 10%, transparent) 50%, transparent 100%),
+    linear-gradient(transparent 0, color-mix(in srgb, var(--primary) 7%, transparent) 50%, transparent 100%);
   background-size: 150px 150px;
   opacity: 0.34;
 }
 
+body[data-ui-surface="admin"][data-theme="light"]::before {
+  background:
+    linear-gradient(90deg, transparent 0, color-mix(in srgb, var(--primary) 12%, transparent) 50%, transparent 100%),
+    linear-gradient(transparent 0, color-mix(in srgb, var(--secondary) 9%, transparent) 50%, transparent 100%);
+  opacity: 0.42;
+}
+
 body[data-ui-surface="admin"]::after {
-  background: radial-gradient(circle at center, rgba(109, 225, 255, 0.08) 0, transparent 58%);
+  background: radial-gradient(circle at center, color-mix(in srgb, var(--primary) 14%, transparent) 0, transparent 58%);
   opacity: 0.8;
+}
+
+body[data-ui-surface="admin"][data-theme="light"]::after {
+  background: radial-gradient(circle at center, color-mix(in srgb, var(--primary) 18%, transparent) 0, transparent 58%);
+  opacity: 0.9;
 }
 
 .admin-shell {
@@ -70,6 +89,73 @@ body[data-ui-surface="admin"]::after {
   opacity: 0.35;
 }
 
+.private-workspace-flare,
+.private-workspace-noise {
+  position: absolute;
+  pointer-events: none;
+}
+
+.private-workspace-flare {
+  width: 24rem;
+  height: 24rem;
+  border-radius: 50%;
+  filter: blur(48px);
+  opacity: 0;
+  transition: opacity 220ms ease;
+}
+
+.private-workspace-flare-a {
+  top: -4rem;
+  right: 10%;
+}
+
+.private-workspace-flare-b {
+  bottom: -5rem;
+  left: 8%;
+}
+
+.private-workspace-noise {
+  inset: 0;
+  opacity: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 3px 3px;
+  mix-blend-mode: soft-light;
+}
+
+.private-workspace--lucifer .private-workspace-flare,
+.private-workspace--home .private-workspace-flare,
+.private-workspace--lucifer .private-workspace-noise,
+.private-workspace--home .private-workspace-noise {
+  opacity: 1;
+}
+
+.private-workspace--lucifer .private-workspace-flare-a,
+.private-workspace--home .private-workspace-flare-a {
+  background: radial-gradient(circle, rgba(105, 226, 255, 0.18), transparent 68%);
+}
+
+.private-workspace--lucifer .private-workspace-flare-b,
+.private-workspace--home .private-workspace-flare-b {
+  background: radial-gradient(circle, rgba(156, 124, 255, 0.16), transparent 68%);
+}
+
+[data-theme="light"] .private-workspace--lucifer .private-workspace-flare-a,
+[data-theme="light"] .private-workspace--home .private-workspace-flare-a {
+  background: radial-gradient(circle, rgba(245, 156, 72, 0.2), transparent 68%);
+}
+
+[data-theme="light"] .private-workspace--lucifer .private-workspace-flare-b,
+[data-theme="light"] .private-workspace--home .private-workspace-flare-b {
+  background: radial-gradient(circle, rgba(95, 126, 226, 0.16), transparent 68%);
+}
+
+.private-workspace--edit .private-workspace-flare,
+.private-workspace--edit .private-workspace-noise {
+  display: none;
+}
+
 .admin-shell-grid {
   position: relative;
   z-index: 1;
@@ -82,14 +168,14 @@ body[data-ui-surface="admin"]::after {
 }
 
 .admin-shell-panel {
-  border: 1px solid rgba(121, 177, 225, 0.18);
+  border: 1px solid var(--border);
   background:
-    linear-gradient(180deg, rgba(7, 18, 32, 0.92), rgba(4, 10, 21, 0.94)),
+    linear-gradient(180deg, color-mix(in srgb, var(--bg-card-strong) 96%, transparent), color-mix(in srgb, var(--bg-card) 96%, transparent)),
     linear-gradient(180deg, var(--bg-card-strong), var(--bg-card));
   border-radius: 1.6rem;
   box-shadow:
-    0 0 0 1px rgba(109, 225, 255, 0.05),
-    0 22px 56px rgba(0, 0, 0, 0.28);
+    0 0 0 1px color-mix(in srgb, var(--primary) 10%, transparent),
+    var(--shadow-md);
   backdrop-filter: blur(20px);
 }
 
@@ -111,12 +197,12 @@ body[data-ui-surface="admin"]::after {
   font-family: var(--font-display);
   font-size: clamp(2rem, 3vw, 2.6rem);
   line-height: 0.98;
-  color: #f3fbff;
+  color: var(--text-primary);
 }
 
 .admin-shell-sidebar-top p,
 .admin-shell-sidebar-section li {
-  color: #bfd3e8;
+  color: var(--text-secondary);
 }
 
 .admin-shell-sidebar-section {
@@ -125,7 +211,7 @@ body[data-ui-surface="admin"]::after {
 }
 
 .admin-shell-sidebar-section strong {
-  color: #f4fbff;
+  color: var(--text-primary);
   font-size: 1rem;
 }
 
@@ -206,6 +292,99 @@ body[data-ui-surface="admin"]::after {
 
 .admin-access-gate-status {
   color: #7ee9d1;
+}
+
+.admin-theme-switch {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.9rem 1rem;
+  border-radius: 1.2rem;
+}
+
+.admin-theme-switch strong {
+  display: block;
+  margin-top: 0.15rem;
+  color: var(--text-primary);
+}
+
+[data-theme="light"] .admin-theme-switch {
+  background: linear-gradient(145deg, color-mix(in srgb, var(--bg-card-strong) 96%, white 4%), color-mix(in srgb, var(--bg-card) 94%, var(--bg-primary) 6%));
+  border: 1px solid var(--border);
+}
+
+[data-theme="dark"] .admin-theme-switch {
+  background: linear-gradient(145deg, color-mix(in srgb, var(--bg-card-strong) 98%, transparent), color-mix(in srgb, var(--bg-card) 92%, transparent));
+  border: 1px solid var(--border);
+}
+
+body[data-private-mode="edit"][data-theme="light"] {
+  background:
+    radial-gradient(circle at 12% 14%, rgba(255, 193, 119, 0.22), transparent 24%),
+    radial-gradient(circle at 82% 18%, rgba(88, 132, 255, 0.14), transparent 22%),
+    linear-gradient(135deg, #fffaf3 0%, #f5ecdf 42%, #efe4d6 100%);
+}
+
+body[data-private-mode="edit"][data-theme="light"] .admin-shell-panel,
+body[data-private-mode="edit"][data-theme="light"] .admin-shell .admin-topbar,
+body[data-private-mode="edit"][data-theme="light"] .admin-shell .admin-main-content {
+  background:
+    linear-gradient(160deg, rgba(255, 255, 255, 0.95), rgba(255, 244, 232, 0.92)),
+    linear-gradient(180deg, var(--bg-card-strong), var(--bg-card));
+  border: 1px solid rgba(143, 93, 52, 0.16);
+  box-shadow:
+    0 22px 56px rgba(155, 110, 67, 0.09),
+    0 0 0 1px rgba(255, 255, 255, 0.45);
+}
+
+body[data-private-mode="edit"][data-theme="light"] .admin-shell-sidebar-top h1,
+body[data-private-mode="edit"][data-theme="light"] .admin-topbar-brand h1,
+body[data-private-mode="edit"][data-theme="light"] .admin-section-header h2,
+body[data-private-mode="edit"][data-theme="light"] .admin-section-header h3,
+body[data-private-mode="edit"][data-theme="light"] .admin-window-card h2,
+body[data-private-mode="edit"][data-theme="light"] .admin-window-card h3,
+body[data-private-mode="edit"][data-theme="light"] .admin-stat-card strong {
+  color: #23150d;
+}
+
+body[data-private-mode="edit"][data-theme="light"] .admin-shell-sidebar-top p,
+body[data-private-mode="edit"][data-theme="light"] .admin-topbar-brand p,
+body[data-private-mode="edit"][data-theme="light"] .admin-window-card p,
+body[data-private-mode="edit"][data-theme="light"] .admin-stat-card span,
+body[data-private-mode="edit"][data-theme="light"] .metric-pill,
+body[data-private-mode="edit"][data-theme="light"] .content-upload-hint {
+  color: #6a5648;
+}
+
+body[data-private-mode="edit"][data-theme="light"] .admin-tab-pill,
+body[data-private-mode="edit"][data-theme="light"] .admin-window-card,
+body[data-private-mode="edit"][data-theme="light"] .admin-stat-card,
+body[data-private-mode="edit"][data-theme="light"] .admin-preview-ribbon,
+body[data-private-mode="edit"][data-theme="light"] .admin-comfort-board .admin-stat-card {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.92), rgba(255, 239, 221, 0.86));
+  border: 1px solid rgba(143, 93, 52, 0.14);
+  box-shadow: 0 14px 30px rgba(155, 110, 67, 0.07);
+}
+
+body[data-private-mode="edit"][data-theme="light"] .admin-tab-pill.is-active {
+  background: linear-gradient(135deg, rgba(255, 221, 184, 0.95), rgba(255, 245, 233, 0.92));
+  border-color: rgba(189, 107, 54, 0.28);
+}
+
+body[data-private-mode="edit"][data-theme="light"] .metric-pill {
+  background: rgba(255, 249, 243, 0.9);
+  border: 1px solid rgba(143, 93, 52, 0.12);
+}
+
+body[data-private-mode="edit"][data-theme="light"] .admin-main-content input,
+body[data-private-mode="edit"][data-theme="light"] .admin-main-content textarea,
+body[data-private-mode="edit"][data-theme="light"] .admin-main-content select,
+body[data-private-mode="edit"][data-theme="light"] .admin-main-content .content-field,
+body[data-private-mode="edit"][data-theme="light"] .admin-main-content .content-workspace-panel {
+  background: rgba(255, 252, 248, 0.96);
+  color: #24170f;
+  border-color: rgba(143, 93, 52, 0.14);
 }
 
 @media (max-width: 1080px) {

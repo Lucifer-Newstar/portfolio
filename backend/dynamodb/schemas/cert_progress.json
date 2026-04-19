@@ -1,0 +1,6 @@
+{
+  "tableName": "cert_progress",
+  "partitionKey": { "name": "id", "type": "S" },
+  "billingMode": "PAY_PER_REQUEST",
+  "description": "Private certification progress tracking."
+}

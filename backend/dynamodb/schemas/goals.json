@@ -1,0 +1,6 @@
+{
+  "tableName": "goals",
+  "partitionKey": { "name": "id", "type": "S" },
+  "billingMode": "PAY_PER_REQUEST",
+  "description": "Private personal milestones and goals."
+}

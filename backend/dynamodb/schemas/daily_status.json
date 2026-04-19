@@ -1,0 +1,6 @@
+{
+  "tableName": "daily_status",
+  "partitionKey": { "name": "id", "type": "S" },
+  "billingMode": "PAY_PER_REQUEST",
+  "description": "Private daily focus, mood, and summary updates."
+}

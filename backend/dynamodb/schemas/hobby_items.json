@@ -1,0 +1,6 @@
+{
+  "tableName": "hobby_items",
+  "partitionKey": { "name": "id", "type": "S" },
+  "billingMode": "PAY_PER_REQUEST",
+  "description": "Manual-first hobby collection for reading, anime, movies, TV, and interests."
+}

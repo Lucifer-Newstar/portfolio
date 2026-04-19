@@ -17,6 +17,9 @@ function PageThemeHandler() {
     else if (path === '/certifications') pageType = 'certifications'
     else if (path === '/posts') pageType = 'posts'
     else if (path === '/contact') pageType = 'contact'
+    else if (path.startsWith('/lucifer-newstar_dashboard/edit')) pageType = 'admin-edit'
+    else if (path.startsWith('/lucifer-newstar_dashboard/lucifer')) pageType = 'admin-lucifer'
+    else if (path.startsWith('/lucifer-newstar_dashboard')) pageType = 'admin-home'
     else pageType = 'default'
     
     document.documentElement.setAttribute('data-page', pageType)

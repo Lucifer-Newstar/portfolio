@@ -1,4 +1,10 @@
 import { clearAdminSession, getAdminAccessToken, hasAdminSession } from './adminAuth'
+import {
+  buildLuciferSummary,
+  loadLuciferStateLocal,
+  normalizeLuciferState,
+  saveLuciferStateLocal,
+} from './luciferData'
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://6e2n1oy6k9.execute-api.us-east-1.amazonaws.com/prod'
 const REQUEST_TIMEOUT_MS = 12000
@@ -226,4 +232,43 @@ export const triggerWebsiteDeploy = async () => {
   }
 
   return parsed
+}
+
+export const fetchLuciferState = async () => {
+  try {
+    const state = await request('/admin/lucifer/state', {
+      method: 'GET',
+      includeAdminAuth: true,
+    })
+    return normalizeLuciferState(state)
+  } catch {
+    return loadLuciferStateLocal()
+  }
+}
+
+export const saveLuciferState = async (state) => {
+  const normalized = normalizeLuciferState(state)
+
+  try {
+    await request('/admin/lucifer/state', {
+      method: 'POST',
+      body: JSON.stringify(normalized),
+      includeAdminAuth: true,
+    })
+  } catch {
+    return saveLuciferStateLocal(normalized)
+  }
+
+  return saveLuciferStateLocal(normalized)
+}
+
+export const fetchLuciferSummary = async (shared = {}) => {
+  try {
+    return await request('/admin/lucifer/summary', {
+      method: 'GET',
+      includeAdminAuth: true,
+    })
+  } catch {
+    return buildLuciferSummary(loadLuciferStateLocal(), shared)
+  }
 }

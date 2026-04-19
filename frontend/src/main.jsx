@@ -18,14 +18,18 @@ import './styles/overrides/devops-observability.css'
 import './styles/overrides/posts-source-cards.css'
 import './styles/overrides/professional-refresh.css'
 import './styles/overrides/admin-shell.css'
+import './styles/overrides/lucifer-mode.css'
 import { ThemeProvider } from './context/ThemeContext'
 import { SiteContentProvider } from './context/SiteContentContext'
+import { LuciferProvider } from './context/LuciferContext'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <ThemeProvider>
       <SiteContentProvider>
-        <App />
+        <LuciferProvider>
+          <App />
+        </LuciferProvider>
       </SiteContentProvider>
     </ThemeProvider>
   </React.StrictMode>,

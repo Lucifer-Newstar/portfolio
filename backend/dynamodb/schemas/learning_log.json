@@ -1,0 +1,6 @@
+{
+  "tableName": "learning_log",
+  "partitionKey": { "name": "id", "type": "S" },
+  "billingMode": "PAY_PER_REQUEST",
+  "description": "Private daily learning activity entries for Lucifer Mode."
+}

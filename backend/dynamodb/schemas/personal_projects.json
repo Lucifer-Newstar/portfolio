@@ -1,0 +1,6 @@
+{
+  "tableName": "personal_projects",
+  "partitionKey": { "name": "id", "type": "S" },
+  "billingMode": "PAY_PER_REQUEST",
+  "description": "Private personal or side projects outside the public portfolio."
+}

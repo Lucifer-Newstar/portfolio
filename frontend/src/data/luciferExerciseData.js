@@ -1,0 +1,423 @@
+export const BODY_MEASUREMENT_FIELDS = [
+  { id: 'weight', label: 'Weight', unit: 'kg' },
+  { id: 'bodyFat', label: 'Body Fat', unit: '%' },
+  { id: 'waist', label: 'Waist', unit: 'cm' },
+  { id: 'chest', label: 'Chest', unit: 'cm' },
+  { id: 'arms', label: 'Arms', unit: 'cm' },
+  { id: 'thighs', label: 'Thighs', unit: 'cm' },
+  { id: 'calves', label: 'Calves', unit: 'cm' },
+  { id: 'shoulders', label: 'Shoulders', unit: 'cm' },
+  { id: 'neck', label: 'Neck', unit: 'cm' },
+  { id: 'wrists', label: 'Wrists', unit: 'cm' },
+  { id: 'forearms', label: 'Forearms', unit: 'cm' },
+]
+
+export const MUSCLE_GROUPS = [
+  {
+    id: 'chest',
+    label: 'Chest',
+    shortLabel: 'Chest',
+    region: 'front',
+    muscles: [
+      { id: 'pec-major-clavicular', label: 'Pectoralis major (clavicular head – upper chest)', position: [0, 1.05, 0.46], scale: [0.42, 0.22, 0.2] },
+      { id: 'pec-major-sternal', label: 'Pectoralis major (sternal head – lower/mid chest)', position: [0, 0.82, 0.5], scale: [0.5, 0.28, 0.22] },
+      { id: 'pec-minor', label: 'Pectoralis minor (deep, assists shoulder stability)', position: [0, 0.92, 0.3], scale: [0.26, 0.15, 0.12] },
+    ],
+  },
+  {
+    id: 'shoulders',
+    label: 'Shoulders',
+    shortLabel: 'Shoulders',
+    region: 'upper',
+    muscles: [
+      { id: 'anterior-deltoid', label: 'Anterior deltoid (front shoulder)', position: [0.52, 1.04, 0.36], scale: [0.18, 0.18, 0.18], mirrorX: true },
+      { id: 'lateral-deltoid', label: 'Lateral deltoid (side shoulder)', position: [0.66, 0.98, 0.1], scale: [0.16, 0.22, 0.18], mirrorX: true },
+      { id: 'posterior-deltoid', label: 'Posterior deltoid (rear shoulder)', position: [0.52, 1.02, -0.34], scale: [0.18, 0.18, 0.18], mirrorX: true },
+      { id: 'rotator-cuff', label: 'Rotator cuff group (supraspinatus, infraspinatus, teres minor, subscapularis)', position: [0.42, 1.08, -0.2], scale: [0.14, 0.14, 0.16], mirrorX: true },
+    ],
+  },
+  {
+    id: 'back',
+    label: 'Back',
+    shortLabel: 'Back',
+    region: 'back',
+    muscles: [
+      { id: 'lats', label: 'Latissimus dorsi (lats – back width)', position: [0.46, 0.62, -0.46], scale: [0.22, 0.45, 0.18], mirrorX: true },
+      { id: 'traps', label: 'Trapezius (traps – upper, mid, lower)', position: [0, 1.06, -0.42], scale: [0.42, 0.34, 0.18] },
+      { id: 'rhomboids', label: 'Rhomboids (major & minor – between shoulder blades)', position: [0, 0.9, -0.38], scale: [0.3, 0.2, 0.12] },
+      { id: 'erector-spinae', label: 'Erector spinae (lower back – spinal extension)', position: [0, 0.38, -0.4], scale: [0.18, 0.36, 0.1] },
+      { id: 'teres-major', label: 'Teres major (assists lats)', position: [0.38, 0.78, -0.36], scale: [0.12, 0.12, 0.12], mirrorX: true },
+      { id: 'serratus-anterior', label: 'Serratus anterior (boxer’s muscle – scapular protraction)', position: [0.42, 0.74, 0.28], scale: [0.12, 0.22, 0.12], mirrorX: true },
+    ],
+  },
+  {
+    id: 'biceps',
+    label: 'Arms – Biceps',
+    shortLabel: 'Biceps',
+    region: 'arms',
+    muscles: [
+      { id: 'biceps-brachii', label: 'Biceps brachii (long head & short head)', position: [0.74, 0.62, 0.22], scale: [0.12, 0.28, 0.12], mirrorX: true },
+      { id: 'brachialis', label: 'Brachialis (under biceps – arm thickness)', position: [0.64, 0.54, 0.18], scale: [0.09, 0.2, 0.1], mirrorX: true },
+      { id: 'brachioradialis', label: 'Brachioradialis (forearm/biceps tie-in)', position: [0.82, 0.26, 0.2], scale: [0.09, 0.22, 0.1], mirrorX: true },
+    ],
+  },
+  {
+    id: 'triceps',
+    label: 'Arms – Triceps',
+    shortLabel: 'Triceps',
+    region: 'arms',
+    muscles: [
+      { id: 'triceps-long', label: 'Triceps brachii – long head', position: [0.72, 0.56, -0.2], scale: [0.12, 0.28, 0.12], mirrorX: true },
+      { id: 'triceps-lateral', label: 'Triceps brachii – lateral head', position: [0.82, 0.58, -0.08], scale: [0.08, 0.22, 0.08], mirrorX: true },
+      { id: 'triceps-medial', label: 'Triceps brachii – medial head', position: [0.68, 0.5, -0.1], scale: [0.08, 0.18, 0.08], mirrorX: true },
+    ],
+  },
+  {
+    id: 'forearms',
+    label: 'Forearms',
+    shortLabel: 'Forearms',
+    region: 'arms',
+    muscles: [
+      { id: 'forearm-flexors', label: 'Flexor carpi group (grip & wrist curl)', position: [0.88, 0.06, 0.18], scale: [0.09, 0.26, 0.09], mirrorX: true },
+      { id: 'forearm-extensors', label: 'Extensor carpi group (reverse grip strength)', position: [0.88, 0.06, -0.18], scale: [0.09, 0.26, 0.09], mirrorX: true },
+    ],
+  },
+  {
+    id: 'quadriceps',
+    label: 'Legs – Quadriceps',
+    shortLabel: 'Quads',
+    region: 'legs',
+    muscles: [
+      { id: 'rectus-femoris', label: 'Rectus femoris', position: [0.25, -0.72, 0.24], scale: [0.1, 0.34, 0.1], mirrorX: true },
+      { id: 'vastus-lateralis', label: 'Vastus lateralis', position: [0.38, -0.76, 0.18], scale: [0.11, 0.34, 0.1], mirrorX: true },
+      { id: 'vastus-medialis', label: 'Vastus medialis (teardrop)', position: [0.15, -0.9, 0.22], scale: [0.09, 0.2, 0.09], mirrorX: true },
+      { id: 'vastus-intermedius', label: 'Vastus intermedius', position: [0.25, -0.78, 0.1], scale: [0.08, 0.24, 0.08], mirrorX: true },
+    ],
+  },
+  {
+    id: 'hamstrings',
+    label: 'Legs – Hamstrings',
+    shortLabel: 'Hamstrings',
+    region: 'legs',
+    muscles: [
+      { id: 'biceps-femoris', label: 'Biceps femoris (long head & short head)', position: [0.34, -0.82, -0.18], scale: [0.1, 0.32, 0.1], mirrorX: true },
+      { id: 'semitendinosus', label: 'Semitendinosus', position: [0.2, -0.8, -0.16], scale: [0.08, 0.28, 0.08], mirrorX: true },
+      { id: 'semimembranosus', label: 'Semimembranosus', position: [0.14, -0.76, -0.22], scale: [0.08, 0.24, 0.08], mirrorX: true },
+    ],
+  },
+  {
+    id: 'glutes',
+    label: 'Glutes',
+    shortLabel: 'Glutes',
+    region: 'back',
+    muscles: [
+      { id: 'glute-maximus', label: 'Gluteus maximus', position: [0.24, -0.36, -0.34], scale: [0.18, 0.2, 0.16], mirrorX: true },
+      { id: 'glute-medius', label: 'Gluteus medius (side hip stability)', position: [0.36, -0.24, -0.22], scale: [0.12, 0.14, 0.1], mirrorX: true },
+      { id: 'glute-minimus', label: 'Gluteus minimus', position: [0.3, -0.26, -0.12], scale: [0.1, 0.1, 0.08], mirrorX: true },
+    ],
+  },
+  {
+    id: 'calves',
+    label: 'Legs – Calves',
+    shortLabel: 'Calves',
+    region: 'legs',
+    muscles: [
+      { id: 'gastrocnemius', label: 'Gastrocnemius', position: [0.28, -1.48, -0.12], scale: [0.1, 0.28, 0.1], mirrorX: true },
+      { id: 'soleus', label: 'Soleus', position: [0.18, -1.54, -0.08], scale: [0.08, 0.22, 0.08], mirrorX: true },
+    ],
+  },
+  {
+    id: 'hips',
+    label: 'Hips & Inner/Outer Thigh',
+    shortLabel: 'Hips',
+    region: 'core',
+    muscles: [
+      { id: 'hip-adductors', label: 'Hip adductors (inner thigh: adductor longus, magnus, brevis, gracilis)', position: [0.12, -0.64, 0.1], scale: [0.08, 0.26, 0.08], mirrorX: true },
+      { id: 'tfl', label: 'Tensor fasciae latae (TFL) (front outer hip, hip flexion/abduction)', position: [0.42, -0.42, 0.06], scale: [0.08, 0.12, 0.08], mirrorX: true },
+    ],
+  },
+  {
+    id: 'core',
+    label: 'Deep Core & Spinal Stability',
+    shortLabel: 'Core',
+    region: 'core',
+    muscles: [
+      { id: 'rectus-abdominis', label: 'Rectus abdominis (six-pack)', position: [0, 0.36, 0.48], scale: [0.18, 0.34, 0.08] },
+      { id: 'external-obliques', label: 'External obliques', position: [0.28, 0.34, 0.28], scale: [0.1, 0.2, 0.08], mirrorX: true },
+      { id: 'internal-obliques', label: 'Internal obliques', position: [0.22, 0.22, 0.18], scale: [0.08, 0.16, 0.07], mirrorX: true },
+      { id: 'transverse-abdominis', label: 'Transversus abdominis (deep corset muscle)', position: [0, 0.18, 0.18], scale: [0.26, 0.1, 0.06] },
+      { id: 'quadratus-lumborum', label: 'Quadratus lumborum (QL – side bending)', position: [0.22, 0.08, -0.12], scale: [0.08, 0.16, 0.06], mirrorX: true },
+      { id: 'multifidus', label: 'Multifidus (deep spinal stabilizer – segment-to-segment)', position: [0, 0.14, -0.22], scale: [0.1, 0.2, 0.04] },
+    ],
+  },
+  {
+    id: 'neck',
+    label: 'Neck & Accessory',
+    shortLabel: 'Neck',
+    region: 'upper',
+    muscles: [
+      { id: 'scm', label: 'Sternocleidomastoid (neck rotation/flexion)', position: [0.12, 1.36, 0.22], scale: [0.06, 0.18, 0.06], mirrorX: true },
+      { id: 'levator-scapulae', label: 'Levator scapulae (neck to shoulder blade – upper trap assist)', position: [0.18, 1.22, -0.08], scale: [0.06, 0.18, 0.06], mirrorX: true },
+    ],
+  },
+]
+
+export const EXERCISE_LIBRARY = [
+  {
+    id: 'flat-bench-press',
+    name: 'Flat Bench Press',
+    bodyPart: 'chest',
+    type: 'strength',
+    muscles: ['pec-major-sternal', 'pec-major-clavicular', 'anterior-deltoid', 'triceps-long', 'triceps-lateral', 'triceps-medial'],
+    prFocus: 'weight',
+  },
+  {
+    id: 'incline-dumbbell-press',
+    name: 'Incline Dumbbell Press',
+    bodyPart: 'chest',
+    type: 'strength',
+    muscles: ['pec-major-clavicular', 'anterior-deltoid', 'triceps-long', 'triceps-lateral'],
+    prFocus: 'weight',
+  },
+  {
+    id: 'cable-fly',
+    name: 'Cable Fly',
+    bodyPart: 'chest',
+    type: 'strength',
+    muscles: ['pec-major-sternal', 'pec-minor', 'serratus-anterior'],
+    prFocus: 'reps',
+  },
+  {
+    id: 'overhead-press',
+    name: 'Overhead Press',
+    bodyPart: 'shoulders',
+    type: 'strength',
+    muscles: ['anterior-deltoid', 'lateral-deltoid', 'triceps-long', 'traps', 'rectus-abdominis'],
+    prFocus: 'weight',
+  },
+  {
+    id: 'lateral-raise',
+    name: 'Lateral Raise',
+    bodyPart: 'shoulders',
+    type: 'strength',
+    muscles: ['lateral-deltoid', 'rotator-cuff'],
+    prFocus: 'reps',
+  },
+  {
+    id: 'face-pull',
+    name: 'Face Pull',
+    bodyPart: 'shoulders',
+    type: 'conditioning',
+    muscles: ['posterior-deltoid', 'rotator-cuff', 'rhomboids', 'traps'],
+    prFocus: 'reps',
+  },
+  {
+    id: 'weighted-pull-up',
+    name: 'Weighted Pull-Up',
+    bodyPart: 'back',
+    type: 'strength',
+    muscles: ['lats', 'teres-major', 'biceps-brachii', 'brachialis', 'rhomboids', 'forearm-flexors'],
+    prFocus: 'weight',
+  },
+  {
+    id: 'barbell-row',
+    name: 'Barbell Row',
+    bodyPart: 'back',
+    type: 'strength',
+    muscles: ['lats', 'rhomboids', 'traps', 'erector-spinae', 'posterior-deltoid', 'biceps-brachii'],
+    prFocus: 'weight',
+  },
+  {
+    id: 'lat-pulldown',
+    name: 'Lat Pulldown',
+    bodyPart: 'back',
+    type: 'strength',
+    muscles: ['lats', 'teres-major', 'biceps-brachii', 'brachialis'],
+    prFocus: 'weight',
+  },
+  {
+    id: 'barbell-curl',
+    name: 'Barbell Curl',
+    bodyPart: 'biceps',
+    type: 'strength',
+    muscles: ['biceps-brachii', 'brachialis', 'brachioradialis'],
+    prFocus: 'weight',
+  },
+  {
+    id: 'hammer-curl',
+    name: 'Hammer Curl',
+    bodyPart: 'biceps',
+    type: 'strength',
+    muscles: ['brachialis', 'brachioradialis', 'biceps-brachii'],
+    prFocus: 'weight',
+  },
+  {
+    id: 'rope-pushdown',
+    name: 'Rope Pushdown',
+    bodyPart: 'triceps',
+    type: 'strength',
+    muscles: ['triceps-lateral', 'triceps-medial', 'triceps-long'],
+    prFocus: 'weight',
+  },
+  {
+    id: 'skull-crusher',
+    name: 'Skull Crusher',
+    bodyPart: 'triceps',
+    type: 'strength',
+    muscles: ['triceps-long', 'triceps-medial', 'triceps-lateral'],
+    prFocus: 'weight',
+  },
+  {
+    id: 'farmer-carry',
+    name: 'Farmer Carry',
+    bodyPart: 'forearms',
+    type: 'conditioning',
+    muscles: ['forearm-flexors', 'forearm-extensors', 'traps', 'rectus-abdominis', 'quadratus-lumborum'],
+    prFocus: 'distance',
+  },
+  {
+    id: 'back-squat',
+    name: 'Back Squat',
+    bodyPart: 'quadriceps',
+    type: 'strength',
+    muscles: ['rectus-femoris', 'vastus-lateralis', 'vastus-medialis', 'vastus-intermedius', 'glute-maximus', 'erector-spinae', 'rectus-abdominis'],
+    prFocus: 'weight',
+  },
+  {
+    id: 'front-squat',
+    name: 'Front Squat',
+    bodyPart: 'quadriceps',
+    type: 'strength',
+    muscles: ['rectus-femoris', 'vastus-medialis', 'vastus-intermedius', 'rectus-abdominis', 'external-obliques'],
+    prFocus: 'weight',
+  },
+  {
+    id: 'romanian-deadlift',
+    name: 'Romanian Deadlift',
+    bodyPart: 'hamstrings',
+    type: 'strength',
+    muscles: ['biceps-femoris', 'semitendinosus', 'semimembranosus', 'glute-maximus', 'erector-spinae', 'forearm-flexors'],
+    prFocus: 'weight',
+  },
+  {
+    id: 'leg-curl',
+    name: 'Leg Curl',
+    bodyPart: 'hamstrings',
+    type: 'strength',
+    muscles: ['biceps-femoris', 'semitendinosus', 'semimembranosus'],
+    prFocus: 'reps',
+  },
+  {
+    id: 'hip-thrust',
+    name: 'Hip Thrust',
+    bodyPart: 'glutes',
+    type: 'strength',
+    muscles: ['glute-maximus', 'glute-medius', 'glute-minimus', 'biceps-femoris'],
+    prFocus: 'weight',
+  },
+  {
+    id: 'walking-lunge',
+    name: 'Walking Lunge',
+    bodyPart: 'glutes',
+    type: 'conditioning',
+    muscles: ['glute-maximus', 'glute-medius', 'rectus-femoris', 'vastus-lateralis', 'hip-adductors'],
+    prFocus: 'distance',
+  },
+  {
+    id: 'standing-calf-raise',
+    name: 'Standing Calf Raise',
+    bodyPart: 'calves',
+    type: 'strength',
+    muscles: ['gastrocnemius', 'soleus'],
+    prFocus: 'reps',
+  },
+  {
+    id: 'seated-calf-raise',
+    name: 'Seated Calf Raise',
+    bodyPart: 'calves',
+    type: 'strength',
+    muscles: ['soleus', 'gastrocnemius'],
+    prFocus: 'reps',
+  },
+  {
+    id: 'copenhagen-plank',
+    name: 'Copenhagen Plank',
+    bodyPart: 'hips',
+    type: 'mobility',
+    muscles: ['hip-adductors', 'external-obliques', 'quadratus-lumborum'],
+    prFocus: 'time',
+  },
+  {
+    id: 'banded-lateral-walk',
+    name: 'Banded Lateral Walk',
+    bodyPart: 'hips',
+    type: 'mobility',
+    muscles: ['tfl', 'glute-medius', 'glute-minimus'],
+    prFocus: 'distance',
+  },
+  {
+    id: 'ab-wheel-rollout',
+    name: 'Ab Wheel Rollout',
+    bodyPart: 'core',
+    type: 'strength',
+    muscles: ['rectus-abdominis', 'transverse-abdominis', 'external-obliques', 'lats'],
+    prFocus: 'reps',
+  },
+  {
+    id: 'cable-woodchop',
+    name: 'Cable Woodchop',
+    bodyPart: 'core',
+    type: 'conditioning',
+    muscles: ['external-obliques', 'internal-obliques', 'rectus-abdominis', 'transverse-abdominis'],
+    prFocus: 'reps',
+  },
+  {
+    id: 'back-extension',
+    name: 'Back Extension',
+    bodyPart: 'core',
+    type: 'strength',
+    muscles: ['erector-spinae', 'multifidus', 'glute-maximus'],
+    prFocus: 'reps',
+  },
+  {
+    id: 'neck-flexion',
+    name: 'Neck Flexion',
+    bodyPart: 'neck',
+    type: 'mobility',
+    muscles: ['scm', 'levator-scapulae'],
+    prFocus: 'reps',
+  },
+  {
+    id: 'shrug',
+    name: 'Barbell Shrug',
+    bodyPart: 'neck',
+    type: 'strength',
+    muscles: ['traps', 'levator-scapulae', 'forearm-flexors'],
+    prFocus: 'weight',
+  },
+]
+
+export const EXERCISE_GROUPS = MUSCLE_GROUPS.map((group) => ({
+  ...group,
+  exercises: EXERCISE_LIBRARY.filter((exercise) => exercise.bodyPart === group.id),
+}))
+
+export const MUSCLE_LOOKUP = MUSCLE_GROUPS.flatMap((group) =>
+  group.muscles.flatMap((muscle) => {
+    const variants = muscle.mirrorX ? [
+      { ...muscle, id: `${muscle.id}-left`, side: 'left', baseId: muscle.id, groupId: group.id, groupLabel: group.label, position: [-muscle.position[0], muscle.position[1], muscle.position[2]] },
+      { ...muscle, id: `${muscle.id}-right`, side: 'right', baseId: muscle.id, groupId: group.id, groupLabel: group.label, position: muscle.position },
+    ] : [
+      { ...muscle, side: 'center', baseId: muscle.id, groupId: group.id, groupLabel: group.label },
+    ]
+    return variants
+  })
+)
+
+export function getExercisesByMuscle(muscleId) {
+  return EXERCISE_LIBRARY.filter((exercise) => exercise.muscles.includes(muscleId))
+}
+
+export function getPrimaryMuscleId(exercise) {
+  return exercise?.muscles?.[0] || ''
+}

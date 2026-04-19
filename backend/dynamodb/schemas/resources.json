@@ -1,0 +1,6 @@
+{
+  "tableName": "resources",
+  "partitionKey": { "name": "id", "type": "S" },
+  "billingMode": "PAY_PER_REQUEST",
+  "description": "Private learning resources such as courses, docs, videos, and books."
+}

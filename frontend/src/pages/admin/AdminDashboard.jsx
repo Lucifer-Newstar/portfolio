@@ -8,6 +8,7 @@ import PostsManager from '../../components/admin/PostsManager'
 import ContentManager from '../../components/admin/ContentManager'
 import PreviewManager from '../../components/admin/PreviewManager'
 import OperationsManager from '../../components/admin/OperationsManager'
+import ThemeToggle from '../../components/ThemeToggle'
 import { useSiteContent } from '../../context/useSiteContent'
 import { useTheme } from '../../context/useTheme'
 import { clearAdminSession } from '../../utils/adminAuth'
@@ -70,6 +71,13 @@ function AdminDashboard() {
         </nav>
 
         <div className="admin-topbar-actions">
+          <div className="admin-theme-switch admin-panel">
+            <div>
+              <span className="eyebrow">Theme control</span>
+              <strong>{theme === 'dark' ? 'Dark command view' : 'Light studio view'}</strong>
+            </div>
+            <ThemeToggle />
+          </div>
           <div className="content-meta-strip">
             <span className="metric-pill">{hasUnsavedChanges ? 'Unsaved changes' : 'Saved state'}</span>
             <span className="metric-pill">

@@ -4,6 +4,7 @@ import PageThemeHandler from './components/PageThemeHandler'
 import RouteMeta from './components/RouteMeta'
 import PublicLayout from './components/layout/PublicLayout'
 import AdminShell from './components/admin/AdminShell'
+import PrivateWorkspace from './components/admin/PrivateWorkspace'
 
 // Public pages
 import HomeProfessional from './pages/public/HomeProfessional'
@@ -19,6 +20,14 @@ import Callback from './pages/public/Callback'
 
 // Admin page
 import AdminDashboard from './pages/admin/AdminDashboard'
+import PrivateHome from './pages/admin/PrivateHome'
+import LuciferDashboard from './pages/admin/LuciferDashboard'
+import LuciferSkills from './pages/admin/LuciferSkills'
+import LuciferProjects from './pages/admin/LuciferProjects'
+import LuciferPosts from './pages/admin/LuciferPosts'
+import LuciferLearning from './pages/admin/LuciferLearning'
+import LuciferWorkouts from './pages/admin/LuciferWorkouts'
+import LuciferHobbies from './pages/admin/LuciferHobbies'
 
 function AppFrame() {
   return (
@@ -44,11 +53,21 @@ function AppFrame() {
           element={
             <AdminShell>
               <ProtectedRoute>
-                <AdminDashboard />
+                <PrivateWorkspace />
               </ProtectedRoute>
             </AdminShell>
           }
-        />
+        >
+          <Route index element={<PrivateHome />} />
+          <Route path="edit" element={<AdminDashboard />} />
+          <Route path="lucifer/skills/*" element={<LuciferSkills />} />
+          <Route path="lucifer/projects/*" element={<LuciferProjects />} />
+          <Route path="lucifer/posts/*" element={<LuciferPosts />} />
+          <Route path="lucifer/learning/*" element={<LuciferLearning />} />
+          <Route path="lucifer/workouts/*" element={<LuciferWorkouts />} />
+          <Route path="lucifer/hobbies/*" element={<LuciferHobbies />} />
+          <Route path="lucifer/*" element={<LuciferDashboard />} />
+        </Route>
       </Routes>
     </>
   )

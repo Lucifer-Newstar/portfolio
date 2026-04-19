@@ -1,0 +1,34 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Generic private collection handler for Lucifer Mode.
+
+Resources:
+  LuciferCollectionsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/index.handler
+      Runtime: nodejs22.x
+      Timeout: 10
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: learning_log
+        - DynamoDBCrudPolicy:
+            TableName: cert_progress
+        - DynamoDBCrudPolicy:
+            TableName: study_notes
+        - DynamoDBCrudPolicy:
+            TableName: resources
+        - DynamoDBCrudPolicy:
+            TableName: workout_log
+        - DynamoDBCrudPolicy:
+            TableName: calisthenics_progress
+        - DynamoDBCrudPolicy:
+            TableName: body_stats
+        - DynamoDBCrudPolicy:
+            TableName: goals
+        - DynamoDBCrudPolicy:
+            TableName: daily_status
+        - DynamoDBCrudPolicy:
+            TableName: hobby_items
+        - DynamoDBCrudPolicy:
+            TableName: personal_projects

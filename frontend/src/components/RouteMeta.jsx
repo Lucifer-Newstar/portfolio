@@ -17,6 +17,78 @@ function buildRouteDetails(pathname, siteContent) {
   const host = window.location.origin
   const fallbackImage = siteContent.home?.heroImage || siteContent.about?.visualImage || ''
 
+  if (pathname.startsWith('/lucifer-newstar_dashboard/lucifer/skills')) {
+    return {
+      title: `Lucifer Skills | ${siteContent.global?.nav?.brandName || 'Navin Jairam'}`,
+      description: 'Private skill tracking with progress overlays and fast updates.',
+      image: fallbackImage,
+      url: `${host}${pathname}`,
+    }
+  }
+
+  if (pathname.startsWith('/lucifer-newstar_dashboard/lucifer/projects')) {
+    return {
+      title: `Lucifer Projects | ${siteContent.global?.nav?.brandName || 'Navin Jairam'}`,
+      description: 'Private project tracking layered on top of public portfolio work.',
+      image: fallbackImage,
+      url: `${host}${pathname}`,
+    }
+  }
+
+  if (pathname.startsWith('/lucifer-newstar_dashboard/lucifer/posts')) {
+    return {
+      title: `Lucifer Posts | ${siteContent.global?.nav?.brandName || 'Navin Jairam'}`,
+      description: 'Private post context and quick logging workspace.',
+      image: fallbackImage,
+      url: `${host}${pathname}`,
+    }
+  }
+
+  if (pathname.startsWith('/lucifer-newstar_dashboard/lucifer/learning')) {
+    return {
+      title: `Lucifer Learning | ${siteContent.global?.nav?.brandName || 'Navin Jairam'}`,
+      description: 'Private learning tracker with logs, certifications, notes, and resources.',
+      image: fallbackImage,
+      url: `${host}${pathname}`,
+    }
+  }
+
+  if (pathname.startsWith('/lucifer-newstar_dashboard/lucifer/workouts')) {
+    return {
+      title: `Lucifer Workouts | ${siteContent.global?.nav?.brandName || 'Navin Jairam'}`,
+      description: 'Private workout tracker with PRs, body stats, and calisthenics progress.',
+      image: fallbackImage,
+      url: `${host}${pathname}`,
+    }
+  }
+
+  if (pathname.startsWith('/lucifer-newstar_dashboard/lucifer/hobbies')) {
+    return {
+      title: `Lucifer Hobbies | ${siteContent.global?.nav?.brandName || 'Navin Jairam'}`,
+      description: 'Private hobbies, goals, and manual-first personal tracking.',
+      image: fallbackImage,
+      url: `${host}${pathname}`,
+    }
+  }
+
+  if (pathname.startsWith('/lucifer-newstar_dashboard/lucifer')) {
+    return {
+      title: `Lucifer Dashboard | ${siteContent.global?.nav?.brandName || 'Navin Jairam'}`,
+      description: 'Private dashboard for momentum, streaks, quick actions, and personal tracking.',
+      image: fallbackImage,
+      url: `${host}${pathname}`,
+    }
+  }
+
+  if (pathname.startsWith('/lucifer-newstar_dashboard/edit')) {
+    return {
+      title: `Edit Mode | ${siteContent.global?.nav?.brandName || 'Navin Jairam'}`,
+      description: siteContent.admin?.lead || 'Full editorial workspace for the public portfolio.',
+      image: fallbackImage,
+      url: `${host}${pathname}`,
+    }
+  }
+
   const routes = {
     '/': {
       title: `${siteContent.home?.title || 'Portfolio'} | ${siteContent.global?.nav?.brandName || 'Navin Jairam'}`,
@@ -69,8 +141,8 @@ function buildRouteDetails(pathname, siteContent) {
       image: fallbackImage,
     },
     '/lucifer-newstar_dashboard': {
-      title: `Admin Dashboard | ${siteContent.global?.nav?.brandName || 'Navin Jairam'}`,
-      description: siteContent.admin?.lead || 'Dedicated admin workspace for managing portfolio content and operations.',
+      title: `Private Workspace | ${siteContent.global?.nav?.brandName || 'Navin Jairam'}`,
+      description: 'Mode selector for Edit Mode and Lucifer Mode inside the authenticated workspace.',
       image: fallbackImage,
     },
   }

@@ -1,0 +1,6 @@
+{
+  "tableName": "body_stats",
+  "partitionKey": { "name": "id", "type": "S" },
+  "billingMode": "PAY_PER_REQUEST",
+  "description": "Private body measurement snapshots."
+}

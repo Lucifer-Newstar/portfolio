@@ -1,0 +1,6 @@
+{
+  "tableName": "workout_log",
+  "partitionKey": { "name": "id", "type": "S" },
+  "billingMode": "PAY_PER_REQUEST",
+  "description": "Private workout entries for exercise, sets, reps, and weight."
+}
