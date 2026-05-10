@@ -41,13 +41,14 @@ function WorkspaceNavGroup({ title, items }) {
 
 function PrivateWorkspace() {
   const location = useLocation()
-  const [isExploreOpen, setIsExploreOpen] = useState(false)
+  const [exploreState, setExploreState] = useState({ isOpen: false, pathname: '' })
   const { summary } = useLucifer()
   const privateMode = location.pathname.includes('/lucifer-newstar_dashboard/edit')
     ? 'edit'
     : location.pathname.includes('/lucifer-newstar_dashboard/lucifer')
       ? 'lucifer'
       : 'home'
+  const isExploreOpen = exploreState.isOpen && exploreState.pathname === location.pathname
   const activeLuciferLink = useMemo(() => (
     LUCIFER_LINKS.find((item) => item.to === location.pathname)
     || LUCIFER_LINKS.find((item) => location.pathname.startsWith(item.to))
@@ -72,13 +73,9 @@ function PrivateWorkspace() {
   }, [isExploreOpen, privateMode])
 
   useEffect(() => {
-    setIsExploreOpen(false)
-  }, [location.pathname])
-
-  useEffect(() => {
     const handleEscape = (event) => {
       if (event.key === 'Escape') {
-        setIsExploreOpen(false)
+        setExploreState((current) => ({ ...current, isOpen: false }))
       }
     }
 
@@ -118,7 +115,10 @@ function PrivateWorkspace() {
                 <button
                   type="button"
                   className={`lucifer-explore-trigger nav-explore-toggle ${isExploreOpen ? 'is-open' : ''}`}
-                  onClick={() => setIsExploreOpen((value) => !value)}
+                  onClick={() => setExploreState((current) => ({
+                    isOpen: current.pathname === location.pathname ? !current.isOpen : true,
+                    pathname: location.pathname,
+                  }))}
                   aria-expanded={isExploreOpen}
                   aria-haspopup="true"
                 >
@@ -176,14 +176,14 @@ function PrivateWorkspace() {
             type="button"
             className="lucifer-explore-backdrop"
             aria-label="Close Lucifer explore navigation"
-            onClick={() => setIsExploreOpen(false)}
+            onClick={() => setExploreState((current) => ({ ...current, isOpen: false }))}
           />
           <div className="lucifer-board-menu">
             <NavLink
               to="/lucifer-newstar_dashboard/lucifer"
               end
               className="lucifer-board-home"
-              onClick={() => setIsExploreOpen(false)}
+              onClick={() => setExploreState((current) => ({ ...current, isOpen: false }))}
             >
               Dashboard
             </NavLink>
@@ -201,7 +201,7 @@ function PrivateWorkspace() {
                 to={item.to}
                 end={item.to === '/lucifer-newstar_dashboard/lucifer'}
                 className={({ isActive }) => `lucifer-board-link ${isActive ? 'is-active' : ''}`}
-                onClick={() => setIsExploreOpen(false)}
+                onClick={() => setExploreState((current) => ({ ...current, isOpen: false }))}
               >
                 <strong>{item.label}</strong>
                 <span>{item.detail}</span>

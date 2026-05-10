@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { EXERCISE_GROUPS, EXERCISE_LIBRARY, MUSCLE_LOOKUP, getExercisesByMuscle } from '../../data/luciferExerciseData'
 
 const VIEW_MODES = [
@@ -294,7 +294,7 @@ function MuscleExplorer3D({
   onSelectExercise,
 }) {
   const [hoveredMuscle, setHoveredMuscle] = useState(null)
-  const [zoomLevel, setZoomLevel] = useState(1)
+  const [zoomState, setZoomState] = useState({ contextKey: 'idle', value: 1 })
   const [viewMode, setViewMode] = useState('split')
 
   const activeExercise = useMemo(
@@ -322,6 +322,12 @@ function MuscleExplorer3D({
     () => (selectedMuscleId ? getExercisesByMuscle(selectedMuscleId) : []),
     [selectedMuscleId]
   )
+  const zoomContextKey = selectedMuscleId
+    ? `muscle:${selectedMuscleId}`
+    : activeExerciseId
+      ? `exercise:${activeExerciseId}`
+      : 'idle'
+  const zoomLevel = zoomState.contextKey === zoomContextKey ? zoomState.value : 1
 
   const visiblePanels = viewMode === 'split' ? ['front', 'back'] : [viewMode]
 
@@ -338,14 +344,11 @@ function MuscleExplorer3D({
 
   const focusedMuscle = hoveredMuscle || MUSCLE_LOOKUP.find((muscle) => muscle.baseId === selectedMuscleId) || null
 
-  useEffect(() => {
-    if (!selectedMuscleId && !activeExerciseId) {
-      setZoomLevel(1)
-    }
-  }, [activeExerciseId, selectedMuscleId])
-
   const changeZoom = (nextZoom) => {
-    setZoomLevel(clamp(nextZoom, 0.82, 1.55))
+    setZoomState({
+      contextKey: zoomContextKey,
+      value: clamp(nextZoom, 0.82, 1.55),
+    })
   }
 
   const handleViewerWheel = (event) => {
@@ -421,7 +424,17 @@ function MuscleExplorer3D({
                 <button type="button" className="muscle-explorer-icon-button" onClick={() => changeZoom(zoomLevel + 0.08)} aria-label="Zoom in">
                   +
                 </button>
-                <button type="button" className="muscle-explorer-reset" onClick={() => { setViewMode('split'); setZoomLevel(1) }}>
+                <button
+                  type="button"
+                  className="muscle-explorer-reset"
+                  onClick={() => {
+                    setViewMode('split')
+                    setZoomState({
+                      contextKey: zoomContextKey,
+                      value: 1,
+                    })
+                  }}
+                >
                   Reset view
                 </button>
               </div>
