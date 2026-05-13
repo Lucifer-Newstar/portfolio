@@ -1377,6 +1377,119 @@ body[data-private-mode="lucifer"][data-theme="light"] .lucifer-signal-row small 
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
+.lucifer-span-2 {
+  grid-column: 1 / -1;
+}
+
+.lucifer-insight-grid,
+.lucifer-progress-grid,
+.lucifer-chart-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.lucifer-insight-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-bottom: 1rem;
+}
+
+.lucifer-insight-card,
+.lucifer-chart-card,
+.lucifer-progress-card {
+  padding: 1rem;
+  border-radius: 1rem;
+  border: 1px solid color-mix(in srgb, var(--primary) 14%, var(--border));
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--bg-card-strong) 96%, transparent), color-mix(in srgb, var(--bg-card) 92%, transparent));
+  box-shadow: 0 18px 35px color-mix(in srgb, black 8%, transparent);
+}
+
+.lucifer-insight-card strong,
+.lucifer-chart-head strong,
+.lucifer-progress-head strong {
+  display: block;
+  font-size: 1.1rem;
+  margin: 0.2rem 0;
+}
+
+.lucifer-progress-layout {
+  display: grid;
+  gap: 1rem;
+}
+
+.lucifer-progress-grid,
+.lucifer-chart-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.lucifer-progress-head,
+.lucifer-chart-head,
+.lucifer-chart-labels {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.lucifer-progress-head,
+.lucifer-chart-head {
+  margin-bottom: 0.85rem;
+}
+
+.lucifer-progress-track {
+  position: relative;
+  height: 0.75rem;
+  border-radius: 999px;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--bg-card) 72%, black 8%);
+  border: 1px solid color-mix(in srgb, var(--primary) 10%, var(--border));
+  margin-bottom: 0.65rem;
+}
+
+.lucifer-progress-fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--progress-tone, var(--primary)) 74%, white 10%), color-mix(in srgb, var(--progress-tone, var(--primary)) 92%, black 8%));
+}
+
+.lucifer-chart-shell {
+  min-height: 10rem;
+  display: grid;
+  align-items: center;
+  padding: 0.65rem;
+  border-radius: 0.9rem;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--bg-primary) 60%, transparent), color-mix(in srgb, var(--bg-card) 94%, transparent));
+  border: 1px solid color-mix(in srgb, var(--primary) 10%, var(--border));
+}
+
+.lucifer-trend-chart {
+  width: 100%;
+  height: 9rem;
+}
+
+.lucifer-chart-labels {
+  margin-top: 0.85rem;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+}
+
+.lucifer-chart-empty {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.lucifer-inline-button {
+  margin-left: 0.65rem;
+  padding: 0.25rem 0.65rem;
+  font-size: 0.72rem;
+}
+
 .lucifer-progress-photo {
   width: 100%;
   aspect-ratio: 1 / 1;
@@ -1618,6 +1731,9 @@ body[data-private-mode="lucifer"][data-theme="light"] .lucifer-theme-toggle-slot
   .private-form-grid,
   .private-nav-summary,
   .lucifer-command-grid,
+  .lucifer-progress-grid,
+  .lucifer-chart-grid,
+  .lucifer-insight-grid,
   .muscle-explorer,
   .lucifer-topbar-metrics,
   .lucifer-photo-grid,
@@ -1634,6 +1750,9 @@ body[data-private-mode="lucifer"][data-theme="light"] .lucifer-theme-toggle-slot
   .private-form-grid,
   .private-nav-summary,
   .lucifer-command-grid,
+  .lucifer-progress-grid,
+  .lucifer-chart-grid,
+  .lucifer-insight-grid,
   .lucifer-topbar-metrics,
   .lucifer-photo-grid,
   .lucifer-measurement-grid,
@@ -1677,6 +1796,10 @@ body[data-private-mode="lucifer"][data-theme="light"] .lucifer-theme-toggle-slot
 
   .muscle-explorer-control-group--views {
     grid-template-columns: 1fr;
+  }
+
+  .lucifer-span-2 {
+    grid-column: auto;
   }
 
   .muscle-explorer-control-group--zoom {
