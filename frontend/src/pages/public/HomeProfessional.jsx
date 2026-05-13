@@ -29,6 +29,10 @@ function HomeProfessional() {
 
   const activeSignal = signalModes.find((mode) => mode.name === activeSignalName) ?? signalModes[0]
   const activeRoleLabel = roles[currentRole] || roles[0]
+  const roleText = roles[currentRole] || roles[0] || ''
+  const prefersReducedMotion =
+    typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  const shouldAnimateRole = Boolean(roleText) && !prefersReducedMotion
   const resolvedPortraitImage = theme === 'dark'
     ? (home.portraitImageDark || home.portraitImage || home.heroImageDark || home.heroImage)
     : (home.portraitImageLight || home.portraitImage || home.heroImageLight || home.heroImage)
@@ -43,28 +47,20 @@ function HomeProfessional() {
   const resumeSection = home.resumeSection || null
 
   useEffect(() => {
-    const fullText = roles[currentRole] || roles[0] || ''
-
-    if (!fullText) {
-      setDisplayText('')
-      return undefined
-    }
-
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      setDisplayText(fullText)
+    if (!shouldAnimateRole) {
       return undefined
     }
 
     const handleTyping = () => {
       if (isDeleting) {
-        setDisplayText(fullText.substring(0, displayText.length - 1))
+        setDisplayText(roleText.substring(0, displayText.length - 1))
         setTypingSpeed(50)
       } else {
-        setDisplayText(fullText.substring(0, displayText.length + 1))
+        setDisplayText(roleText.substring(0, displayText.length + 1))
         setTypingSpeed(150)
       }
 
-      if (!isDeleting && displayText === fullText) {
+      if (!isDeleting && displayText === roleText) {
         setIsDeleting(true)
         setTypingSpeed(1800)
       } else if (isDeleting && displayText === '') {
@@ -77,7 +73,7 @@ function HomeProfessional() {
     const timer = window.setTimeout(handleTyping, typingSpeed)
 
     return () => window.clearTimeout(timer)
-  }, [currentRole, displayText, isDeleting, roles, typingSpeed])
+  }, [currentRole, displayText, isDeleting, roleText, roles.length, shouldAnimateRole, typingSpeed])
 
   useEffect(() => {
     let mounted = true
@@ -103,7 +99,7 @@ function HomeProfessional() {
             <span className="eyebrow">Cloud Engineer | DevOps | Reliability</span>
             <h1 className="hero-title">{home.title}</h1>
             <p className="hero-subtitle">
-              {home.introPrefix} <span className="typed-text">{displayText}</span><span className="cursor" aria-hidden="true">|</span>
+              {home.introPrefix} <span className="typed-text">{shouldAnimateRole ? displayText : roleText}</span><span className="cursor" aria-hidden="true">|</span>
             </p>
             <p className="hero-description">
               I build cloud platforms, delivery systems, and observability workflows that help

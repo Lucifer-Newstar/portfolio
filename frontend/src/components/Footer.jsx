@@ -5,29 +5,25 @@ import { useSiteContent } from '../context/useSiteContent'
 function Footer() {
   const { siteContent } = useSiteContent()
   const footer = siteContent.global.footer
+  const signalHeading = footer.signalHeading || ''
   const [typedSignalHeading, setTypedSignalHeading] = useState('')
   const [isDeletingSignal, setIsDeletingSignal] = useState(false)
+  const prefersReducedMotion =
+    typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  const shouldAnimateSignal = Boolean(signalHeading) && !prefersReducedMotion
 
   useEffect(() => {
-    const fullText = footer.signalHeading || ''
-
-    if (!fullText) {
-      setTypedSignalHeading('')
-      return undefined
-    }
-
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      setTypedSignalHeading(fullText)
+    if (!shouldAnimateSignal) {
       return undefined
     }
 
     const nextDelay = isDeletingSignal
       ? typedSignalHeading === '' ? 450 : 40
-      : typedSignalHeading === fullText ? 1800 : 95
+      : typedSignalHeading === signalHeading ? 1800 : 95
 
     const timer = window.setTimeout(() => {
       if (isDeletingSignal) {
-        const nextText = fullText.slice(0, Math.max(typedSignalHeading.length - 1, 0))
+        const nextText = signalHeading.slice(0, Math.max(typedSignalHeading.length - 1, 0))
         setTypedSignalHeading(nextText)
 
         if (nextText === '') {
@@ -36,16 +32,16 @@ function Footer() {
         return
       }
 
-      const nextText = fullText.slice(0, typedSignalHeading.length + 1)
+      const nextText = signalHeading.slice(0, typedSignalHeading.length + 1)
       setTypedSignalHeading(nextText)
 
-      if (nextText === fullText) {
+      if (nextText === signalHeading) {
         setIsDeletingSignal(true)
       }
     }, nextDelay)
 
     return () => window.clearTimeout(timer)
-  }, [footer.signalHeading, isDeletingSignal, typedSignalHeading])
+  }, [isDeletingSignal, shouldAnimateSignal, signalHeading, typedSignalHeading])
 
   return (
     <footer className="footer">
@@ -70,7 +66,7 @@ function Footer() {
             <span className="eyebrow">{footer.signalTitle}</span>
             <div className="widget-stat">
               <strong>
-                <span className="typed-text">{typedSignalHeading}</span>
+                <span className="typed-text">{shouldAnimateSignal ? typedSignalHeading : signalHeading}</span>
                 <span className="cursor" aria-hidden="true">|</span>
               </strong>
               <span>{footer.signalText}</span>
