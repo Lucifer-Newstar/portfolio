@@ -67,6 +67,18 @@ npm run lint
 npm run build
 ```
 
+## SonarQube
+
+The CI workflow includes an optional SonarQube scan for `frontend/`.
+
+Enable it in GitHub repository settings with:
+
+- Secret: `SONAR_TOKEN`
+- Variable: `SONAR_HOST_URL`
+- Variable: `SONAR_PROJECT_KEY`
+
+If those values are not configured, the SonarQube step is skipped and the rest of CI still runs normally.
+
 Current local verification status on `2026-04-08`:
 
 - `npm run lint`: passed

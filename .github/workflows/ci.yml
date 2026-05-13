@@ -37,4 +37,15 @@ jobs:
       - name: Build
         working-directory: frontend
         run: npm run build
+
+      - name: SonarQube scan
+        if: ${{ secrets.SONAR_TOKEN != '' && vars.SONAR_HOST_URL != '' && vars.SONAR_PROJECT_KEY != '' }}
+        uses: SonarSource/sonarqube-scan-action@v5
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ vars.SONAR_HOST_URL }}
+        with:
+          projectBaseDir: frontend
+          args: >
+            -Dsonar.projectKey=${{ vars.SONAR_PROJECT_KEY }}
         
