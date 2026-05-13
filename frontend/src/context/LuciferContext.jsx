@@ -8,6 +8,7 @@ import {
   loadLuciferStateLocal,
   normalizeLuciferState,
   upsertCollectionItem,
+  mergeCollectionItems,
   upsertEntityMeta,
   deleteCollectionItem,
   buildLuciferSummary,
@@ -20,6 +21,7 @@ import {
   fetchPosts,
   fetchProjects,
   fetchSkills,
+  importHobbySource as importHobbySourceApi,
   uploadAdminImage,
 } from '../utils/api'
 import { LuciferContext } from './lucifer-context'
@@ -85,6 +87,17 @@ export function LuciferProvider({ children }) {
   const removeCollectionItem = useCallback(async (collectionName, itemId) => {
     const nextState = deleteCollectionItem(privateState, collectionName, itemId)
     return persistState(nextState)
+  }, [persistState, privateState])
+
+  const importHobbySource = useCallback(async (source, payload = {}) => {
+    const result = await importHobbySourceApi(source, payload)
+    const importedItems = Array.isArray(result?.items) ? result.items : []
+    const nextState = mergeCollectionItems(privateState, LUCIFER_COLLECTIONS.hobbyItems, importedItems)
+    await persistState(nextState)
+    return {
+      ...result,
+      items: importedItems,
+    }
   }, [persistState, privateState])
 
   const saveEntityMeta = useCallback(async (entityName, entityId, values) => {
@@ -184,6 +197,7 @@ export function LuciferProvider({ children }) {
     refreshSharedData: loadSharedData,
     saveCollectionItem,
     removeCollectionItem,
+    importHobbySource,
     saveSkillMeta: (skillId, values) => saveEntityMeta('skillMeta', skillId, values),
     saveProjectMeta: (projectId, values) => saveEntityMeta('projectMeta', projectId, values),
     savePostMeta: (postId, values) => saveEntityMeta('postMeta', postId, values),
@@ -202,6 +216,7 @@ export function LuciferProvider({ children }) {
     quickAddPost,
     quickAddSkill,
     removeCollectionItem,
+    importHobbySource,
     saveCollectionItem,
     saveEntityMeta,
     sharedPosts,

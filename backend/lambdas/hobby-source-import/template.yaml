@@ -1,0 +1,20 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Admin-only hobby imports for MyAnimeList and Letterboxd.
+
+Resources:
+  HobbySourceImportFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/index.handler
+      Runtime: nodejs22.x
+      Timeout: 10
+      Environment:
+        Variables:
+          MYANIMELIST_CLIENT_ID: ''
+      Events:
+        HobbySourceImportApi:
+          Type: Api
+          Properties:
+            Method: POST
+            Path: /admin/lucifer/hobbies/import

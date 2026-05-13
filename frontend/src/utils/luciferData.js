@@ -8,6 +8,11 @@ export const LUCIFER_COLLECTIONS = {
   workoutLog: 'workoutLog',
   calisthenicsProgress: 'calisthenicsProgress',
   bodyStats: 'bodyStats',
+  fitnessProfiles: 'fitnessProfiles',
+  nutritionLog: 'nutritionLog',
+  cardioLog: 'cardioLog',
+  flexibilityLog: 'flexibilityLog',
+  vitalsLog: 'vitalsLog',
   goals: 'goals',
   dailyStatus: 'dailyStatus',
   hobbyItems: 'hobbyItems',
@@ -52,6 +57,11 @@ export function createEmptyLuciferState() {
     workoutLog: [],
     calisthenicsProgress: [],
     bodyStats: [],
+    fitnessProfiles: [],
+    nutritionLog: [],
+    cardioLog: [],
+    flexibilityLog: [],
+    vitalsLog: [],
     goals: [],
     dailyStatus: [],
     hobbyItems: [],
@@ -76,6 +86,11 @@ export function normalizeLuciferState(rawState) {
     workoutLog: Array.isArray(rawState.workoutLog) ? rawState.workoutLog : base.workoutLog,
     calisthenicsProgress: Array.isArray(rawState.calisthenicsProgress) ? rawState.calisthenicsProgress : base.calisthenicsProgress,
     bodyStats: Array.isArray(rawState.bodyStats) ? rawState.bodyStats : base.bodyStats,
+    fitnessProfiles: Array.isArray(rawState.fitnessProfiles) ? rawState.fitnessProfiles : base.fitnessProfiles,
+    nutritionLog: Array.isArray(rawState.nutritionLog) ? rawState.nutritionLog : base.nutritionLog,
+    cardioLog: Array.isArray(rawState.cardioLog) ? rawState.cardioLog : base.cardioLog,
+    flexibilityLog: Array.isArray(rawState.flexibilityLog) ? rawState.flexibilityLog : base.flexibilityLog,
+    vitalsLog: Array.isArray(rawState.vitalsLog) ? rawState.vitalsLog : base.vitalsLog,
     goals: Array.isArray(rawState.goals) ? rawState.goals : base.goals,
     dailyStatus: Array.isArray(rawState.dailyStatus) ? rawState.dailyStatus : base.dailyStatus,
     hobbyItems: Array.isArray(rawState.hobbyItems) ? rawState.hobbyItems : base.hobbyItems,
@@ -122,6 +137,13 @@ export function upsertCollectionItem(state, collectionName, item) {
     updatedAt: isoNow(),
     [collectionName]: updatedCollection,
   }
+}
+
+export function mergeCollectionItems(state, collectionName, items = []) {
+  return items.reduce(
+    (nextState, item) => upsertCollectionItem(nextState, collectionName, item),
+    normalizeLuciferState(state)
+  )
 }
 
 export function deleteCollectionItem(state, collectionName, itemId) {
@@ -224,6 +246,77 @@ export function buildWorkoutPrs(workoutLog = []) {
   return Object.values(grouped).sort((left, right) => right.score - left.score)
 }
 
+function sortByLoggedDate(entries = []) {
+  return [...entries].sort((left, right) => String(right.date || right.updatedAt || '').localeCompare(String(left.date || left.updatedAt || '')))
+}
+
+function getLatestEntry(entries = []) {
+  return sortByLoggedDate(entries)[0] || null
+}
+
+export function calculateBmi(weightKg, heightCm) {
+  const weight = Number(weightKg || 0)
+  const height = Number(heightCm || 0)
+  if (weight <= 0 || height <= 0) return 0
+  const heightMeters = height / 100
+  return weight / (heightMeters * heightMeters)
+}
+
+export function getBmiCategory(bmi) {
+  if (!bmi) return 'Not enough data'
+  if (bmi < 18.5) return 'Underweight'
+  if (bmi < 25) return 'Healthy'
+  if (bmi < 30) return 'Overweight'
+  return 'Obese'
+}
+
+const ACTIVITY_MULTIPLIERS = {
+  sedentary: 1.2,
+  light: 1.375,
+  moderate: 1.55,
+  active: 1.725,
+  athlete: 1.9,
+}
+
+const GOAL_CALORIE_ADJUSTMENTS = {
+  cut: -450,
+  maintain: 0,
+  lean_bulk: 250,
+  bulk: 400,
+  recomposition: -100,
+}
+
+export function calculateDailyCaloriesRequired(profile = {}, bodyEntry = {}) {
+  const safeProfile = profile && typeof profile === 'object' ? profile : {}
+  const safeBodyEntry = bodyEntry && typeof bodyEntry === 'object' ? bodyEntry : {}
+  const weightKg = Number(safeBodyEntry.weight || 0)
+  const heightCm = Number(safeProfile.heightCm || 0)
+  const age = Number(safeProfile.age || 0)
+  const sex = String(safeProfile.sex || 'male').toLowerCase()
+  if (weightKg <= 0 || heightCm <= 0 || age <= 0) return 0
+
+  const baseBmr = 10 * weightKg + 6.25 * heightCm - 5 * age
+  const sexAdjustment = sex === 'female' ? -161 : 5
+  const bmr = baseBmr + sexAdjustment
+  const activityMultiplier = ACTIVITY_MULTIPLIERS[safeProfile.activityLevel] || ACTIVITY_MULTIPLIERS.moderate
+  const goalAdjustment = GOAL_CALORIE_ADJUSTMENTS[safeProfile.goal] || 0
+  return Math.max(1200, Math.round((bmr * activityMultiplier) + goalAdjustment))
+}
+
+function groupCountByDate(entries = [], field = 'date', valueSelector = () => 1, maxPoints = 7) {
+  const grouped = entries.reduce((acc, entry) => {
+    const key = toDateKey(entry[field] || entry.updatedAt)
+    if (!key) return acc
+    acc[key] = (acc[key] || 0) + valueSelector(entry)
+    return acc
+  }, {})
+
+  return Object.entries(grouped)
+    .sort(([left], [right]) => left.localeCompare(right))
+    .slice(-maxPoints)
+    .map(([date, value]) => ({ date, value }))
+}
+
 export function buildActivityHeatmap(state) {
   const activityMap = {}
 
@@ -272,12 +365,29 @@ export function buildLuciferSummary(state, shared = {}) {
   const weekly = buildWeeklySummary(normalized, shared)
   const workoutPrs = buildWorkoutPrs(normalized.workoutLog)
   const heatmap = buildActivityHeatmap(normalized)
+  const latestBodyEntry = getLatestEntry(normalized.bodyStats)
+  const latestFitnessProfile = getLatestEntry(normalized.fitnessProfiles)
+  const latestVitals = getLatestEntry(normalized.vitalsLog)
+  const latestNutrition = getLatestEntry(normalized.nutritionLog)
+  const latestCardio = getLatestEntry(normalized.cardioLog)
+  const latestFlexibility = getLatestEntry(normalized.flexibilityLog)
+  const bmi = calculateBmi(latestBodyEntry?.weight, latestFitnessProfile?.heightCm)
+  const caloriesRequired = calculateDailyCaloriesRequired(latestFitnessProfile, latestBodyEntry)
   const workoutVolume = normalized.workoutLog.reduce((sum, entry) => {
     const sets = Number(entry.sets || 0)
     const reps = Number(entry.reps || 0)
     const weight = Number(entry.weight || 0)
     return sum + (sets * reps * Math.max(weight, 1))
   }, 0)
+  const caloriesConsumed = normalized.nutritionLog
+    .filter((entry) => toDateKey(entry.date) === toDateKey(isoNow()))
+    .reduce((sum, entry) => sum + Number(entry.calories || 0), 0)
+  const weeklyCardioMinutes = normalized.cardioLog
+    .filter((entry) => toDateKey(entry.date) >= toDateKey(new Date(Date.now() - (6 * 24 * 60 * 60 * 1000)).toISOString()))
+    .reduce((sum, entry) => sum + Number(entry.durationMinutes || 0), 0)
+  const weeklyMobilityMinutes = normalized.flexibilityLog
+    .filter((entry) => toDateKey(entry.date) >= toDateKey(new Date(Date.now() - (6 * 24 * 60 * 60 * 1000)).toISOString()))
+    .reduce((sum, entry) => sum + Number(entry.durationMinutes || 0), 0)
 
   return {
     generatedAt: isoNow(),
@@ -289,12 +399,38 @@ export function buildLuciferSummary(state, shared = {}) {
       totalPosts: Array.isArray(shared.posts) ? shared.posts.length : 0,
       certificationsTracked: normalized.certProgress.length,
       workoutsLogged: normalized.workoutLog.length,
+      cardioSessionsLogged: normalized.cardioLog.length,
+      flexibilitySessionsLogged: normalized.flexibilityLog.length,
+      nutritionEntriesLogged: normalized.nutritionLog.length,
+      vitalsLogged: normalized.vitalsLog.length,
       hobbiesTracked: normalized.hobbyItems.length,
     },
     workout: {
       prs: workoutPrs.slice(0, 6),
       weeklyVolume: workoutVolume,
       workoutsThisWeek: weekly.workouts,
+      latestBodyEntry,
+      latestFitnessProfile,
+      currentBmi: bmi ? Number(bmi.toFixed(1)) : 0,
+      bmiCategory: getBmiCategory(bmi),
+      dailyCaloriesRequired: caloriesRequired,
+      dailyCaloriesConsumed: caloriesConsumed,
+      weeklyCardioMinutes,
+      weeklyMobilityMinutes,
+      latestVitals,
+      latestNutrition,
+      latestCardio,
+      latestFlexibility,
+      charts: {
+        weightTrend: sortByLoggedDate(normalized.bodyStats)
+          .slice(0, 6)
+          .reverse()
+          .map((entry) => ({ date: toDateKey(entry.date || entry.updatedAt), value: Number(entry.weight || 0) }))
+          .filter((entry) => entry.date && entry.value > 0),
+        caloriesTrend: groupCountByDate(normalized.nutritionLog, 'date', (entry) => Number(entry.calories || 0), 7),
+        cardioTrend: groupCountByDate(normalized.cardioLog, 'date', (entry) => Number(entry.durationMinutes || 0), 7),
+        flexibilityTrend: groupCountByDate(normalized.flexibilityLog, 'date', (entry) => Number(entry.durationMinutes || 0), 7),
+      },
     },
     heatmap,
     latestStatus: normalized.dailyStatus[0] || null,
