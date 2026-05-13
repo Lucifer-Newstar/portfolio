@@ -156,6 +156,228 @@ body[data-ui-surface="admin"][data-theme="light"]::after {
   display: none;
 }
 
+.edit-shell {
+  position: relative;
+  z-index: 1;
+  width: min(1840px, 100%);
+  margin: 0 auto;
+  display: grid;
+  gap: 1rem;
+}
+
+.edit-shell-topbar,
+.edit-shell-stage {
+  padding: 1.2rem;
+}
+
+.edit-shell-topbar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem 1.25rem;
+}
+
+.edit-shell-topbar-copy {
+  display: grid;
+  gap: 0.55rem;
+  max-width: 72ch;
+}
+
+.edit-shell-topbar-copy h1 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3vw, 2.7rem);
+  line-height: 0.98;
+  color: var(--text-primary);
+}
+
+.edit-shell-topbar-copy p {
+  color: var(--text-secondary);
+}
+
+.edit-shell-topbar-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.edit-shell-theme-toggle {
+  display: flex;
+  align-items: center;
+}
+
+.edit-shell-stage {
+  min-height: calc(100vh - 12.5rem);
+}
+
+.private-workspace--edit .admin-workspace-shell {
+  width: 100%;
+}
+
+.private-workspace--edit .admin-main-content {
+  min-height: 74vh;
+  padding: 1.6rem;
+}
+
+.private-workspace--edit .admin-main-content .admin-manager-surface {
+  padding: 1.6rem;
+}
+
+.private-workspace--edit .admin-main-content .content-editor-surface {
+  padding: 1.85rem;
+}
+
+.private-workspace--edit .admin-main-content .content-workspace-grid {
+  grid-template-columns: 1fr;
+  gap: 1.35rem;
+}
+
+.private-workspace--edit .content-workspace-panel:first-child {
+  align-self: auto;
+  position: static;
+  top: auto;
+  padding: 1.2rem 1.2rem 1.25rem;
+}
+
+.private-workspace--edit .content-workspace-panel:last-child {
+  padding: 1.4rem;
+}
+
+.private-workspace--edit .content-grid {
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+.private-workspace--edit .content-field {
+  padding: 1.1rem;
+  border-radius: 1.1rem;
+}
+
+.admin-main-content .content-editor-surface {
+  padding: 2rem;
+}
+
+.admin-main-content .content-workspace-grid {
+  grid-template-columns: 1fr !important;
+  gap: 1.5rem;
+}
+
+.admin-main-content .content-workspace-panel:first-child {
+  position: static;
+  align-self: auto;
+}
+
+.admin-main-content .content-workspace-panel:last-child {
+  width: 100%;
+  padding: 1.5rem;
+}
+
+.admin-main-content .content-grid {
+  grid-template-columns: 1fr !important;
+  gap: 1.1rem;
+}
+
+.admin-main-content .content-field {
+  padding: 1.15rem;
+  border-radius: 1.1rem;
+}
+
+.admin-main-content .content-node > h4 {
+  margin-bottom: 0.85rem;
+}
+
+.admin-main-content .content-field input,
+.admin-main-content .content-field textarea,
+.admin-main-content .content-field select {
+  width: 100%;
+  min-height: 3.15rem;
+  padding: 0.9rem 1rem;
+}
+
+.admin-main-content .content-field textarea {
+  min-height: 10rem;
+  resize: vertical;
+}
+
+.admin-main-content .content-image-preview {
+  width: min(100%, 24rem);
+}
+
+.admin-main-content .content-visual-image {
+  width: 100%;
+  max-width: 24rem;
+  min-height: 220px;
+}
+
+.private-workspace--edit .content-field input,
+.private-workspace--edit .content-field textarea,
+.private-workspace--edit .content-field select,
+.private-workspace--edit .admin-toolbar input {
+  min-height: 3.25rem;
+  padding: 0.9rem 1rem;
+  font-size: 0.98rem;
+  line-height: 1.6;
+}
+
+.private-workspace--edit .content-field textarea {
+  min-height: 10rem;
+  resize: vertical;
+}
+
+.private-workspace--edit .content-field label {
+  margin-bottom: 0.45rem;
+  font-size: 0.86rem;
+}
+
+.private-workspace--edit .content-node > h4 {
+  margin-bottom: 0.8rem;
+}
+
+.private-workspace--edit .admin-window-grid,
+.private-workspace--edit .admin-overview-grid,
+.private-workspace--edit .admin-comfort-board,
+.private-workspace--edit .admin-preview-shell,
+.private-workspace--edit .admin-preview-compare-grid,
+.private-workspace--edit .admin-topbar-stats,
+.private-workspace--edit .content-meta-strip {
+  grid-template-columns: 1fr;
+}
+
+.private-workspace--edit .admin-preview-shell,
+.private-workspace--edit .admin-preview-compare-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.private-workspace--edit .admin-topbar-stats,
+.private-workspace--edit .content-meta-strip {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.private-workspace--edit .admin-main-content .admin-manager form,
+.private-workspace--edit .admin-main-content .admin-manager table,
+.private-workspace--edit .admin-main-content .admin-manager > div {
+  width: 100%;
+}
+
+.private-workspace--edit .admin-main-content .admin-manager form > div {
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 1200px) {
+  .private-workspace--edit .admin-main-content .content-workspace-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .private-workspace--edit .content-workspace-panel:first-child {
+    position: static;
+  }
+}
+
 .admin-shell-grid {
   position: relative;
   z-index: 1;
@@ -404,6 +626,25 @@ body[data-private-mode="edit"][data-theme="light"] .admin-main-content .content-
 @media (max-width: 768px) {
   .admin-shell {
     padding: 0.75rem;
+  }
+
+  .edit-shell-topbar,
+  .edit-shell-stage {
+    padding: 0.95rem;
+  }
+
+  .edit-shell-topbar-actions {
+    justify-content: flex-start;
+  }
+
+  .private-workspace--edit .admin-main-content,
+  .private-workspace--edit .admin-main-content .admin-manager-surface,
+  .private-workspace--edit .admin-main-content .content-editor-surface {
+    padding: 0.9rem;
+  }
+
+  .private-workspace--edit .content-grid {
+    grid-template-columns: 1fr;
   }
 
   .admin-shell-sidebar,

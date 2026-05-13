@@ -152,6 +152,10 @@ export const defaultSiteContent = {
         }
       ]
     },
+    resumeSection: {
+      label: 'Download resume',
+      href: ''
+    },
     storySection: {
       eyebrow: 'Scroll story',
       title: 'The homepage now tells the portfolio story in motion.',

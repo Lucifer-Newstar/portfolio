@@ -362,6 +362,11 @@ body[data-ui-surface="public"] .sticky-story-card:hover {
   overflow: hidden;
 }
 
+.home-resume-button-row {
+  display: flex;
+  justify-content: center;
+}
+
 .home-profile-media {
   aspect-ratio: 4 / 3;
   overflow: hidden;

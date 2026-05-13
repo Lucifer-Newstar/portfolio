@@ -86,6 +86,55 @@ function PrivateWorkspace() {
     }
   }, [])
 
+  if (privateMode === 'edit') {
+    return (
+      <div className={`admin-shell private-workspace private-workspace--${privateMode}`}>
+        <div className="admin-shell-backdrop" aria-hidden="true">
+          <span className="admin-shell-orb admin-shell-orb-1" />
+          <span className="admin-shell-orb admin-shell-orb-2" />
+          <span className="admin-shell-gridline" />
+        </div>
+
+        <div className="edit-shell">
+          <header className="edit-shell-topbar admin-shell-panel">
+            <div className="edit-shell-topbar-copy">
+              <span className="eyebrow">Edit mode</span>
+              <h1>Spacious editing workspace</h1>
+              <p>The editor stays front and center here so you can work through long content changes without the navigation squeezing the form.</p>
+            </div>
+
+            <div className="edit-shell-topbar-actions">
+              <div className="edit-shell-theme-toggle" aria-label="Theme control">
+                <ThemeToggle />
+              </div>
+              <NavLink to="/lucifer-newstar_dashboard" end className="btn btn-secondary">
+                Private home
+              </NavLink>
+              <NavLink to="/lucifer-newstar_dashboard/lucifer" className="btn btn-secondary">
+                Lucifer mode
+              </NavLink>
+              <a href="/" className="btn btn-secondary">Public site</a>
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={() => {
+                  clearAdminSession()
+                  window.location.href = '/'
+                }}
+              >
+                Logout
+              </button>
+            </div>
+          </header>
+
+          <section className="edit-shell-stage admin-shell-panel">
+            <Outlet />
+          </section>
+        </div>
+      </div>
+    )
+  }
+
   if (privateMode === 'lucifer') {
     return (
       <div className={`admin-shell private-workspace private-workspace--${privateMode}`}>

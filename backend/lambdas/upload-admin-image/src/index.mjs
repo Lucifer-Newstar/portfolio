@@ -7,6 +7,7 @@ const DEFAULT_ALLOWED_ORIGINS = "http://localhost:5173,https://lucifernewstar-20
 const DEFAULT_BUCKET = "navin-portfolio";
 const DEFAULT_SITE_URL = "https://lucifernewstar-2006.xyz";
 const MAX_IMAGE_BYTES = 3.5 * 1024 * 1024;
+const MAX_DOCUMENT_BYTES = 5 * 1024 * 1024;
 
 function corsHeaders(event) {
   const allowedOrigins = String(process.env.ALLOWED_ORIGINS || DEFAULT_ALLOWED_ORIGINS)
@@ -79,6 +80,9 @@ function extensionFromMimeType(contentType) {
   if (contentType === "image/gif") return "gif";
   if (contentType === "image/svg+xml") return "svg";
   if (contentType === "image/avif") return "avif";
+  if (contentType === "application/pdf") return "pdf";
+  if (contentType === "application/msword") return "doc";
+  if (contentType === "application/vnd.openxmlformats-officedocument.wordprocessingml.document") return "docx";
   return "bin";
 }
 
@@ -86,7 +90,8 @@ function buildObjectKey(filename, contentType) {
   const safeName = sanitizeFilename(filename).replace(/\.[a-z0-9]+$/i, "");
   const extension = extensionFromMimeType(contentType);
   const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
-  return `images/uploads/${timestamp}-${safeName}.${extension}`;
+  const folder = contentType.startsWith("application/") ? "documents/uploads" : "images/uploads";
+  return `${folder}/${timestamp}-${safeName}.${extension}`;
 }
 
 export const handler = async (event) => {
@@ -133,11 +138,18 @@ export const handler = async (event) => {
       };
     }
 
-    if (!/^image\/(avif|gif|jpe?g|png|svg\+xml|webp)$/i.test(contentType)) {
+    const isImage = /^image\/(avif|gif|jpe?g|png|svg\+xml|webp)$/i.test(contentType);
+    const isDocument = [
+      "application/pdf",
+      "application/msword",
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    ].includes(contentType);
+
+    if (!isImage && !isDocument) {
       return {
         statusCode: 400,
         headers: corsHeaders(event),
-        body: JSON.stringify({ error: "Only image uploads are supported." }),
+        body: JSON.stringify({ error: "Only image uploads and PDF/DOC/DOCX documents are supported." }),
       };
     }
 
@@ -150,11 +162,13 @@ export const handler = async (event) => {
       };
     }
 
-    if (buffer.length > MAX_IMAGE_BYTES) {
+    const maxBytes = isDocument ? MAX_DOCUMENT_BYTES : MAX_IMAGE_BYTES;
+
+    if (buffer.length > maxBytes) {
       return {
         statusCode: 413,
         headers: corsHeaders(event),
-        body: JSON.stringify({ error: "Image is too large. Keep uploads under 3.5 MB." }),
+        body: JSON.stringify({ error: isDocument ? "Document is too large. Keep uploads under 5 MB." : "Image is too large. Keep uploads under 3.5 MB." }),
       };
     }
 
@@ -174,7 +188,7 @@ export const handler = async (event) => {
       statusCode: 200,
       headers: corsHeaders(event),
       body: JSON.stringify({
-        message: "Image uploaded successfully.",
+        message: isDocument ? "Document uploaded successfully." : "Image uploaded successfully.",
         key: objectKey,
         url: `${siteUrl}/${objectKey}`,
       }),

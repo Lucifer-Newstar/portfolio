@@ -20,6 +20,9 @@ function HomeProfessional() {
     [home.signalModes],
   )
   const [currentRole, setCurrentRole] = useState(0)
+  const [displayText, setDisplayText] = useState('')
+  const [isDeleting, setIsDeleting] = useState(false)
+  const [typingSpeed, setTypingSpeed] = useState(150)
   const [activeSignalName, setActiveSignalName] = useState(() => signalModes[0]?.name ?? '')
   const [skills, setSkills] = useState([])
   const [projects, setProjects] = useState([])
@@ -37,16 +40,44 @@ function HomeProfessional() {
   const homepageSignals = useMemo(() => buildHomepageSignals(skills, projects), [skills, projects])
   const storySteps = home.storySection?.steps?.length ? home.storySection.steps : []
   const stickyPhases = home.stickyStory?.phases?.length ? home.stickyStory.phases : []
+  const resumeSection = home.resumeSection || null
 
   useEffect(() => {
-    if (roles.length <= 1) return undefined
+    const fullText = roles[currentRole] || roles[0] || ''
 
-    const timer = window.setInterval(() => {
-      setCurrentRole((value) => (value + 1) % roles.length)
-    }, 2800)
+    if (!fullText) {
+      setDisplayText('')
+      return undefined
+    }
 
-    return () => window.clearInterval(timer)
-  }, [roles])
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setDisplayText(fullText)
+      return undefined
+    }
+
+    const handleTyping = () => {
+      if (isDeleting) {
+        setDisplayText(fullText.substring(0, displayText.length - 1))
+        setTypingSpeed(50)
+      } else {
+        setDisplayText(fullText.substring(0, displayText.length + 1))
+        setTypingSpeed(150)
+      }
+
+      if (!isDeleting && displayText === fullText) {
+        setIsDeleting(true)
+        setTypingSpeed(1800)
+      } else if (isDeleting && displayText === '') {
+        setIsDeleting(false)
+        setCurrentRole((value) => (value + 1) % roles.length)
+        setTypingSpeed(500)
+      }
+    }
+
+    const timer = window.setTimeout(handleTyping, typingSpeed)
+
+    return () => window.clearTimeout(timer)
+  }, [currentRole, displayText, isDeleting, roles, typingSpeed])
 
   useEffect(() => {
     let mounted = true
@@ -72,7 +103,7 @@ function HomeProfessional() {
             <span className="eyebrow">Cloud Engineer | DevOps | Reliability</span>
             <h1 className="hero-title">{home.title}</h1>
             <p className="hero-subtitle">
-              {home.introPrefix} <span className="typed-text">{activeRoleLabel}</span>
+              {home.introPrefix} <span className="typed-text">{displayText}</span><span className="cursor" aria-hidden="true">|</span>
             </p>
             <p className="hero-description">
               I build cloud platforms, delivery systems, and observability workflows that help
@@ -255,6 +286,22 @@ function HomeProfessional() {
           ))}
         </div>
       </section>
+
+      {resumeSection?.href ? (
+        <section className="container page-section">
+          <div className="home-resume-button-row">
+            <a
+              href={resumeSection.href}
+              className="btn btn-primary"
+              download
+              target="_blank"
+              rel="noreferrer"
+            >
+              {resumeSection.label || 'Download resume'}
+            </a>
+          </div>
+        </section>
+      ) : null}
 
       <section className="container page-section home-cta-band">
         <article className="home-cta-card">

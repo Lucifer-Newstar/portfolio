@@ -139,6 +139,13 @@ export function upsertCollectionItem(state, collectionName, item) {
   }
 }
 
+export function mergeCollectionItems(state, collectionName, items = []) {
+  return items.reduce(
+    (nextState, item) => upsertCollectionItem(nextState, collectionName, item),
+    normalizeLuciferState(state)
+  )
+}
+
 export function deleteCollectionItem(state, collectionName, itemId) {
   const nextState = normalizeLuciferState(state)
   return {
@@ -280,17 +287,19 @@ const GOAL_CALORIE_ADJUSTMENTS = {
 }
 
 export function calculateDailyCaloriesRequired(profile = {}, bodyEntry = {}) {
-  const weightKg = Number(bodyEntry.weight || 0)
-  const heightCm = Number(profile.heightCm || 0)
-  const age = Number(profile.age || 0)
-  const sex = String(profile.sex || 'male').toLowerCase()
+  const safeProfile = profile && typeof profile === 'object' ? profile : {}
+  const safeBodyEntry = bodyEntry && typeof bodyEntry === 'object' ? bodyEntry : {}
+  const weightKg = Number(safeBodyEntry.weight || 0)
+  const heightCm = Number(safeProfile.heightCm || 0)
+  const age = Number(safeProfile.age || 0)
+  const sex = String(safeProfile.sex || 'male').toLowerCase()
   if (weightKg <= 0 || heightCm <= 0 || age <= 0) return 0
 
   const baseBmr = 10 * weightKg + 6.25 * heightCm - 5 * age
   const sexAdjustment = sex === 'female' ? -161 : 5
   const bmr = baseBmr + sexAdjustment
-  const activityMultiplier = ACTIVITY_MULTIPLIERS[profile.activityLevel] || ACTIVITY_MULTIPLIERS.moderate
-  const goalAdjustment = GOAL_CALORIE_ADJUSTMENTS[profile.goal] || 0
+  const activityMultiplier = ACTIVITY_MULTIPLIERS[safeProfile.activityLevel] || ACTIVITY_MULTIPLIERS.moderate
+  const goalAdjustment = GOAL_CALORIE_ADJUSTMENTS[safeProfile.goal] || 0
   return Math.max(1200, Math.round((bmr * activityMultiplier) + goalAdjustment))
 }
 

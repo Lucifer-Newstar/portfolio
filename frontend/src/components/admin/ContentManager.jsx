@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { mergeWithDefaultContent } from '../../content/siteContent'
 import { useSiteContent } from '../../context/useSiteContent'
-import { uploadAdminImage } from '../../utils/api'
+import { uploadAdminAsset } from '../../utils/api'
 
 function updateByPath(target, path, value) {
   if (path.length === 0) return value
@@ -36,6 +36,15 @@ function isImageField(label, value) {
   return /image|avatar|logo|icon|photo|banner|thumbnail/i.test(label) || looksLikeImageUrl(value) || looksLikeImageData(value)
 }
 
+function isDocumentUrl(value) {
+  return typeof value === 'string' && /^(https?:\/\/|\/).+\.(pdf|doc|docx)(\?.*)?$/i.test(value)
+}
+
+function isDocumentField(label, value, path) {
+  const joinedPath = [...path, label].join('.')
+  return /resume|cv|document|pdf/i.test(joinedPath) || isDocumentUrl(value)
+}
+
 function getRecommendedImageSize(label, path) {
   const joinedPath = [...path, label].join('.').toLowerCase()
 
@@ -45,6 +54,9 @@ function getRecommendedImageSize(label, path) {
   if (joinedPath.includes('avatar')) return 'Recommended: 800 x 800 px square'
   if (joinedPath.includes('logo') || joinedPath.includes('icon')) return 'Recommended: 512 x 512 px square'
   if (joinedPath.includes('banner')) return 'Recommended: 1600 x 900 px banner'
+  if (joinedPath.includes('resume') || joinedPath.includes('cv') || joinedPath.includes('document') || joinedPath.includes('pdf')) {
+    return 'Recommended: PDF, DOC, or DOCX under 5 MB'
+  }
 
   return 'Recommended: at least 1200 px wide for crisp display'
 }
@@ -121,22 +133,37 @@ function ContentNodeEditor({ label, value, path, onChange }) {
     <div className="content-field">
       <label>{label}</label>
       {renderPrimitiveInput(value, (nextValue) => onChange(path, nextValue))}
-      {isImageField(label, value) && (
+      {(isImageField(label, value) || isDocumentField(label, value, path)) && (
         <div className="content-upload-actions">
           <span className="content-upload-hint">{getRecommendedImageSize(label, path)}</span>
           <label className="btn btn-secondary btn-sm">
-            {isUploading ? 'Uploading...' : 'Upload image'}
+            {isUploading ? 'Uploading...' : isDocumentField(label, value, path) ? 'Upload file' : 'Upload image'}
             <input
               type="file"
-              accept="image/*"
+              accept={isDocumentField(label, value, path) ? '.pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document' : 'image/*'}
               hidden
               disabled={isUploading}
               onChange={async (event) => {
                 const file = event.target.files?.[0]
                 if (!file) return
 
-                if (file.size > 3.5 * 1024 * 1024) {
-                  alert('Image is too large. Keep uploads under 3.5 MB.')
+                const isDocumentUpload = isDocumentField(label, value, path)
+                const sizeLimit = isDocumentUpload ? 5 * 1024 * 1024 : 3.5 * 1024 * 1024
+
+                const isSupportedDocument = [
+                  'application/pdf',
+                  'application/msword',
+                  'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                ].includes(file.type) || /\.(pdf|doc|docx)$/i.test(file.name)
+
+                if (isDocumentUpload && !isSupportedDocument) {
+                  alert('Only PDF, DOC, and DOCX files are supported right now.')
+                  event.target.value = ''
+                  return
+                }
+
+                if (file.size > sizeLimit) {
+                  alert(isDocumentUpload ? 'Document is too large. Keep uploads under 5 MB.' : 'Image is too large. Keep uploads under 3.5 MB.')
                   event.target.value = ''
                   return
                 }
@@ -144,14 +171,14 @@ function ContentNodeEditor({ label, value, path, onChange }) {
                 setIsUploading(true)
                 try {
                   const data = await fileToBase64(file)
-                  const result = await uploadAdminImage({
+                  const result = await uploadAdminAsset({
                     filename: file.name,
                     contentType: file.type,
                     data,
                   })
                   onChange(path, result.url || '')
                 } catch (error) {
-                  alert(`Image upload failed: ${error.message}`)
+                  alert(`Upload failed: ${error.message}`)
                 } finally {
                   setIsUploading(false)
                   event.target.value = ''
@@ -161,7 +188,7 @@ function ContentNodeEditor({ label, value, path, onChange }) {
           </label>
           {value ? (
             <button type="button" className="btn btn-secondary btn-sm" onClick={() => onChange(path, '')}>
-              Clear image
+              Clear file
             </button>
           ) : null}
         </div>
@@ -169,6 +196,13 @@ function ContentNodeEditor({ label, value, path, onChange }) {
       {(looksLikeImageUrl(value) || looksLikeImageData(value)) && (
         <div className="content-image-preview">
           <img src={value} alt={label} className="content-visual-image" />
+        </div>
+      )}
+      {isDocumentUrl(value) && (
+        <div className="content-file-preview">
+          <a href={value} target="_blank" rel="noreferrer" className="btn btn-secondary btn-sm">
+            Open uploaded file
+          </a>
         </div>
       )}
     </div>

@@ -33,6 +33,14 @@ function formatDate(value) {
   return String(value).slice(0, 10)
 }
 
+function formatWorkoutHeadline(entry) {
+  if (!entry) return 'No sessions logged yet'
+  if (Number(entry.weight || 0) > 0) return `${entry.sets} x ${entry.reps} @ ${entry.weight}${entry.unit || 'kg'}`
+  if (Number(entry.durationSeconds || 0) > 0) return `${entry.durationSeconds}s effort`
+  if (Number(entry.distance || 0) > 0) return `${entry.distance}${entry.distanceUnit || 'm'} tracked`
+  return `${entry.sets} sets • ${entry.reps} reps`
+}
+
 function buildLinePath(points = []) {
   if (!points.length) return ''
   const values = points.map((point) => Number(point.value || 0))
@@ -171,6 +179,9 @@ function LuciferWorkouts() {
   const [calisthenicsForm, setCalisthenicsForm] = useState({ skill: '', status: 'learning', progress: 0, notes: '' })
   const [selectedExerciseId, setSelectedExerciseId] = useState(EXERCISE_LIBRARY[0]?.id || '')
   const [selectedMuscleId, setSelectedMuscleId] = useState('')
+  const [exerciseSearch, setExerciseSearch] = useState('')
+  const [exerciseBodyPartFilter, setExerciseBodyPartFilter] = useState('all')
+  const [exerciseTypeFilter, setExerciseTypeFilter] = useState('all')
   const [workoutLogForm, setWorkoutLogForm] = useState({
     date: '',
     exerciseId: EXERCISE_LIBRARY[0]?.id || '',
@@ -192,6 +203,16 @@ function LuciferWorkouts() {
     () => EXERCISE_LIBRARY.find((entry) => entry.id === selectedExerciseId) || EXERCISE_LIBRARY[0],
     [selectedExerciseId]
   )
+  const filteredExercises = useMemo(() => {
+    const query = exerciseSearch.trim().toLowerCase()
+    return EXERCISE_LIBRARY.filter((exercise) => {
+      const matchesQuery = !query || exercise.name.toLowerCase().includes(query)
+      const matchesBodyPart = exerciseBodyPartFilter === 'all' || exercise.bodyPart === exerciseBodyPartFilter
+      const matchesType = exerciseTypeFilter === 'all' || exercise.type === exerciseTypeFilter
+      const matchesMuscle = !selectedMuscleId || exercise.muscles.includes(selectedMuscleId)
+      return matchesQuery && matchesBodyPart && matchesType && matchesMuscle
+    })
+  }, [exerciseBodyPartFilter, exerciseSearch, exerciseTypeFilter, selectedMuscleId])
 
   const sections = [
     { id: 'strength-signal', label: 'Strength signal', detail: 'PRs, BMI, calorie targets, and current status' },
@@ -226,6 +247,20 @@ function LuciferWorkouts() {
   const vitalEntries = [...privateState.vitalsLog].sort((left, right) => String(right.date || right.updatedAt).localeCompare(String(left.date || left.updatedAt)))
   const fitnessProfiles = [...privateState.fitnessProfiles].sort((left, right) => String(right.date || right.updatedAt).localeCompare(String(left.date || left.updatedAt)))
   const selectedMuscleExercises = selectedMuscleId ? getExercisesByMuscle(selectedMuscleId) : []
+  const recentWorkoutVolume = recentWorkouts.slice(0, 8).reduce((sum, entry) => (
+    sum + (Number(entry.sets || 0) * Number(entry.reps || 0) * Math.max(Number(entry.weight || 0), 1))
+  ), 0)
+  const recentAverageRpe = recentWorkouts.length
+    ? (recentWorkouts.slice(0, 8).reduce((sum, entry) => sum + Number(entry.rpe || 0), 0) / Math.max(recentWorkouts.slice(0, 8).length, 1)).toFixed(1)
+    : null
+  const recentCategoryBreakdown = recentWorkouts.slice(0, 8).reduce((acc, entry) => {
+    const key = entry.category || 'strength'
+    acc[key] = (acc[key] || 0) + 1
+    return acc
+  }, {})
+  const dominantCategory = Object.entries(recentCategoryBreakdown).sort((left, right) => right[1] - left[1])[0]?.[0] || 'strength'
+  const selectedExerciseRecent = recentWorkouts.find((entry) => entry.exerciseId === selectedExerciseId || entry.exercise === selectedExercise?.name)
+  const calisthenicsEntries = [...privateState.calisthenicsProgress].sort((left, right) => String(right.updatedAt || '').localeCompare(String(left.updatedAt || '')))
 
   const todayCaloriesDelta = (summary.workout.dailyCaloriesConsumed || 0) - (summary.workout.dailyCaloriesRequired || 0)
   const targetWeight = Number(summary.workout.latestFitnessProfile?.goalWeight || 0)
@@ -757,7 +792,20 @@ function LuciferWorkouts() {
       {activeSectionId === 'workout-logbook' ? (
       <section id="workout-logbook" className="private-two-column">
         <article className="private-card lucifer-section-panel">
+          <span className="eyebrow">Session composer</span>
           <h3>Detailed workout log</h3>
+          <div className="lucifer-insight-grid lucifer-logbook-summary">
+            <div className="lucifer-insight-card">
+              <span className="eyebrow">Selected exercise</span>
+              <strong>{selectedExercise?.name || 'Movement not selected'}</strong>
+              <p>{selectedExercise?.bodyPart || 'Body part not mapped'} • {selectedExercise?.type || workoutLogForm.category}</p>
+            </div>
+            <div className="lucifer-insight-card">
+              <span className="eyebrow">Last logged</span>
+              <strong>{formatWorkoutHeadline(selectedExerciseRecent)}</strong>
+              <p>{selectedExerciseRecent ? formatDate(selectedExerciseRecent.date) : 'No previous entry for this movement yet.'}</p>
+            </div>
+          </div>
           <form className="private-inline-form" onSubmit={async (event) => {
             event.preventDefault()
             await saveCollectionItem(LUCIFER_COLLECTIONS.workoutLog, {
@@ -838,6 +886,7 @@ function LuciferWorkouts() {
         </article>
 
         <article className="private-card lucifer-section-panel">
+          <span className="eyebrow">Skill lane</span>
           <h3>Calisthenics progress</h3>
           <form className="private-inline-form" onSubmit={async (event) => {
             event.preventDefault()
@@ -854,15 +903,66 @@ function LuciferWorkouts() {
             <textarea value={calisthenicsForm.notes} onChange={(event) => setCalisthenicsForm({ ...calisthenicsForm, notes: event.target.value })} placeholder="notes" rows="3" />
             <button type="submit" className="btn btn-primary">Save calisthenics skill</button>
           </form>
+
+          <div className="lucifer-progress-stack">
+            {calisthenicsEntries.slice(0, 4).map((entry) => (
+              <article key={entry.id} className="lucifer-progress-card">
+                <div className="lucifer-progress-head">
+                  <strong>{entry.skill}</strong>
+                  <span>{entry.status}</span>
+                </div>
+                <div className="lucifer-progress-track">
+                  <span className="lucifer-progress-fill" style={{ width: `${Math.max(0, Math.min(100, Number(entry.progress || 0)))}%`, '--progress-tone': 'var(--secondary)' }} />
+                </div>
+                <small>{Number(entry.progress || 0)}% progress{entry.notes ? ` • ${entry.notes}` : ''}</small>
+              </article>
+            ))}
+          </div>
         </article>
 
         <article className="private-card lucifer-section-panel lucifer-span-2">
+          <span className="eyebrow">Logbook review</span>
           <h3>Recent workout entries</h3>
-          <div className="detail-list">
+          <div className="lucifer-insight-grid lucifer-logbook-summary">
+            <div className="lucifer-insight-card">
+              <span className="eyebrow">Recent sessions</span>
+              <strong>{recentWorkouts.slice(0, 8).length}</strong>
+              <p>Dominant lane: {dominantCategory}</p>
+            </div>
+            <div className="lucifer-insight-card">
+              <span className="eyebrow">Recent volume</span>
+              <strong>{Math.round(recentWorkoutVolume)}</strong>
+              <p>Across the last 8 logged sessions.</p>
+            </div>
+            <div className="lucifer-insight-card">
+              <span className="eyebrow">Average RPE</span>
+              <strong>{recentAverageRpe || '-'}</strong>
+              <p>Intensity trend across recent entries.</p>
+            </div>
+            <div className="lucifer-insight-card">
+              <span className="eyebrow">Movement focus</span>
+              <strong>{selectedExercise?.name || 'Exercise'}</strong>
+              <p>{selectedExercise?.muscles?.join(', ') || 'Muscle mapping appears here.'}</p>
+            </div>
+          </div>
+          <div className="lucifer-logbook-list">
             {recentWorkouts.slice(0, 8).map((entry) => (
-              <p key={entry.id}>
-                {entry.exercise} - {entry.sets} x {entry.reps} @ {entry.weight || 0}{entry.unit || 'kg'} | RPE {entry.rpe || '-'} | {formatDate(entry.date)}
-              </p>
+              <article key={entry.id} className="lucifer-log-entry-card">
+                <div className="lucifer-log-entry-head">
+                  <div>
+                    <strong>{entry.exercise}</strong>
+                    <span>{formatDate(entry.date)} • {entry.category || 'strength'}</span>
+                  </div>
+                  <button type="button" className="btn btn-secondary lucifer-inline-button" onClick={() => removeCollectionItem(LUCIFER_COLLECTIONS.workoutLog, entry.id)}>Remove</button>
+                </div>
+                <div className="lucifer-log-entry-metrics">
+                  <span>{formatWorkoutHeadline(entry)}</span>
+                  <span>RPE {entry.rpe || '-'} / RIR {entry.rir || '-'}</span>
+                  <span>{entry.bodyPart || 'Body part n/a'}</span>
+                  <span>{entry.prMetric || 'volume'} PR tracking</span>
+                </div>
+                {entry.notes ? <p>{entry.notes}</p> : null}
+              </article>
             ))}
             {!recentWorkouts.length ? <p>No workout entries yet.</p> : null}
           </div>
@@ -873,6 +973,51 @@ function LuciferWorkouts() {
       {activeSectionId === 'exercise-lists' ? (
       <section id="exercise-lists" className="private-card lucifer-section-panel">
         <h3>Exercise lists</h3>
+        <div className="lucifer-filter-bar">
+          <input
+            value={exerciseSearch}
+            onChange={(event) => setExerciseSearch(event.target.value)}
+            placeholder="Search exercise name"
+          />
+          <select value={exerciseBodyPartFilter} onChange={(event) => setExerciseBodyPartFilter(event.target.value)}>
+            <option value="all">All body parts</option>
+            {EXERCISE_GROUPS.map((group) => (
+              <option key={group.id} value={group.id}>{group.label}</option>
+            ))}
+          </select>
+          <select value={exerciseTypeFilter} onChange={(event) => setExerciseTypeFilter(event.target.value)}>
+            <option value="all">All types</option>
+            <option value="strength">Strength</option>
+            <option value="conditioning">Conditioning</option>
+            <option value="mobility">Mobility</option>
+          </select>
+          <button
+            type="button"
+            className="btn btn-secondary"
+            onClick={() => {
+              setExerciseSearch('')
+              setExerciseBodyPartFilter('all')
+              setExerciseTypeFilter('all')
+              setSelectedMuscleId('')
+            }}
+          >
+            Clear filters
+          </button>
+        </div>
+
+        <div className="lucifer-insight-grid lucifer-logbook-summary">
+          <div className="lucifer-insight-card">
+            <span className="eyebrow">Interlinked map</span>
+            <strong>{selectedMuscleId ? 'Muscle-linked' : 'Full library'}</strong>
+            <p>Exercises are linked by muscle, body part, and movement type.</p>
+          </div>
+          <div className="lucifer-insight-card">
+            <span className="eyebrow">Filtered results</span>
+            <strong>{filteredExercises.length}</strong>
+            <p>{selectedMuscleId ? 'Current muscle filter is active.' : 'No muscle filter applied.'}</p>
+          </div>
+        </div>
+
         <div className="exercise-library-groups">
           {EXERCISE_GROUPS.map((group) => (
             <article key={group.id} className="exercise-group-card">
@@ -892,26 +1037,37 @@ function LuciferWorkouts() {
                 ))}
               </div>
               <div className="exercise-tag-row">
-                {group.exercises.map((exercise) => (
+                {group.exercises
+                  .filter((exercise) => filteredExercises.some((entry) => entry.id === exercise.id))
+                  .map((exercise) => (
                   <button key={exercise.id} type="button" className={`exercise-tag ${selectedExerciseId === exercise.id ? 'is-active' : ''}`} onClick={() => syncExercise(exercise.id)}>
                     {exercise.name}
                   </button>
-                ))}
+                  ))}
               </div>
             </article>
           ))}
         </div>
 
-        {selectedMuscleExercises.length ? (
+        {filteredExercises.length ? (
           <div className="private-card lucifer-section-panel">
-            <span className="eyebrow">Exercises for selected muscle</span>
+            <span className="eyebrow">{selectedMuscleId ? 'Exercises for selected muscle' : 'Filtered exercises'}</span>
             <div className="exercise-tag-row">
-              {selectedMuscleExercises.map((exercise) => (
+              {filteredExercises.map((exercise) => (
                 <button key={exercise.id} type="button" className="exercise-tag" onClick={() => syncExercise(exercise.id)}>
                   {exercise.name}
                 </button>
               ))}
             </div>
+          </div>
+        ) : null}
+
+        {selectedMuscleId && selectedMuscleExercises.length ? (
+          <div className="private-card lucifer-section-panel">
+            <span className="eyebrow">Muscle linkage detail</span>
+            <p>
+              The selected muscle currently links to {selectedMuscleExercises.length} exercise{selectedMuscleExercises.length === 1 ? '' : 's'} in the library.
+            </p>
           </div>
         ) : null}
       </section>
