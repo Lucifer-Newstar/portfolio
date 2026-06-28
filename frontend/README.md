@@ -1,16 +1,52 @@
-# React + Vite
+# Frontend App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This folder contains the active Vite + React application for the portfolio platform. If you are running, testing, or building the website, start here.
 
-Currently, two official plugins are available:
+## Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- React 19
+- Vite 5
+- React Router 7
+- GSAP
+- Three.js with `@react-three/fiber` and `@react-three/drei`
 
-## React Compiler
+## Run Locally
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```bash
+cd frontend
+npm ci --legacy-peer-deps
+npm run dev
+```
 
-## Expanding the ESLint configuration
+Node version: `22` via [frontend/.nvmrc](/D:/navin/Resume%20and%20Portfolio/portfolio/frontend/.nvmrc)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Recommended Env
+
+```env
+VITE_API_BASE_URL=https://6e2n1oy6k9.execute-api.us-east-1.amazonaws.com/prod
+VITE_COGNITO_DOMAIN=https://us-east-1iwnapdbk8.auth.us-east-1.amazoncognito.com
+VITE_COGNITO_CLIENT_ID=2kqig6fjtjb5rot22ccttr398n
+VITE_COGNITO_REDIRECT_URI=https://lucifernewstar-2006.xyz/callback
+VITE_COGNITO_SCOPE=openid email phone
+```
+
+The app has fallback values for the current live environment, but explicit env values are the safer rebuild path.
+
+## Verification
+
+```bash
+cd frontend
+npm run lint
+npm run build
+npm audit --omit=dev
+```
+
+## SonarQube
+
+CI is prepared for an optional repo-level SonarQube quality gate. The scan covers `frontend/src/` and the Lambda handlers under `backend/lambdas/**/src/`, and it runs only when these GitHub settings are configured:
+
+- Secret: `SONAR_TOKEN`
+- Variable: `SONAR_HOST_URL`
+- Variable: `SONAR_PROJECT_KEY`
+
+If those values are absent, the rest of CI still runs normally.

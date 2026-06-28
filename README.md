@@ -1,8 +1,32 @@
 # Portfolio Platform
 
-Production-style personal portfolio platform with a public React site, a hidden Cognito-protected admin dashboard, AWS-backed content APIs, GitHub Actions deployment, SES contact delivery, operations telemetry, and an exported AWS recovery snapshot.
+Production-style personal portfolio platform with a public React site, a Cognito-protected admin CMS, AWS-backed content APIs, GitHub Actions deployment, SES contact delivery, operations telemetry, and an exported AWS recovery snapshot.
 
-Live site: `https://lucifernewstar-2006.xyz`
+Live site: [lucifernewstar-2006.xyz](https://lucifernewstar-2006.xyz)
+
+## Resume-Ready Snapshot
+
+- Architecture: serverless AWS platform with a React/Vite frontend
+- Delivery: GitHub Actions CI/CD with optional SonarQube quality gate wiring
+- Operations: admin-triggered deploys, public ops summary, richer admin ops insights
+- Security posture: Cognito-protected admin, SSM-backed GitHub token lookup, allowlisted CORS on browser-facing admin/contact flows
+- Status on `2026-05-15`: `frontend/` lint, build, and production dependency audit all pass locally
+
+```mermaid
+flowchart LR
+    U["Visitor or Admin"] --> F["React 19 + Vite frontend"]
+    F --> APIGW["API Gateway REST API"]
+    APIGW --> L["AWS Lambda handlers"]
+    L --> DDB["DynamoDB"]
+    L --> S3["S3 uploads and site assets"]
+    L --> SES["SES contact delivery"]
+    L --> SSM["SSM Parameter Store"]
+    S3 --> CF["CloudFront"]
+    CF --> U
+    GH["GitHub Actions"] --> S3
+    GH --> CF
+    COG["Cognito Hosted UI"] --> F
+```
 
 ## What This Repo Contains
 
@@ -39,13 +63,15 @@ Important note: the root-level `src/` folder is an older stub and is not the pro
 - Node.js `22` for the frontend workflow
 - npm
 
-### Start the app
+### Start the active app
 
 ```bash
 cd frontend
 npm ci --legacy-peer-deps
 npm run dev
 ```
+
+Important note: the root-level `src/` folder is an older stub and is not the production app. The real website lives in `frontend/src/`.
 
 ### Recommended frontend env
 
@@ -65,11 +91,15 @@ The app has fallback values in code for the current live environment, but explic
 cd frontend
 npm run lint
 npm run build
+npm audit --omit=dev
 ```
 
 ## SonarQube
 
-The CI workflow includes an optional SonarQube scan for `frontend/`.
+The CI workflow is prepared for an optional repo-level SonarQube quality gate. It analyzes:
+
+- `frontend/src/`
+- `backend/lambdas/**/src/`
 
 Enable it in GitHub repository settings with:
 
@@ -79,13 +109,29 @@ Enable it in GitHub repository settings with:
 
 If those values are not configured, the SonarQube step is skipped and the rest of CI still runs normally.
 
-Current local verification status on `2026-04-08`:
+The scan configuration lives in [sonar-project.properties](/D:/navin/Resume%20and%20Portfolio/portfolio/sonar-project.properties).
+
+Current local verification status on `2026-05-15`:
 
 - `npm run lint`: passed
 - `npm run build`: passed
-- Build warnings still present:
-- `three-stack` output chunk is large
-- `LinkedDataModal.jsx` is both statically and dynamically imported, so that import is not split as intended
+- `npm audit --omit=dev`: passed
+- Build warning still present: large frontend bundle chunks remain, especially around the `three`-heavy visual stack
+
+## Security And Operations
+
+- Admin authentication uses Cognito Hosted UI plus PKCE and token-backed protected routes.
+- Admin-triggered deploys fetch the GitHub PAT from SSM path `/portfolio/github/token` instead of storing plaintext tokens in Lambda env vars.
+- Browser-facing admin/content/contact handlers use allowlisted CORS instead of wildcard browser access.
+- Content saves strip embedded `data:image/...` payloads before upload and persist large content through chunked `site_content` records in DynamoDB.
+- Production deploy syncs must keep `images/uploads/*` excluded from destructive S3 deletes.
+
+## Ship Checklist
+
+- Run the active app from `frontend/`, not the legacy root `src/`.
+- Keep the project description centered on React/Vite, AWS serverless services, GitHub Actions CI/CD, observability, and optional SonarQube.
+- Do not claim `Docker`, `Kubernetes`, or `microservices` unless they are actually implemented and used in this repo.
+- Finish one manual live-environment pass for auth, save, upload, deploy, contact, and ops flows before calling the site fully signed off.
 
 ## Deployment Flow
 
@@ -122,6 +168,7 @@ Start here:
 1. `docs/DOCS-INDEX.md`
 2. `docs/MASTER-DOC.md`
 3. `docs/INFRASTRUCTURE-REBUILD-PLAYBOOK.md`
+4. `docs/SHIP-READINESS-CHECKLIST.md`
 
 Specialized references:
 

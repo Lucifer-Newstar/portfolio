@@ -1,6 +1,6 @@
 # Portfolio Documentation Index
 
-Last updated: 2026-04-08
+Last updated: 2026-05-15
 
 This folder is the source-of-truth documentation set for understanding, rebuilding, operating, verifying, and restoring the portfolio platform. Together with `backend/aws-backups/2026-04-08/`, it should be enough to recreate the project from scratch.
 
@@ -71,9 +71,15 @@ This folder is the source-of-truth documentation set for understanding, rebuildi
 - API/Lambda contract
 - validation and recovery notes
 
+13. `docs/SHIP-READINESS-CHECKLIST.md`
+- resume-ready finish line
+- verified safeguards and CI status
+- manual live QA list
+- public positioning guardrails
+
 ## AWS Backup Reference
 
-13. `backend/aws-backups/2026-04-08/`
+14. `backend/aws-backups/2026-04-08/`
 - exported live AWS inventory and service state
 - Lambda ZIPs, API exports, table scans, infra metadata
 - repo copy includes redaction where needed for safety
@@ -83,4 +89,5 @@ Use this order when onboarding or rebuilding:
 1. `README.md`
 2. `docs/MASTER-DOC.md`
 3. `docs/INFRASTRUCTURE-REBUILD-PLAYBOOK.md`
-4. `docs/CRITICAL-ISSUES-WARNINGS-AND-PRECAUTIONS.md`
+4. `docs/SHIP-READINESS-CHECKLIST.md`
+5. `docs/CRITICAL-ISSUES-WARNINGS-AND-PRECAUTIONS.md`

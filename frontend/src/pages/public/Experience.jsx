@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react'
+import { lazy, Suspense, useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { fetchExperience } from '../../utils/api'
-import LinkedDataModal from '../../components/LinkedDataModal'
 import { useSiteContent } from '../../context/useSiteContent'
+
+const LinkedDataModal = lazy(() => import('../../components/LinkedDataModal'))
 
 function Experience() {
   const { siteContent } = useSiteContent()
@@ -123,13 +124,15 @@ function Experience() {
         ))}
       </section>
 
-      <LinkedDataModal
-        isOpen={modalOpen}
-        onClose={() => setModalOpen(false)}
-        itemType={selectedItem.type}
-        itemId={selectedItem.id}
-        itemName={selectedItem.name}
-      />
+      <Suspense fallback={null}>
+        <LinkedDataModal
+          isOpen={modalOpen}
+          onClose={() => setModalOpen(false)}
+          itemType={selectedItem.type}
+          itemId={selectedItem.id}
+          itemName={selectedItem.name}
+        />
+      </Suspense>
     </div>
   )
 }
