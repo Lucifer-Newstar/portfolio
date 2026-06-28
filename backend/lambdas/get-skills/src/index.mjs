@@ -12,7 +12,7 @@ export const handler = async (event) => {
     
     const response = await docClient.send(command);
     
-    const items = response.Items.sort((a, b) => (a.order || 999) - (b.order || 999));
+    const items = (response.Items || []).sort((a, b) => (a.order ?? 999) - (b.order ?? 999));
     
     return {
       statusCode: 200,

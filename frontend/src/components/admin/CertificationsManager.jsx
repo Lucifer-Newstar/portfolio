@@ -61,8 +61,12 @@ function CertificationsManager() {
 
   const handleDelete = async (id) => {
     if (confirm('Delete this certification?')) {
-      await deleteCertification(id)
-      await refreshCertifications()
+      try {
+        await deleteCertification(id)
+        await refreshCertifications()
+      } catch (error) {
+        alert('Error: ' + error.message)
+      }
     }
   }
 

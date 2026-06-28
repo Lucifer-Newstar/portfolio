@@ -61,8 +61,12 @@ function ProjectsManager() {
 
   const handleDelete = async (id) => {
     if (confirm('Delete this project?')) {
-      await deleteProject(id)
-      await refreshProjects()
+      try {
+        await deleteProject(id)
+        await refreshProjects()
+      } catch (error) {
+        alert('Error: ' + error.message)
+      }
     }
   }
 

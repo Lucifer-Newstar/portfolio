@@ -69,8 +69,12 @@ function PostsManager() {
 
   const handleDelete = async (id) => {
     if (confirm('Delete this post?')) {
-      await deletePost(id)
-      await refreshPosts()
+      try {
+        await deletePost(id)
+        await refreshPosts()
+      } catch (error) {
+        alert('Error: ' + error.message)
+      }
     }
   }
 

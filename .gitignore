@@ -12,6 +12,10 @@ dist
 dist-ssr
 *.local
 
+# Local GitHub Actions runner and package caches.
+actions-runner/
+frontend/.npm-cache/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

@@ -62,8 +62,12 @@ function ExperienceManager() {
 
   const handleDelete = async (id) => {
     if (confirm('Delete this experience?')) {
-      await deleteExperience(id)
-      await refreshExperiences()
+      try {
+        await deleteExperience(id)
+        await refreshExperiences()
+      } catch (error) {
+        alert('Error: ' + error.message)
+      }
     }
   }
 

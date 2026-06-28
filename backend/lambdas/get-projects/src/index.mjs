@@ -22,7 +22,7 @@ export const handler = async (event) => {
       items = items.filter(item => item.visible !== false);
     }
     
-    items = items.sort((a, b) => (a.order || 999) - (b.order || 999));
+    items = items.sort((a, b) => (a.order ?? 999) - (b.order ?? 999));
     
     return {
       statusCode: 200,

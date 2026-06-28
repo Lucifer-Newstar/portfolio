@@ -68,9 +68,12 @@ async function request(path, options = {}) {
 
     return await handleResponse(response)
   } catch (error) {
+    if (error?.name === 'AbortError') {
+      throw new Error('Request timed out. Please check the service and try again.')
+    }
     if (includeAdminAuth && /unauthorized|expired/i.test(String(error?.message || ''))) {
       clearAdminSession()
-      throw new Error('Admin session expired. Please login again and retry the deploy.')
+      throw new Error('Admin session expired. Please login again and retry.')
     }
     throw error
   } finally {
@@ -133,27 +136,27 @@ export const uploadAdminAsset = async ({ filename, contentType, data }) => {
 export const uploadAdminImage = uploadAdminAsset
 
 export const fetchSkills = async () => fetchCollection('/skills')
-export const createSkill = async (skill) => request('/skills', { method: 'POST', body: JSON.stringify(skill) })
-export const updateSkill = async (id, updates) => request(`/skills/${id}`, { method: 'PUT', body: JSON.stringify(updates) })
-export const deleteSkill = async (id) => request(`/skills/${id}`, { method: 'DELETE' })
+export const createSkill = async (skill) => request('/skills', { method: 'POST', body: JSON.stringify(skill), includeAdminAuth: true })
+export const updateSkill = async (id, updates) => request(`/skills/${encodeURIComponent(id)}`, { method: 'PUT', body: JSON.stringify(updates), includeAdminAuth: true })
+export const deleteSkill = async (id) => request(`/skills/${encodeURIComponent(id)}`, { method: 'DELETE', includeAdminAuth: true })
 
 export const fetchProjects = async () => {
-  const isAdmin = window.location.pathname.includes('lucifer-newstar_dashboard')
+  const isAdmin = hasAdminSession() && window.location.pathname.includes('lucifer-newstar_dashboard')
   return fetchCollection(isAdmin ? '/projects?admin=true' : '/projects')
 }
-export const createProject = async (project) => request('/projects', { method: 'POST', body: JSON.stringify(project) })
-export const updateProject = async (id, updates) => request(`/projects/${id}`, { method: 'PUT', body: JSON.stringify(updates) })
-export const deleteProject = async (id) => request(`/projects/${id}`, { method: 'DELETE' })
+export const createProject = async (project) => request('/projects', { method: 'POST', body: JSON.stringify(project), includeAdminAuth: true })
+export const updateProject = async (id, updates) => request(`/projects/${encodeURIComponent(id)}`, { method: 'PUT', body: JSON.stringify(updates), includeAdminAuth: true })
+export const deleteProject = async (id) => request(`/projects/${encodeURIComponent(id)}`, { method: 'DELETE', includeAdminAuth: true })
 
 export const fetchExperience = async () => fetchCollection('/experience')
-export const createExperience = async (exp) => request('/experience', { method: 'POST', body: JSON.stringify(exp) })
-export const updateExperience = async (id, updates) => request(`/experience/${id}`, { method: 'PUT', body: JSON.stringify(updates) })
-export const deleteExperience = async (id) => request(`/experience/${id}`, { method: 'DELETE' })
+export const createExperience = async (exp) => request('/experience', { method: 'POST', body: JSON.stringify(exp), includeAdminAuth: true })
+export const updateExperience = async (id, updates) => request(`/experience/${encodeURIComponent(id)}`, { method: 'PUT', body: JSON.stringify(updates), includeAdminAuth: true })
+export const deleteExperience = async (id) => request(`/experience/${encodeURIComponent(id)}`, { method: 'DELETE', includeAdminAuth: true })
 
 export const fetchCertifications = async () => fetchCollection('/certifications')
-export const createCertification = async (cert) => request('/certifications', { method: 'POST', body: JSON.stringify(cert) })
-export const updateCertification = async (id, updates) => request(`/certifications/${id}`, { method: 'PUT', body: JSON.stringify(updates) })
-export const deleteCertification = async (id) => request(`/certifications/${id}`, { method: 'DELETE' })
+export const createCertification = async (cert) => request('/certifications', { method: 'POST', body: JSON.stringify(cert), includeAdminAuth: true })
+export const updateCertification = async (id, updates) => request(`/certifications/${encodeURIComponent(id)}`, { method: 'PUT', body: JSON.stringify(updates), includeAdminAuth: true })
+export const deleteCertification = async (id) => request(`/certifications/${encodeURIComponent(id)}`, { method: 'DELETE', includeAdminAuth: true })
 
 export const fetchPosts = async (options = {}) => {
   const posts = await fetchCollection('/posts')
@@ -166,10 +169,10 @@ export const fetchPosts = async (options = {}) => {
     return true
   })
 }
-export const syncGitHubActivity = async () => request('/posts/sync-github', { method: 'POST' })
-export const createPost = async (post) => request('/posts', { method: 'POST', body: JSON.stringify(post) })
-export const updatePost = async (id, updates) => request(`/posts/${id}`, { method: 'PUT', body: JSON.stringify(updates) })
-export const deletePost = async (id) => request(`/posts/${id}`, { method: 'DELETE' })
+export const syncGitHubActivity = async () => request('/posts/sync-github', { method: 'POST', includeAdminAuth: true })
+export const createPost = async (post) => request('/posts', { method: 'POST', body: JSON.stringify(post), includeAdminAuth: true })
+export const updatePost = async (id, updates) => request(`/posts/${encodeURIComponent(id)}`, { method: 'PUT', body: JSON.stringify(updates), includeAdminAuth: true })
+export const deletePost = async (id) => request(`/posts/${encodeURIComponent(id)}`, { method: 'DELETE', includeAdminAuth: true })
 
 export const submitContactForm = async (payload) =>
   request('/contact', {
